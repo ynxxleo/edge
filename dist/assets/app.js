@@ -10,7 +10,7 @@
   const dateAt = days => new Date(today.getTime() - days * 86400000).toISOString();
   const dateLabel = date => new Date(date).toLocaleString('en-GB', { day: '2-digit', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' });
   const initial = () => ({
-    balance: 124500, profit: 24500,
+    balance: 124500, profit: 24500, copyPositions: [],
     bets: [
       { id: 'ED-10482', date: dateAt(0), title: 'Manchester City to win', match: 'Manchester City vs Real Madrid', market: 'Match winner', odds: 2.15, stake: 5000, returns: 10750, status: 'active' },
       { id: 'ED-10479', date: dateAt(0), title: 'Arsenal to win', match: 'Arsenal vs Chelsea', market: 'Match winner', odds: 3.1214285714, stake: 3500, returns: 10925, status: 'active' },
@@ -28,6 +28,7 @@
   let state;
   try { state = JSON.parse(localStorage.getItem('edge-demo-v1')); } catch (_) {}
   if (!state || !Number.isFinite(state.balance) || !Array.isArray(state.bets) || !Array.isArray(state.transactions)) state = initial();
+  if (!Array.isArray(state.copyPositions)) state.copyPositions = [];
   const save = () => { try { localStorage.setItem('edge-demo-v1', JSON.stringify(state)); } catch (_) { toast('Browser storage is unavailable. Changes will last for this visit.'); } };
   const fixtures = [
     { id:'ars-che', sport:'football', league:'Premier League', country:'England', a:'Arsenal', b:'Chelsea', ac:'ars', bc:'che', ai:'A', bi:'C', live:true, minute:"67′", score:[2,1], odds:[1.85,3.60,4.20], more:124 },
@@ -41,6 +42,15 @@
     { id:'g2-navi', sport:'esports', league:'Counter-Strike 2', country:'ESL', a:'G2 Esports', b:'Natus Vincere', ac:'rma', bc:'lal', ai:'G2', bi:'NV', live:true, minute:'Map 2', score:[1,0], odds:[1.65,null,2.30], more:38 }
   ];
   let page='sports', sport='all', league='all', liveOnly=false, query='', expanded=false, selections=[], betType='single', stakeAmount='', betFilter='active', walletMode='deposit', modalTrigger=null, toastTimer;
+  let copyPositionFilter='active';
+  const roundMoney = amount => Math.round((amount + Number.EPSILON) * 100) / 100;
+  const copyStrategies = [
+    {id:'touchline',name:'Touchline Method',initials:'TM',sport:'Football',risk:'balanced',return:12.4,winRate:61,copiers:128,stakeLimit:.02,description:'Selective match-winner picks across European football. A measured rhythm, with room for the big moments.',chart:'0,45 18,40 34,45 53,28 70,31 87,20 103,26 121,12 139,19 159,8 180,3'},
+    {id:'court',name:'Court Vision',initials:'CV',sport:'Basketball & tennis',risk:'measured',return:8.7,winRate:64,copiers:86,stakeLimit:.02,description:'A focused approach to the court. Smaller stakes, selective events, and a consistent allocation per play.',chart:'0,43 19,40 37,42 55,35 73,38 91,29 109,32 126,22 144,25 162,15 180,10'},
+    {id:'mixed',name:'Mixed Playbook',initials:'MP',sport:'Multiple sports',risk:'dynamic',return:-4.2,winRate:53,copiers:72,stakeLimit:.03,description:'A wider field of opportunities across sports. Larger swings and a more active approach to every round.',chart:'0,13 18,25 35,18 53,30 71,14 89,32 106,23 123,40 141,30 160,46 180,39'}
+  ];
+  const copyStrategy = id => copyStrategies.find(s=>s.id===id);
+  state.copyPositions=state.copyPositions.filter(p=>p&&copyStrategy(p.strategyId)&&Number.isFinite(p.principal)&&p.principal>=0&&Number.isFinite(p.profit)&&Number.isFinite(p.value)&&p.value>=0&&['active','paused','closed'].includes(p.status)).map(p=>({...p,rounds:Number.isInteger(p.rounds)?p.rounds:0,history:Array.isArray(p.history)?p.history:[]}));
   const diceSvg = `<svg viewBox="0 0 140 140" aria-hidden="true"><g transform="rotate(-18 53 70)"><rect x="17" y="32" width="67" height="67" rx="13" fill="#fcfff9"/><path d="m24 94 8 10h51l8-11V45l-8-8v49a8 8 0 0 1-8 8Z" fill="#c9d9bf"/><g fill="#244a36"><circle cx="34" cy="48" r="5"/><circle cx="67" cy="48" r="5"/><circle cx="51" cy="65" r="5"/><circle cx="34" cy="82" r="5"/><circle cx="67" cy="82" r="5"/></g></g><g transform="rotate(15 98 88)"><rect x="70" y="63" width="53" height="53" rx="11" fill="#193e2c"/><path d="m74 111 6 8h44l5-8V74l-6-7v38a6 6 0 0 1-6 6Z" fill="#0d2b1c"/><g fill="#9de5be"><circle cx="84" cy="77" r="4"/><circle cx="110" cy="103" r="4"/><circle cx="97" cy="90" r="4"/></g></g></svg>`;
   const rocketSvg = `<svg viewBox="0 0 150 150" aria-hidden="true"><path d="M21 117C49 113 54 92 75 85s31-27 55-57" stroke="#aba1bc" stroke-width="1" fill="none" stroke-dasharray="3 5"/><path d="m44 108-14 21 24-12 13-22Z" fill="#bba1d1"/><g transform="rotate(39 83 68)"><path d="M71 84 55 105V78l16-15Z" fill="#5f4778"/><path d="m94 84 16 21V78L94 63Z" fill="#5f4778"/><path d="M71 88V55c0-17 11-33 12-33s11 16 11 33v33Z" fill="#faf8ff"/><path d="M83 22c1 0 11 16 11 33v33H83Z" fill="#d4c8df"/><circle cx="83" cy="57" r="8" fill="#51456b"/><circle cx="83" cy="57" r="5" fill="#ada5cf"/><path d="M75 90h15l-5 22-3 7-4-7Z" fill="#c7a1ed"/><path d="M79 91h7l-3 16Z" fill="#fff"/></g></svg>`;
   const games = [
@@ -63,7 +73,7 @@
     $$('[data-returns]').forEach(el=>el.textContent=money(active.reduce((n,b)=>n+b.returns,0)));
     $('#bets-count').textContent=active.length;
     $('#active-bet-count').textContent=active.length;
-    renderTransactions(); renderBets();
+    renderTransactions(); renderBets(); renderCopy();
   }
   function renderMatches() {
     const filtered=fixtures.filter(f=>(sport==='all'||f.sport===sport)&&(league==='all'||f.league===league)&&(!liveOnly||f.live)&&(!query||`${f.a} ${f.b} ${f.league}`.toLowerCase().includes(query.toLowerCase())));
@@ -108,8 +118,56 @@
     const bets=state.bets.filter(b=>betFilter==='all'||(betFilter==='active'?b.status==='active':b.status!=='active'));
     $('#bet-history').innerHTML=bets.length?bets.map(b=>`<article class="history-card"><div class="history-top"><span>${escape(b.id)} · ${dateLabel(b.date)}</span><span class="history-status">${b.status==='active'?'ACTIVE':b.status==='won'?'WON':'CASHED OUT'}</span></div><h3>${escape(b.title)}</h3><p>${escape(b.match)}<br>${escape(b.market)} · ${b.odds.toFixed(2)}</p><div class="history-values"><div><span>STAKE</span><strong>${money(b.stake)}</strong></div><div><span>${b.status==='cashed'?'CASH OUT RETURN':b.status==='won'?'TOTAL RETURN':'POTENTIAL RETURN'}</span><strong class="green-text">${money(b.returns)}</strong></div></div>${b.status==='active'?`<button class="cashout-button" data-cashout="${escape(b.id)}">Cash out · ${money(Math.round(b.stake*1.08*100)/100)}</button>`:''}</article>`).join(''):'<div class="empty-history">No bets here yet. Explore the sports markets and add an outcome to your bet slip.</div>';
   }
+  function renderCopy() {
+    if (!$('#copy-page')) return;
+    const risk=$('#copy-risk-filter')?.value||'all';
+    $('#copy-strategy-list').innerHTML=copyStrategies.filter(s=>risk==='all'||s.risk===risk).map(s=>`<article class="copy-strategy-card"><div class="copy-strategy-top"><span class="copy-avatar ${s.id}">${s.initials}</span><div><span class="copy-strategy-tag">${escape(s.sport)}</span><h3 class="copy-strategy-name">${s.name}</h3></div><span class="copy-risk ${s.risk}">${s.risk}</span></div><p class="copy-strategy-description">${s.description}</p><div class="copy-metrics"><div><span>30D SAMPLE RETURN</span><strong class="${s.return>=0?'green-text':'copy-negative'}">${s.return>0?'+':''}${s.return}%</strong></div><div><span>SAMPLE WIN RATE</span><strong>${s.winRate}%</strong></div><div><span>DEMO COPIERS</span><strong>${s.copiers}</strong></div></div><div class="copy-chart ${s.return<0?'negative':''}"><svg viewBox="0 0 180 54" role="img" aria-label="Illustrative 30-day ${s.return>=0?'positive':'negative'} performance"><path d="M0 51H180M0 27H180M0 3H180" stroke="currentColor" opacity=".12"/><polyline points="${s.chart}" fill="none" stroke="currentColor" stroke-width="1.8" vector-effect="non-scaling-stroke"/></svg><span>ILLUSTRATIVE PERFORMANCE / 30 DAYS</span></div><div class="copy-strategy-footer"><div><span>Minimum allocation</span><strong>₦5,000 <small>· ${(s.stakeLimit*100).toFixed(0)}% per stake</small></strong></div><button class="button ${s.id==='touchline'?'green':'outline'}" data-copy-fund="${s.id}">Deposit & copy ${icon('arrow')}</button></div></article>`).join('');
+    const open=state.copyPositions.filter(p=>p.status!=='closed');
+    $('#copy-total-allocated').textContent=money(open.reduce((sum,p)=>sum+p.value,0));
+    const profit=state.copyPositions.reduce((sum,p)=>sum+p.profit,0);
+    $('#copy-total-profit').textContent=`${profit>0?'+':''}${money(profit)}`;
+    $('#copy-total-profit').classList.toggle('copy-negative',profit<0);
+    $('#copy-active-count').textContent=open.filter(p=>p.status==='active').length;
+    const positions=state.copyPositions.filter(p=>copyPositionFilter==='all'||p.status!=='closed');
+    $$('[data-copy-position-filter]').forEach(b=>b.classList.toggle('active',b.dataset.copyPositionFilter===copyPositionFilter));
+    $('#copy-position-list').innerHTML=positions.length?positions.map(p=>{
+      const s=copyStrategy(p.strategyId),last=p.history.at(-1);
+      return `<article class="copy-position-card"><div class="copy-position-top"><div><span class="section-kicker">${escape(p.id)} / ${dateLabel(p.date)}</span><h3>${s.name}</h3></div><span class="copy-status ${p.status}">${p.status==='active'?'Copying':p.status==='paused'?'Paused':'Closed'}</span></div><div class="copy-position-values"><div><span>DEPOSITED</span><strong>${money(p.principal)}</strong></div><div><span>${p.status==='closed'?'RETURNED TO WALLET':'CURRENT VALUE'}</span><strong>${money(p.value)}</strong></div><div><span>COPY PROFIT / LOSS</span><strong class="${p.profit<0?'copy-negative':'green-text'}">${p.profit>0?'+':''}${money(p.profit)}</strong></div></div><div class="copy-position-activity"><span>${p.rounds} demo ${p.rounds===1?'stake':'stakes'} copied · ${Math.round(p.stakeLimit*100)}% per round</span>${last?`<p>Last round: ${escape(last.event)} · ${last.outcome==='won'?'Won':'Lost'} · ${last.profit>=0?'+':''}${money(last.profit)}</p>`:'<p>No copied stakes yet. Simulate a round to preview how copying works.</p>'}</div>${p.status!=='closed'?`<div class="copy-position-actions"><button class="button green" data-copy-fund="${s.id}">Add funds ${icon('plus')}</button><button class="button outline" data-copy-${p.status==='paused'?'resume':'pause'}="${escape(p.id)}">${p.status==='paused'?'Resume':'Pause'}</button><button class="copy-close-button" data-copy-close="${escape(p.id)}">Return to wallet ${icon('arrow')}</button></div><button class="copy-simulate" data-copy-round="${escape(p.id)}" ${p.status==='paused'||p.value<1?'disabled':''}>${icon('football')} Simulate a copied stake <span>DEMO</span></button>`:''}</article>`;
+    }).join(''):`<div class="copy-empty"><span class="empty-slip-icon">${icon('game')}<span>+</span></span><h3>Your shared edge starts here.</h3><p>Choose a strategy above and make your first allocation.<br>Your positions and copied stakes will appear here.</p><button class="button outline" id="copy-empty-explore">Explore strategies ${icon('arrow')}</button></div>`;
+  }
+  function openCopyFunding(id) {
+    const s=copyStrategy(id);if(!s)return;
+    const existing=state.copyPositions.find(p=>p.strategyId===id&&p.status!=='closed');
+    $('#info-content').innerHTML=`<span class="section-kicker">COPY STAKING / ${escape(s.name.toUpperCase())}</span><h2 id="info-title">FUND YOUR COPY<span>.</span></h2><p>${existing?'Add to your existing allocation.':'Set an allocation to copy this strategy’s future stakes.'} ${Math.round(s.stakeLimit*100)}% of your position is used per demo round.</p><form class="copy-funding-form" id="copy-fund-form" data-strategy="${s.id}"><label for="copy-fund-amount">Allocation amount <span>NGN</span></label><div class="amount-input"><span>₦</span><input id="copy-fund-amount" type="number" inputmode="decimal" min="5000" max="1000000" step="0.01" placeholder="5,000.00" required></div><div class="amount-presets"><button type="button" data-copy-amount="5000">₦5,000</button><button type="button" data-copy-amount="10000">₦10,000</button><button type="button" data-copy-amount="25000">₦25,000</button><button type="button" data-copy-amount="50000">₦50,000</button></div><label for="copy-fund-source">Fund from</label><select id="copy-fund-source" required><option value="wallet">Available wallet balance</option><option value="deposit">New demo deposit</option></select><div id="copy-fund-method-fields" hidden><label for="copy-fund-method">Deposit method</label><select id="copy-fund-method" required disabled><option value="bank">Bank transfer (demo)</option><option value="card">Debit card (demo)</option></select></div><div class="copy-funding-note" id="copy-funding-note">The allocation moves from your wallet into this copy position.</div><div class="form-error" id="copy-fund-error" role="alert" hidden></div><div class="wallet-form-summary"><span>Available wallet balance</span><strong>${money(state.balance)}</strong></div><button class="button green wallet-submit" id="copy-fund-submit" type="submit">${existing?'Add demo allocation':'Start copying'} ${icon('arrow')}</button><p class="modal-fine-print">Virtual funds. Demo rounds are simulated on request. Returns can rise or fall.</p></form>`;
+    $('#copy-fund-source').value=existing?'wallet':'deposit';
+    changeCopyFundingSource();
+    openModal('info-modal');
+  }
+  function changeCopyFundingSource() {
+    const deposit=$('#copy-fund-source').value==='deposit';
+    $('#copy-fund-method-fields').hidden=!deposit;
+    $('#copy-fund-method').disabled=!deposit;
+    $('#copy-funding-note').textContent=deposit?'Your new demo deposit is allocated directly to this strategy. Your existing wallet balance stays available.':'The allocation moves from your wallet into this copy position.';
+    const s=copyStrategy($('#copy-fund-form').dataset.strategy);
+    const existing=state.copyPositions.some(p=>p.strategyId===s.id&&p.status!=='closed');
+    $('#copy-fund-submit').innerHTML=`${deposit?'Deposit & copy':existing?'Add demo allocation':'Start copying'} ${icon('arrow')}`;
+    $('#copy-fund-error').hidden=true;
+  }
+  function simulateCopyRound(id) {
+    const p=state.copyPositions.find(p=>p.id===id&&p.status==='active');
+    if(!p||p.value<1)return;
+    const stake=roundMoney(p.value*p.stakeLimit),won=p.rounds%3!==1,odds=1.85;
+    if(stake<=0)return;
+    const delta=won?roundMoney(stake*(odds-1)):-stake;
+    const events={touchline:['Arsenal · match winner','Barcelona · match winner','Manchester City · match winner'],court:['LA Lakers · match winner','Jannik Sinner · match winner','Boston Celtics · match winner'],mixed:['India · match winner','G2 Esports · match winner','Real Madrid · match winner']};
+    const event=events[p.strategyId][p.rounds%3];
+    p.value=roundMoney(p.value+delta);p.profit=roundMoney(p.profit+delta);p.rounds++;
+    p.history.push({event,stake,odds,outcome:won?'won':'lost',profit:delta,date:new Date().toISOString()});
+    state.profit=roundMoney(state.profit+delta);save();renderWallet();
+    toast(`Demo round ${won?'won':'lost'}: ${delta>=0?'+':''}${money(delta)} in your copy position.`);
+  }
   function navigate(next,updateHash=true) {
-    if(!['sports','live','games','wallet','bets'].includes(next))next='sports';
+    if(!['sports','live','games','copy','wallet','bets'].includes(next))next='sports';
     page=next;
     $$('.page-panel').forEach(p=>p.hidden=p.id!==`${next==='live'?'sports':next}-page`);
     $$('.nav-link').forEach(b=>b.classList.toggle('active',b.dataset.page===next));
@@ -118,7 +176,7 @@
     if(next==='live'){liveOnly=true;$('#live-filter').classList.add('active');renderMatches();}
     else if(next==='sports'){liveOnly=false;$('#live-filter').classList.remove('active');renderMatches();}
     if(updateHash && location.hash!==`#${next}`)history.pushState(null,'',`#${next}`);
-    document.title=`${next==='wallet'?'Wallet':next==='bets'?'My bets':next==='games'?'Games':'Sports'} — EDGE`;
+    document.title=`${next==='wallet'?'Wallet':next==='bets'?'My bets':next==='games'?'Games':next==='copy'?'Copy Staking':'Sports'} — EDGE`;
     window.scrollTo({top:0,behavior:'instant'});
   }
   function toast(message) { clearTimeout(toastTimer);$('#toast').textContent=message;$('#toast').hidden=false;toastTimer=setTimeout(()=>$('#toast').hidden=true,4000); }
@@ -150,8 +208,8 @@
   function showInfo(kind) {
     const content={
       responsible:{title:'STAY IN CONTROL',body:'<p>Enjoy the game at your own pace. Set a budget before you play, take regular breaks, and never stake more than you can afford to lose.</p><ul><li>This experience is for adults aged 18 and above.</li><li>Odds and events in this demo are sample data.</li><li>Returns are potential outcomes, never a guarantee.</li></ul><p>This demo uses virtual funds. No real money is accepted.</p>'},
-      help:{title:'HOW CAN WE HELP?',body:'<p><strong>Build your slip</strong><br>Select an outcome in a sports market, enter a demo stake, and place your bet.</p><p><strong>Manage your wallet</strong><br>Add demo funds with Deposit. Withdraw from the available balance, including profits, using sample bank details.</p><p><strong>Track your plays</strong><br>Open My bets to see active and settled stakes. Cash out an active demo stake to move its return into your available balance.</p>'},
-      terms:{title:'THE GROUND RULES',body:'<p>EDGE is an interactive UI demonstration. All fixtures, odds, balances, transactions and cash-out values are illustrative.</p><p>Funds are virtual and stored locally in your browser. There are no connected payment processors, real bets, bank transfers or live event feeds.</p><p>The arcade uses free rounds and does not deduct money. Deposits and withdrawals demonstrate the product flow only.</p>'},
+      help:{title:'HOW CAN WE HELP?',body:'<p><strong>Build your slip</strong><br>Select an outcome in a sports market, enter a demo stake, and place your bet.</p><p><strong>Copy a strategy</strong><br>Open Copy Staking, choose a strategy, and allocate from your wallet or a new demo deposit. Simulate a copied stake to preview a result. Pause copying anytime, or return the position to your wallet before withdrawing.</p><p><strong>Manage your wallet</strong><br>Add demo funds with Deposit. Withdraw from the available balance, including profits, using sample bank details.</p><p><strong>Track your plays</strong><br>Open My bets to see active and settled stakes. Cash out an active demo stake to move its return into your available balance.</p>'},
+      terms:{title:'THE GROUND RULES',body:'<p>EDGE is an interactive UI demonstration. All fixtures, odds, balances, transactions and cash-out values are illustrative.</p><p>Funds are virtual and stored locally in your browser. There are no connected payment processors, real bets, bank transfers or live event feeds.</p><p>Copy strategies and past performance are fictional. Copied rounds run only when you select Simulate a copied stake. No live account is followed and no real stakes are placed.</p><p>The arcade uses free rounds and does not deduct money. Deposits and withdrawals demonstrate the product flow only.</p>'},
       account:{title:'YOUR ACCOUNT',body:'<p><strong>Jordan Adams</strong><br>Demo member · NGN wallet</p><p>Your wallet activity and stakes are saved in this browser. No account registration is needed for this preview.</p><button class="button outline" id="reset-demo">Reset demo wallet</button>'}
     };
     const c=content[kind];if(!c)return;
@@ -164,6 +222,23 @@
   document.addEventListener('click',e=>{
     const b=e.target.closest('button,a');
     if(b?.dataset.page){navigate(b.dataset.page);return;}
+    if(b?.dataset.copyFund){openCopyFunding(b.dataset.copyFund);return;}
+    if(b?.dataset.copyAmount){$('#copy-fund-amount').value=b.dataset.copyAmount;$('#copy-fund-error').hidden=true;return;}
+    if(b?.dataset.copyPositionFilter){copyPositionFilter=b.dataset.copyPositionFilter;renderCopy();return;}
+    if(b?.dataset.copyPause||b?.dataset.copyResume){const p=state.copyPositions.find(p=>p.id===(b.dataset.copyPause||b.dataset.copyResume)&&p.status!=='closed');if(!p)return;p.status=b.dataset.copyPause?'paused':'active';save();renderCopy();toast(p.status==='paused'?'Copying paused. Your allocation stays in this position.':'Copying resumed. Your position is ready for the next demo round.');return;}
+    if(b?.dataset.copyRound){simulateCopyRound(b.dataset.copyRound);return;}
+    if(b?.dataset.copyClose){
+      const p=state.copyPositions.find(p=>p.id===b.dataset.copyClose&&p.status!=='closed');if(!p)return;
+      const s=copyStrategy(p.strategyId);
+      $('#info-content').innerHTML=`<span class="section-kicker">COPY STAKING / ${escape(s.name.toUpperCase())}</span><h2 id="info-title">MAKE YOUR EXIT<span>.</span></h2><p>Close this copy position and return its current value, including its demo profit or loss, to your available wallet balance.</p><div class="success-amount">${money(p.value)}</div><div class="success-details"><div><span>Deposited</span><strong>${money(p.principal)}</strong></div><div><span>Profit / loss</span><strong>${p.profit>0?'+':''}${money(p.profit)}</strong></div></div><p>This stops future copies for this position. You can withdraw the returned funds from your wallet.</p><button class="button green success-button" data-confirm-copy-close="${escape(p.id)}">Close & return to wallet ${icon('arrow')}</button>`;openModal('info-modal');return;
+    }
+    if(b?.dataset.confirmCopyClose){
+      const p=state.copyPositions.find(p=>p.id===b.dataset.confirmCopyClose&&p.status!=='closed');if(!p)return;
+      p.status='closed';p.closedAt=new Date().toISOString();state.balance=roundMoney(state.balance+p.value);
+      state.transactions.unshift({id:`TX-${p.id}-exit`,type:'copy',title:`Copy return · ${copyStrategy(p.strategyId).name}`,amount:p.value,date:p.closedAt});save();renderWallet();
+      showSuccess('BACK IN YOUR WALLET','Your copy position is closed. These demo funds are available to withdraw from your wallet.',p.value,[['Strategy',copyStrategy(p.strategyId).name],['Profit / loss',money(p.profit)]]);return;
+    }
+    if(b?.id==='copy-explore'||b?.id==='copy-empty-explore'){$('#copy-strategies').scrollIntoView({behavior:'smooth'});return;}
     if(b?.matches('.brand')){e.preventDefault();navigate('sports');return;}
     if(b?.dataset.wallet){openWallet(b.dataset.wallet);return;}
     if(b?.dataset.modalWallet){openWallet(b.dataset.modalWallet);return;}
@@ -211,7 +286,33 @@
     if(e.target.id==='stake-amount'){stakeAmount=e.target.value;const t=slipTotals();$('#slip-total-stake').textContent=money(t.totalStake);$('#slip-potential-return').textContent=money(t.returns);$('#slip-error').hidden=true;}
   });
   $('#transaction-filter').addEventListener('change',renderTransactions);
+  document.addEventListener('change',e=>{
+    if(e.target.id==='copy-risk-filter')renderCopy();
+    if(e.target.id==='copy-fund-source')changeCopyFundingSource();
+  });
   document.addEventListener('submit',e=>{
+    if(e.target.id==='copy-fund-form'){
+      e.preventDefault();
+      const s=copyStrategy(e.target.dataset.strategy),amount=Number($('#copy-fund-amount').value),source=$('#copy-fund-source').value,method=$('#copy-fund-method').value;
+      const fail=message=>{$('#copy-fund-error').textContent=message;$('#copy-fund-error').hidden=false;};
+      if(!s)return fail('Choose a strategy to continue.');
+      if(!Number.isFinite(amount)||amount<5000||Math.abs(amount*100-Math.round(amount*100))>.00001)return fail('Enter an allocation of at least ₦5,000, with at most two decimal places.');
+      if(amount>1000000)return fail('The maximum demo allocation per transaction is ₦1,000,000.');
+      if(!['wallet','deposit'].includes(source))return fail('Choose your funding source.');
+      if(source==='deposit'&&!['bank','card'].includes(method))return fail('Choose a deposit method.');
+      if(source==='wallet'&&amount>state.balance)return fail('Your available wallet balance is too low. Choose a new demo deposit or reduce your allocation.');
+      const now=new Date().toISOString(),reference=`CP-${globalThis.crypto?.randomUUID?.()||`${Date.now().toString(36)}-${Math.random().toString(36).slice(2,8)}`}`;
+      let p=state.copyPositions.find(p=>p.strategyId===s.id&&p.status!=='closed');
+      if(p){p.principal=roundMoney(p.principal+amount);p.value=roundMoney(p.value+amount);}
+      else {p={id:reference,strategyId:s.id,principal:amount,profit:0,value:amount,status:'active',date:now,rounds:0,stakeLimit:s.stakeLimit,history:[]};state.copyPositions.unshift(p);}
+      const txs=[];
+      if(source==='deposit')txs.push({id:`TX-${reference}-deposit`,type:'deposit',title:`Copy deposit · ${method==='card'?'Debit card':'Bank transfer'}`,amount,date:now});
+      else state.balance=roundMoney(state.balance-amount);
+      txs.push({id:`TX-${reference}-allocation`,type:'copy',title:`Copy allocation · ${s.name}`,amount:-amount,date:now});state.transactions.unshift(...txs);
+      save();renderWallet();
+      showSuccess('YOUR SHARED EDGE','Your demo allocation is ready. Open your position to simulate copied stakes or manage your funds.',amount,[['Strategy',s.name],['Funded from',source==='deposit'?'New demo deposit':'Wallet balance'],['Position status',p.status==='paused'?'Paused':'Copying']]);
+      return;
+    }
     if(e.target.id==='wallet-form'){
       e.preventDefault();
       const amount=Number($('#wallet-amount').value),fail=message=>{$('#wallet-error').textContent=message;$('#wallet-error').hidden=false;};

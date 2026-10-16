@@ -39,6 +39,7 @@
       <button class="nav-link active" data-page="sports">Sports</button>
       <button class="nav-link" data-page="live">Live <span class="nav-dot"></span></button>
       <button class="nav-link" data-page="games">Games</button>
+      <button class="nav-link" data-page="copy">Copy Staking</button>
       <button class="nav-link" data-page="bets">My bets <span class="nav-count" id="bets-count">2</span></button>
     </nav>
     <div class="header-actions">
@@ -109,9 +110,39 @@
 
     <section id="games-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">FIND YOUR NEXT FAVORITE / 002</span><h1>MORE WAYS<br>TO <span class="green-text">PLAY.</span></h1><p>Quick rounds. New challenges. Every game is a new move.</p></div><div class="games-info"><svg><use href="#i-game"/></svg><span>Free play arcade — explore game previews with no wallet deductions.</span></div><div class="game-grid full-game-grid" id="all-games"></div></section>
 
-    <section id="wallet-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">YOUR MONEY. YOUR MOVE. / 003</span><h1>THE <span class="green-text">WALLET.</span></h1><p>Keep track of every stake, return and transaction.</p></div><div class="wallet-overview"><div class="wallet-total"><span class="eyebrow">AVAILABLE DEMO BALANCE</span><strong data-balance>₦124,500.00</strong><div><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit funds</button><button class="button outline" data-wallet="withdraw">Withdraw funds <svg><use href="#i-arrow"/></svg></button></div></div><div class="wallet-overview-stat"><svg><use href="#i-trophy"/></svg><span>Total profit</span><strong data-profit>₦24,500.00</strong></div><div class="wallet-overview-stat"><svg><use href="#i-clock"/></svg><span>Active stakes</span><strong data-stakes>₦8,500.00</strong></div></div><div class="section-heading transaction-heading"><h2>Transaction history<span class="green-text">.</span></h2><select id="transaction-filter" aria-label="Filter transactions"><option value="all">All transactions</option><option value="deposit">Deposits</option><option value="withdrawal">Withdrawals</option><option value="stake">Stakes</option><option value="return">Returns</option></select></div><div class="transaction-table-wrap"><table class="transaction-table"><thead><tr><th>TRANSACTION</th><th>DATE</th><th>AMOUNT</th><th>STATUS</th></tr></thead><tbody id="transaction-body"></tbody></table></div><p class="demo-explanation">Demo wallet • Transactions are saved in this browser. Payment providers and bank transfers are not connected.</p></section>
+    <section id="copy-page" class="page-panel" hidden aria-label="Copy staking">
+      <div class="copy-hero-grid">
+        <div class="copy-hero">
+          <span class="eyebrow"><span class="green-dot"></span> YOUR NEXT MOVE, TOGETHER / 003</span>
+          <h1>A SHARED<br><span>EDGE.</span><span class="copy-hero-star" aria-hidden="true">✳</span></h1>
+          <p>Follow a strategy. Fund your allocation.<br>Copy its future stakes.</p>
+          <button class="button green" id="copy-explore">Explore strategies <svg><use href="#i-arrow"/></svg></button>
+          <div class="copy-hero-bottom"><span>INDEPENDENT STRATEGIES. YOUR CONTROL.</span><span>01 — COPY / STAKE</span></div>
+          <span class="copy-hero-orbit" aria-hidden="true"></span>
+        </div>
+        <aside class="copy-overview" aria-label="Your copy staking overview">
+          <div class="copy-overview-title"><span class="eyebrow">YOUR COPY CAPITAL</span><span class="demo-badge">DEMO</span></div>
+          <span class="copy-capital-label">Copy position value</span>
+          <strong class="copy-capital" id="copy-total-allocated">₦0.00</strong>
+          <div class="copy-overview-metrics"><div><span>Copy profit</span><strong id="copy-total-profit">₦0.00</strong></div><div><span>Active strategies</span><strong id="copy-active-count">0</strong></div></div>
+          <div class="copy-available"><span>Available wallet balance</span><strong data-balance>₦124,500.00</strong></div>
+          <button class="copy-wallet-link" data-wallet="deposit">Add funds to wallet <svg><use href="#i-plus"/></svg></button>
+          <p class="copy-overview-note">Choose a strategy below to deposit into copy staking.</p>
+        </aside>
+      </div>
+      <div class="copy-demo-note"><span class="demo-badge">DEMO EXPERIENCE</span><p>Strategies and performance are illustrative. Returns can vary and stakes can be lost. No real money is transferred.</p></div>
+      <div class="copy-how"><span class="copy-how-heading">HOW IT WORKS <svg><use href="#i-arrow"/></svg></span><div><span>01</span><p>Find your strategy</p></div><div><span>02</span><p>Deposit your allocation</p></div><div><span>03</span><p>Track & manage your funds</p></div></div>
+      <section id="copy-strategies" class="copy-strategies" aria-labelledby="copy-strategies-title">
+        <div class="section-heading copy-section-heading"><div><span class="section-kicker">DIFFERENT APPROACHES. ONE GAME.</span><h2 id="copy-strategies-title">Find your shared edge<span class="green-text">.</span></h2></div><label class="copy-filter-label" for="copy-risk-filter"><span>Strategy style</span><select id="copy-risk-filter"><option value="all">All strategies</option><option value="measured">Measured</option><option value="balanced">Balanced</option><option value="dynamic">Dynamic</option></select></label></div>
+        <div id="copy-strategy-list" class="copy-strategy-grid"></div>
+        <p class="copy-performance-note">Sample performance describes a fictional past period. It does not predict future results.</p>
+      </section>
+      <section class="copy-positions" aria-labelledby="copy-positions-title"><div class="section-heading copy-section-heading"><div><span class="section-kicker">YOUR ALLOCATION. YOUR CALL.</span><h2 id="copy-positions-title">Your copy positions<span class="green-text">.</span></h2></div><div class="copy-position-filters" role="group" aria-label="Filter copy positions"><button class="active" data-copy-position-filter="active">Active</button><button data-copy-position-filter="all">All positions</button></div></div><div id="copy-position-list" class="copy-position-list"></div></section>
+    </section>
 
-    <section id="bets-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">EVERY MOVE, IN ONE PLACE / 004</span><h1>YOUR <span class="green-text">PLAYS.</span></h1><p>Follow your active stakes and revisit your results.</p></div><div class="bet-history-tabs"><button class="active" data-bet-filter="active">Active <span id="active-bet-count">2</span></button><button data-bet-filter="settled">Settled</button><button data-bet-filter="all">All bets</button></div><div id="bet-history" class="bet-history"></div></section>
+    <section id="wallet-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">YOUR MONEY. YOUR MOVE. / 004</span><h1>THE <span class="green-text">WALLET.</span></h1><p>Keep track of every stake, return and transaction.</p></div><div class="wallet-overview"><div class="wallet-total"><span class="eyebrow">AVAILABLE DEMO BALANCE</span><strong data-balance>₦124,500.00</strong><div><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit funds</button><button class="button outline" data-wallet="withdraw">Withdraw funds <svg><use href="#i-arrow"/></svg></button></div></div><div class="wallet-overview-stat"><svg><use href="#i-trophy"/></svg><span>Total profit</span><strong data-profit>₦24,500.00</strong></div><div class="wallet-overview-stat"><svg><use href="#i-clock"/></svg><span>Active stakes</span><strong data-stakes>₦8,500.00</strong></div></div><div class="section-heading transaction-heading"><h2>Transaction history<span class="green-text">.</span></h2><select id="transaction-filter" aria-label="Filter transactions"><option value="all">All transactions</option><option value="deposit">Deposits</option><option value="withdrawal">Withdrawals</option><option value="stake">Stakes</option><option value="return">Returns</option><option value="copy">Copy staking</option></select></div><div class="transaction-table-wrap"><table class="transaction-table"><thead><tr><th>TRANSACTION</th><th>DATE</th><th>AMOUNT</th><th>STATUS</th></tr></thead><tbody id="transaction-body"></tbody></table></div><p class="demo-explanation">Demo wallet • Transactions are saved in this browser. Payment providers and bank transfers are not connected.</p></section>
+
+    <section id="bets-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">EVERY MOVE, IN ONE PLACE / 005</span><h1>YOUR <span class="green-text">PLAYS.</span></h1><p>Follow your active stakes and revisit your results.</p></div><div class="bet-history-tabs"><button class="active" data-bet-filter="active">Active <span id="active-bet-count">2</span></button><button data-bet-filter="settled">Settled</button><button data-bet-filter="all">All bets</button></div><div id="bet-history" class="bet-history"></div></section>
 
     <section class="bottom-banner"><div><span class="eyebrow">BACK YOUR KNOWLEDGE. OWN YOUR GAME.</span><h2>MAKE YOUR NEXT MOVE<span>.</span></h2></div><span class="bottom-asterisk">✳</span></section>
   </main>

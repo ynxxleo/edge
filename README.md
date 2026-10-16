@@ -20,8 +20,12 @@ Open http://127.0.0.1:8000. Dependencies and a local `.env` have already been pr
 - Deposit demo funds and withdraw available funds, including demo profit, using the wallet modal.
 - View and filter wallet transactions. Reset the starting wallet from the account menu.
 - Play the free arcade games without staking wallet funds.
+- Use Copy Staking (`#copy`) to browse three sample strategies, deposit directly into an allocation or fund it from your available wallet, and track separate copy positions.
+- Add funds, pause/resume copying, preview explicit simulated rounds, or close a position and return its value to the wallet for withdrawal.
 
 All balances, transactions, stakes, and profits are illustrative and stored in this browser’s `localStorage` under `edge-demo-v1`. Fixtures and odds are sample data. Deposits and withdrawals update virtual funds only: there is no payment processor, bank transfer, authentication service, live odds feed, or server-side financial ledger. Do not use real bank details in the preview.
+
+Copy allocations have a ₦5,000 minimum and a ₦1,000,000 limit per funding transaction. A new demo deposit records a deposit and a matching allocation, preserving the existing available wallet balance. Funds remain separate from the available wallet until the position is closed. Simulated rounds can win or lose; their profit or loss changes the position value. Closing a position returns that value once without counting its profit twice. Existing saved demo wallets are preserved when copy-position storage is added.
 
 ## Static preview
 
@@ -49,6 +53,7 @@ See [ASSET_CREDITS.md](ASSET_CREDITS.md) for image and font credits.
 ```sh
 npm install --prefix /tmp/edge-dom-qa jsdom@26
 EDGE_JSDOM_PATH=/tmp/edge-dom-qa/node_modules/jsdom node scripts/check-ui.cjs
+EDGE_JSDOM_PATH=/tmp/edge-dom-qa/node_modules/jsdom node scripts/check-copy-ui.cjs
 ```
 
-The suite passes 39 checks. Browser layout verification could not run because the supplied browser connection failed during initialization.
+The suites pass 73 checks (39 core UI checks and 34 copy staking checks). Browser layout verification could not run because the supplied browser connection failed during initialization.
