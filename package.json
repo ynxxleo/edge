@@ -1,0 +1,10 @@
+{
+  "name": "edge-sports-ui",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/build-preview.mjs",
+    "dev": "php artisan serve --host=127.0.0.1 --port=8000",
+    "preview": "php -S 127.0.0.1:8080 -t dist",
+    "check": "node --check public/assets/app.js && node --check scripts/build-preview.mjs"
+  }
+}
