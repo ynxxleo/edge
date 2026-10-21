@@ -28,3 +28,8 @@ yarn-error.log
 
 __pycache__/
 *.pyc
+
+# cPanel/PHP runtime files must not dirty a deployment checkout.
+error_log
+.user.ini
+/public/.well-known/
