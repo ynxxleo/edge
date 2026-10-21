@@ -1,0 +1,140 @@
+.copy-funding-form>input{display:block;width:100%;padding:12px;border:1px solid #d5ddcc;background:white;border-radius:3px;font-size:12px}.auth-switch{font-size:11px;color:#688652;text-decoration:underline;display:block;margin:20px auto 0}.server-bet-note{font-size:9px!important;line-height:1.7;color:#879477;margin:15px 0 0!important}.server-requests{margin-top:35px;border-top:1px solid var(--line);padding-top:25px}.server-requests h3{font-size:20px;letter-spacing:-.6px}.server-requests>p{font-size:11px;line-height:1.8;color:#879477}.ledger-ref{display:block;font-size:7px;font-weight:400;color:#93a184;max-width:280px;overflow-wrap:anywhere;margin-top:5px}.server-game-symbol{font:800 75px var(--display);color:#153e2b}.basket-art .server-game-symbol{color:#eff1e9}body[data-runtime="laravel"] .footer-note{font-size:0}body[data-runtime="laravel"] .footer-note:after{content:'18+ · PLAY WITHIN YOUR LIMITS.\A© 2026 EDGE.';white-space:pre;font-size:6px}body[data-runtime="laravel"] .copy-strategy-card:last-child .copy-funding-note{grid-column:1/-1}body[data-runtime="laravel"] .copy-metrics strong{font-size:19px}body[data-runtime="laravel"] .main-nav{gap:clamp(12px,1.6vw,24px)}@media(max-width:760px){.main-nav{overflow-x:auto;scrollbar-width:none}.nav-link{flex-shrink:0}.server-requests h3{font-size:18px}.ledger-ref{max-width:180px}}
+.manual-payment-details{margin:16px 0;background:#e8eee0;border:1px solid #d3dfc8;border-radius:4px;padding:14px}.manual-payment-details>div{display:flex;justify-content:space-between;gap:18px;margin:8px 0;font-size:10px}.manual-payment-details>div>span{color:#7e906d;flex-shrink:0}.manual-payment-details strong{text-align:right;overflow-wrap:anywhere}.manual-payment-details p{font-size:9px;line-height:1.6;margin:12px 0 0;color:#728461}.stripe-checkout-summary{margin:25px 0}.stripe-checkout-summary>strong{display:block;font-size:42px;letter-spacing:-1.8px;margin:16px 0}.stripe-checkout-summary>p{font-size:12px;line-height:1.8}.payment-mode-tag{display:inline-block;padding:4px 6px;border:1px solid #cbd9bf;background:#e8f0df;color:#62804b;border-radius:3px;font-size:7px;letter-spacing:.7px;text-transform:uppercase}.payment-return{padding:20px;margin:10px 0 27px;border:1px solid #d7d9c0;background:#f0f0df;border-radius:4px}.payment-return.confirmed{background:#e2f4e7;border-color:#bcdec5}.payment-return strong{font-size:15px}.payment-return p{font-size:11px;line-height:1.7;color:#7b886b}.payment-return .button{padding:9px 12px;font-size:10px}.wallet-submit:disabled{cursor:not-allowed;opacity:.45}
+/* Copy staking: actual deposit and settled game performance. */
+body[data-runtime="laravel"] .copy-position-list{grid-template-columns:minmax(0,1fr);gap:24px}
+.copy-performance-card{padding:28px;min-width:0;overflow:hidden}
+.copy-performance-card .copy-position-top{margin-bottom:22px}
+.copy-performance-card .copy-position-top h3{font-size:23px;letter-spacing:-.8px}
+.copy-performance-card .copy-position-top .section-kicker{font-size:8px}
+.copy-performance-card .copy-status{font-size:9px;padding:8px 10px}
+.copy-performance-card .copy-position-values{padding:20px 0;gap:24px;margin-bottom:24px}
+.copy-performance-card .copy-position-values>div+div{border-left:1px solid var(--line);padding-left:24px}
+.copy-performance-card .copy-position-values span{font-size:9px;letter-spacing:.6px}
+.copy-performance-card .copy-position-values strong{font-size:clamp(18px,2.3vw,28px);letter-spacing:-1px;display:flex;align-items:baseline;flex-wrap:wrap;gap:8px}
+.copy-performance-card .copy-position-values strong small{font-size:10px;letter-spacing:0;font-weight:500}
+.copy-performance-card .positive{color:#00894e}
+.copy-performance-card .negative{color:#b34b37}
+.copy-performance-card .neutral{color:#73826b}
+.copy-equity{background:#111912;color:#f3f6ef;border:1px solid #263627;border-radius:5px;padding:24px;position:relative;overflow:hidden}
+.copy-equity:before{content:'';position:absolute;width:300px;height:300px;top:-190px;right:-80px;border:1px solid #a0ca9120;border-radius:50%;pointer-events:none}
+.copy-equity-toolbar{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;position:relative}
+.copy-equity-toolbar>div>span{font-size:8px;letter-spacing:1.3px;color:#91a28b}
+.copy-equity-toolbar h4{font-size:20px;font-weight:500;letter-spacing:-.7px;margin:8px 0 0}
+.copy-equity-verified{display:inline-flex;align-items:center;gap:6px;font-size:7px;letter-spacing:.7px;white-space:nowrap;color:#9ab491;border:1px solid #334730;padding:7px 8px;border-radius:3px}
+.copy-equity-verified svg{width:10px;height:10px}
+.copy-equity-readout{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin:28px 0 8px;min-height:82px}
+.copy-equity-readout>div:first-child{min-width:0}
+.copy-equity-readout [data-copy-point-label]{display:block;font-size:10px;line-height:1.6;color:#a0b097;overflow-wrap:anywhere;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.copy-equity-readout strong{display:block;font-size:32px;font-weight:550;letter-spacing:-1.2px;margin-top:4px;line-height:1.2;overflow-wrap:anywhere}
+.copy-equity-readout-detail{text-align:right;flex-shrink:0}
+.copy-equity-readout-detail>span{display:block;font-size:11px;line-height:1.6}
+.copy-equity-readout-detail time{display:block;font-size:9px;color:#85967b;margin-top:5px}
+.copy-equity .positive{color:#00ed8b}
+.copy-equity .negative{color:#f09b83}
+.copy-equity .neutral{color:#a7b49d}
+.copy-equity-chart{height:235px;position:relative;margin-top:14px;isolation:isolate}
+.copy-equity-chart>svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.copy-equity-grid{stroke:#a2bd8b1c;stroke-width:1;vector-effect:non-scaling-stroke}
+.copy-equity-axis{fill:#86997b;font-size:9px;font-family:var(--body)}
+.copy-equity-line{fill:none;stroke:#00ed8b;stroke-width:2.5;stroke-linejoin:round;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.copy-equity-baseline{stroke:#a6b89a;stroke-width:1;stroke-dasharray:4 5;opacity:.65;vector-effect:non-scaling-stroke}
+.copy-equity-dot{fill:#00ed8b;stroke:#111912;stroke-width:1.5;vector-effect:non-scaling-stroke}
+.copy-equity-dot.lost{fill:#ef9b84}
+.copy-equity-point{position:absolute;display:grid;place-items:center;width:28px;height:28px;padding:0;transform:translate(-50%,-50%);border-radius:50%;z-index:1;cursor:pointer;outline:none;background:transparent;touch-action:manipulation}
+.copy-equity-point>span{display:block;width:7px;height:7px;border-radius:50%;background:#00ed8b;border:1.5px solid #111912;transition:box-shadow .16s,transform .16s}
+.copy-equity-point.lost>span{background:#ef9b84}
+.copy-equity-point[aria-pressed="true"]{z-index:2}
+.copy-equity-point[aria-pressed="true"]>span,.copy-equity-point:hover>span{box-shadow:0 0 0 5px #00ed8b26,0 0 0 1px #00ed8b;transform:scale(1.15)}
+.copy-equity-point.lost[aria-pressed="true"]>span,.copy-equity-point.lost:hover>span{box-shadow:0 0 0 5px #ef9b8426,0 0 0 1px #ef9b84}
+.copy-equity-point:focus-visible{outline:2px solid #f3f6ef;outline-offset:2px}
+.copy-equity-timeline{display:flex;justify-content:space-between;gap:15px;padding-left:9.16%;font-size:7px;letter-spacing:.5px;color:#91a185;line-height:1.7;margin-top:0}
+.copy-equity-timeline>span:last-child{text-align:right}
+.copy-equity-legend{display:flex;align-items:center;flex-wrap:wrap;gap:12px 24px;margin:23px 0 0;border-top:1px solid #a2bd8b20;padding-top:18px}
+.copy-equity-legend>span{display:inline-flex;align-items:center;gap:7px;font-size:8px;line-height:1.6;color:#adbaa4}
+.copy-equity-legend i{width:17px;height:2px;display:inline-block;background:#00ed8b}
+.copy-equity-legend>span+span i{height:0;background:transparent;border-top:1px dashed #a6b89a}
+.copy-equity-note{font-size:9px;line-height:1.8;color:#82967a;margin:13px 0 0}
+.copy-master-history{margin-top:28px}
+.copy-master-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:15px;margin-bottom:16px}
+.copy-master-heading .section-kicker{font-size:7px;letter-spacing:.9px;color:#8a987b}
+.copy-master-heading h4{font-size:22px;font-weight:550;letter-spacing:-.8px;margin:7px 0 0}
+.copy-master-heading h4>span{color:#00ae64}
+.copy-master-heading>span{font-size:9px;color:#7e8d70;line-height:1.7;text-align:right}
+.copy-master-games{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
+.copy-master-games>li{display:grid;grid-template-columns:minmax(0,1fr) auto minmax(125px,auto);align-items:center;gap:18px;padding:17px 0;border-bottom:1px solid var(--line)}
+.copy-game-teams{min-width:0}
+.copy-game-teams>strong{font-size:12px;letter-spacing:-.2px;line-height:1.6;font-weight:550;display:block;overflow-wrap:anywhere}
+.copy-game-teams>strong>span{color:#8e9c80;font-size:9px;font-weight:400;margin:0 3px}
+.copy-game-teams>small{display:block;font-size:8px;color:#8a987e;margin-top:6px;line-height:1.6}
+.copy-game-status{display:inline-flex;align-items:center;gap:6px;font-size:9px;line-height:1.4;border-radius:3px;padding:6px 8px;background:#e7ece1;color:#6e8061}
+.copy-game-status:before{content:'';height:4px;width:4px;flex-shrink:0;border-radius:50%;background:currentColor}
+.copy-game-status.won{color:#007e49;background:#e1f0e3}
+.copy-game-status.lost{color:#ae503c;background:#f4e7df}
+.copy-game-status.pending{color:#957330;background:#f3eddc}
+.copy-game-change{text-align:right;min-width:0}
+.copy-game-change strong{font-size:12px;font-weight:600;line-height:1.6;overflow-wrap:anywhere}
+.copy-game-change small{display:block;font-size:8px;font-weight:400;margin-top:4px;color:#8c9a80;line-height:1.6}
+.copy-master-empty{padding:23px 20px;background:#edf2e7;border:1px dashed #d4dfc9;border-radius:3px;color:#7d8e6f;font-size:10px;line-height:1.8}
+.copy-performance-card .copy-position-actions{padding-top:1px;max-width:500px;margin-top:18px}
+.copy-performance-card .copy-position-actions .button{font-size:11px;padding:12px}
+@media(max-width:850px){
+  .copy-performance-card{padding:23px}
+  .copy-performance-card .copy-position-values strong{font-size:22px}
+  .copy-performance-card .copy-position-values>div+div{padding-left:18px}
+  .copy-equity{padding:20px}
+  .copy-equity-chart{height:210px}
+}
+@media(max-width:600px){
+  .copy-performance-card{padding:19px}
+  .copy-performance-card .copy-position-top h3{font-size:20px}
+  .copy-performance-card .copy-position-top .section-kicker{font-size:7px}
+  .copy-performance-card .copy-status{font-size:7px;padding:7px}
+  .copy-performance-card .copy-position-values{gap:12px;padding-block:17px;margin-bottom:20px;grid-template-columns:1fr 1fr}
+  .copy-performance-card .copy-position-values>div+div{padding-left:12px}
+  .copy-performance-card .copy-position-values>div:last-child{grid-column:1/-1;border-left:0;border-top:1px solid var(--line);padding:13px 0 0}
+  .copy-performance-card .copy-position-values span{font-size:8px;letter-spacing:.3px}
+  .copy-performance-card .copy-position-values strong{font-size:21px;letter-spacing:-.7px}
+  .copy-performance-card .copy-position-values>div:last-child strong{font-size:19px}
+  .copy-equity{padding:17px 14px 16px}
+  .copy-equity-toolbar{gap:12px}
+  .copy-equity-toolbar>div>span{font-size:7px;letter-spacing:.9px}
+  .copy-equity-toolbar h4{font-size:17px;letter-spacing:-.5px;line-height:1.3}
+  .copy-equity-verified{font-size:0;padding:7px;flex-shrink:0}
+  .copy-equity-verified svg{height:12px;width:12px}
+  .copy-equity-readout{margin-top:23px;align-items:flex-start;flex-direction:column;gap:9px;min-height:104px}
+  .copy-equity-readout [data-copy-point-label]{font-size:9px}
+  .copy-equity-readout strong{font-size:29px;letter-spacing:-1px}
+  .copy-equity-readout-detail{text-align:left;display:flex;flex-wrap:wrap;align-items:baseline;gap:5px 12px}
+  .copy-equity-readout-detail>span{font-size:10px}
+  .copy-equity-readout-detail time{font-size:8px;margin:0}
+  .copy-equity-chart{height:170px;margin-top:7px}
+  .copy-equity-axis{display:none}
+  .copy-equity-timeline{font-size:6px;letter-spacing:.2px;gap:9px;padding-left:9.16%;line-height:1.7}
+  .copy-equity-legend{margin-top:19px;gap:8px 15px;padding-top:15px}
+  .copy-equity-legend>span{font-size:7px;gap:5px}
+  .copy-equity-legend i{width:12px}
+  .copy-equity-note{font-size:8px;line-height:1.8;margin-top:11px}
+  .copy-master-history{margin-top:24px}
+  .copy-master-heading{gap:9px}
+  .copy-master-heading .section-kicker{font-size:6px;letter-spacing:.6px}
+  .copy-master-heading h4{font-size:20px}
+  .copy-master-heading>span{font-size:8px}
+  .copy-master-games>li{grid-template-columns:minmax(0,1fr) auto;gap:8px 10px;padding:15px 0}
+  .copy-game-teams{grid-column:1/-1}
+  .copy-game-teams>strong{font-size:11px}
+  .copy-game-teams>small{font-size:8px;margin-top:4px}
+  .copy-game-status{font-size:8px;justify-self:start;padding:5px 7px}
+  .copy-game-change{display:flex;align-items:baseline;justify-content:flex-end;flex-wrap:wrap;gap:4px 7px}
+  .copy-game-change strong{font-size:11px}
+  .copy-game-change small{font-size:7px;margin:0}
+  .copy-master-empty{padding:18px 15px;font-size:9px}
+  .copy-performance-card .copy-position-actions .button{font-size:10px;padding:12px 9px}
+}
+@media(prefers-reduced-motion:reduce){.copy-equity-point>span{transition:none}}
+@media(max-width:420px){
+  .copy-performance-card .copy-position-values{grid-template-columns:minmax(0,1fr);gap:13px}
+  .copy-performance-card .copy-position-values>div+div{border-left:0;border-top:1px solid var(--line);padding:13px 0 0}
+  .copy-performance-card .copy-position-values>div:last-child{grid-column:auto}
+  .copy-performance-card .copy-position-values strong{white-space:normal;overflow-wrap:anywhere;font-size:22px}
+  .copy-performance-card .copy-position-values>div:last-child strong{font-size:21px}
+}

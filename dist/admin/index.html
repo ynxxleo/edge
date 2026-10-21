@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111310">
+  <meta name="description" content="Your game. Your edge. Explore sports and games, build a bet slip and manage your demo wallet.">
+  <title>EDGE — Your game. Your edge.</title>
+  <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/assets/app.css">
+  <link rel="stylesheet" href="/assets/admin.css">
+  <link rel="stylesheet" href="/assets/server.css">
+  <link rel="stylesheet" href="/assets/motion.css">
+  <link rel="stylesheet" href="/assets/kyc.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <link rel="stylesheet" href="/assets/promo.css">
+  <link rel="stylesheet" href="/assets/manual-methods.css">
+  <script src="/assets/motion.js" defer></script>
+  <script src="/assets/app.js" defer></script>
+  <script src="/assets/server-app.js" defer></script>
+  <script src="/assets/admin.js" defer></script>
+  <script src="/assets/kyc.js" defer></script>
+  <script src="/assets/support.js" defer></script>
+  <script src="/assets/promo.js" defer></script>
+  <script src="/assets/manual-methods.js" defer></script>
+</head>
+<body data-runtime="static" data-edge-preload="app">
+  <div id="edge-page-loader" class="edge-page-loader" role="status" aria-live="polite" aria-hidden="true" hidden>
+    <div class="edge-loader-mark" aria-hidden="true">EDGE<span>✳</span></div>
+    <span class="edge-loader-caption">Loading your edge</span>
+    <div class="edge-loader-track" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
+  <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 19 19 5M5 5h14v14"/></symbol>
+    <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+    <symbol id="i-wallet" viewBox="0 0 24 24"><path d="M20 8V5H5a2 2 0 0 0 0 4h16v11H5a2 2 0 0 1-2-2V7m18 5h-5v5h5"/><path d="M17.5 14.5h.1"/></symbol>
+    <symbol id="i-football" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="m12 7 5 3-2 5H9l-2-5 5-3Zm0-4v4m9 5-4-2m.5 9L15 15m-8.5 4L9 15M3 12l4-2"/></symbol>
+    <symbol id="i-basketball" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3v18M5.5 5.5c7 3 7 10 0 13m13-13c-7 3-7 10 0 13"/></symbol>
+    <symbol id="i-tennis" viewBox="0 0 24 24"><ellipse cx="14" cy="9" rx="6" ry="7" transform="rotate(38 14 9)"/><path d="m10 14-7 8m4-4-3-2m8-13 7 9M9 6l7 9m-6-3 8-8m-5 11 8-8"/></symbol>
+    <symbol id="i-game" viewBox="0 0 24 24"><path d="M7 6h10c3 0 4 4 4 9 0 4-3 4-6 0H9c-3 4-6 4-6 0 0-5 1-9 4-9Z"/><path d="M8 9v6m-3-3h6m5-2h.1m2 3h.1"/></symbol>
+    <symbol id="i-flame" viewBox="0 0 24 24"><path d="M12 3c1 6 7 6 7 12a7 7 0 0 1-14 0c0-3 2-6 4-8 0 4 2 4 3 5 2-3 1-5 0-9Z"/></symbol>
+    <symbol id="i-star" viewBox="0 0 24 24"><path d="m12 3 3 6 6 1-4.5 4.5 1 6.5-5.5-3-5.5 3 1-6.5L3 10l6-1 3-6Z"/></symbol>
+    <symbol id="i-search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></symbol>
+    <symbol id="i-bell" viewBox="0 0 24 24"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 7-3 9h18c0-2-3-2-3-9ZM10 21h4"/></symbol>
+    <symbol id="i-close" viewBox="0 0 24 24"><path d="m6 6 12 12M6 18 18 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+    <symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10" width="14" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3m-4 5v2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24"><path d="M7 3h10v6a5 5 0 0 1-10 0V3Zm0 2H3v3c0 3 2 4 5 4m9-7h4v3c0 3-2 4-5 4m-4 2v7m-5 0h10"/></symbol>
+    <symbol id="i-cricket" viewBox="0 0 24 24"><path d="m15 3 6 6-9 9-6-6 9-9ZM8 16l-5 5m13-17 4 4"/><circle cx="5" cy="5" r="2"/></symbol>
+    <symbol id="i-boxing" viewBox="0 0 24 24"><path d="M7 19h10v3H7zm0 0-4-8V8a2 2 0 0 1 4 0V4a2 2 0 0 1 4 0 2 2 0 0 1 4 0v1a2 2 0 0 1 4 0v7l-2 7"/></symbol>
+  </defs></svg>
+
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="EDGE home">EDGE<span class="brand-asterisk">✳</span><sup>®</sup></a>
+    <nav class="main-nav" aria-label="Main navigation">
+      <button class="nav-link active" data-page="sports">Sports</button>
+      <button class="nav-link" data-page="live">Live <span class="nav-dot"></span></button>
+      <button class="nav-link" data-page="games">Games</button>
+      <button class="nav-link" data-page="copy">Copy Staking</button>
+      <button class="nav-link" data-page="bets">My bets <span class="nav-count" id="bets-count">2</span></button>
+      <button class="nav-link" data-page="admin" id="admin-nav">Admin</button>
+    </nav>
+    <div class="header-actions">
+      <button class="header-wallet" data-page="wallet"><span class="tiny-label">YOUR WALLET</span><strong data-balance>$124,500.00</strong><svg><use href="#i-chevron"/></svg></button>
+      <button class="button green header-deposit" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit</button>
+      <button class="icon-button notification-button" id="notifications-button" aria-label="Notifications"><svg><use href="#i-bell"/></svg><i></i></button>
+      <button class="avatar" id="profile-button" aria-label="Open account menu">JA</button>
+    </div>
+    <div class="popover" id="header-popover" hidden></div>
+  </header>
+
+  <main class="main-shell" id="app-shell" aria-busy="false">
+    <div class="page-topline"><span><span class="status-dot"></span> THE HOME OF YOUR NEXT MOVE</span><span class="topline-right">PLAY SMART. STAY IN CONTROL. <span class="age-badge">18+</span></span></div>
+
+    <div id="sports-page" class="page-panel">
+      <section class="hero-grid" aria-label="Welcome to EDGE">
+        <div class="hero">
+          <img class="hero-image nfl-hero" src="/assets/game-nfl.jpg" alt="NFL quarterback Tom Brady in a New England Patriots helmet preparing to throw a football">
+          <div class="hero-shade"></div>
+          <div class="hero-content">
+            <span class="eyebrow hero-eyebrow"><span class="green-dot"></span> FOR THE LOVE OF THE GAME</span>
+            <h1>YOUR GAME.<br>YOUR <span>EDGE.</span><span class="headline-star">✳</span></h1>
+            <p>Big moments. Bold moves.<br>A whole new way to get in the game.</p>
+            <button class="button white hero-cta" id="explore-button">Explore sports <svg><use href="#i-arrow"/></svg></button>
+          </div>
+          <div class="hero-index"><span>01 / 03</span><span class="hero-progress"><i></i></span><span>BUILT FOR THE GAME ↗</span></div>
+          <span class="hero-watermark">E.</span>
+          <span class="nfl-photo-credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Tom_Brady.jpg" target="_blank" rel="noopener noreferrer">Keith Allison</a> · <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 2.0</a></span>
+        </div>
+        <aside class="wallet-card" aria-label="Your wallet overview">
+          <div class="wallet-card-top"><span class="eyebrow">YOUR WALLET</span><span class="wallet-symbol"><svg><use href="#i-wallet"/></svg></span></div>
+          <div class="balance-caption">Available balance <span class="demo-badge">DEMO</span></div>
+          <div class="wallet-balance" data-balance>$124,500<span>.00</span></div>
+          <div class="wallet-profit"><span>↗</span> <strong data-profit>$24,500.00</strong><span>Total profit</span></div>
+          <div class="wallet-actions"><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit</button><button class="button outline" data-wallet="withdraw">Withdraw <svg><use href="#i-arrow"/></svg></button></div>
+          <div class="wallet-divider"></div>
+          <div class="wallet-stats"><div><span>Active stakes</span><strong data-stakes>$8,500.00</strong></div><div><span>Potential returns</span><strong class="green-text" data-returns>$21,675.00</strong></div></div>
+          <button class="wallet-history-link" data-page="wallet">View wallet history <svg><use href="#i-arrow"/></svg></button>
+          <div class="wallet-security"><svg><use href="#i-lock"/></svg> YOUR WALLET. YOUR CONTROL.</div>
+        </aside>
+      </section>
+
+      <div class="activity-strip"><span><i></i> <strong>THE GAME NEVER STOPS</strong></span><span>124 <small>live events</small></span><span>32 <small>sports to explore</small></span><span class="strip-end">FIND YOUR NEXT PLAY <svg><use href="#i-arrow"/></svg></span></div>
+
+      <section class="sports-section" id="markets-section">
+        <div class="sports-tabs" role="tablist" aria-label="Filter by sport">
+          <button class="sport-tab active" role="tab" aria-selected="true" data-sport="all"><svg><use href="#i-flame"/></svg> For you <span>36</span></button>
+          <button class="sport-tab" role="tab" aria-selected="false" data-sport="football"><svg><use href="#i-football"/></svg> Football <span>18</span></button>
+          <button class="sport-tab" role="tab" aria-selected="false" data-sport="basketball"><svg><use href="#i-basketball"/></svg> Basketball <span>8</span></button>
+          <button class="sport-tab" role="tab" aria-selected="false" data-sport="tennis"><svg><use href="#i-tennis"/></svg> Tennis <span>6</span></button>
+          <button class="sport-tab" role="tab" aria-selected="false" data-sport="cricket"><svg><use href="#i-cricket"/></svg> Cricket <span>2</span></button>
+          <button class="sport-tab" role="tab" aria-selected="false" data-sport="boxing"><svg><use href="#i-boxing"/></svg> Boxing <span>2</span></button>
+          <button class="sport-tab esports-tab" role="tab" aria-selected="false" data-sport="esports"><svg><use href="#i-game"/></svg> Esports</button>
+        </div>
+        <div class="markets-layout">
+          <div class="markets-main">
+            <div class="section-heading"><div><span class="section-kicker">IN THE MOMENT / 001</span><h2 id="market-title">Live & upcoming<span class="green-text">.</span></h2></div><div class="market-tools"><button class="live-filter" id="live-filter"><span class="status-dot"></span> Live only <span class="toggle"></span></button><button class="icon-button bordered" id="search-toggle" aria-label="Search matches"><svg><use href="#i-search"/></svg></button></div></div>
+            <div class="match-search" id="match-search" hidden><svg><use href="#i-search"/></svg><input id="search-input" type="search" placeholder="Search teams or competitions…" aria-label="Search teams or competitions"></div>
+            <div class="league-tabs" role="tablist" aria-label="Filter competitions"><button class="active" data-league="all">All events</button><button data-league="Premier League">Premier League</button><button data-league="Champions League">Champions League</button><button data-league="La Liga">La Liga</button><button data-league="NBA">NBA</button></div>
+            <div id="match-list" class="match-list"></div>
+            <button class="view-all-button" id="view-all-events">View all events <span id="event-total">(18)</span> <svg><use href="#i-arrow"/></svg></button>
+            <div class="games-preview-header section-heading"><div><span class="section-kicker">A DIFFERENT WAY TO PLAY / 002</span><h2>Switch up the game<span class="green-text">.</span></h2></div><button class="text-button" data-page="games">All games <svg><use href="#i-arrow"/></svg></button></div>
+            <div class="game-grid" id="home-games"></div>
+          </div>
+          <aside class="betslip" id="betslip"><div class="betslip-title"><h3>BET SLIP <span id="slip-count">0</span></h3><svg><use href="#i-arrow"/></svg></div><div class="slip-tabs"><button class="active" data-bet-type="single">Single</button><button data-bet-type="multiple">Multiple</button></div><div id="slip-content"></div><div class="slip-note"><svg><use href="#i-lock"/></svg> Secure stakes. Transparent returns.</div></aside>
+        </div>
+      </section>
+    </div>
+
+    <section id="games-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">FIND YOUR NEXT FAVORITE / 002</span><h1>MORE WAYS<br>TO <span class="green-text">PLAY.</span></h1><p>Quick rounds. New challenges. Every game is a new move.</p></div><div class="games-info"><svg><use href="#i-game"/></svg><span>Free play arcade — explore game previews with no wallet deductions.</span></div><div class="game-grid full-game-grid" id="all-games"></div></section>
+
+    <section id="copy-page" class="page-panel" hidden aria-label="Copy staking">
+      <div class="copy-hero-grid">
+        <div class="copy-hero">
+          <span class="eyebrow"><span class="green-dot"></span> YOUR NEXT MOVE, TOGETHER / 003</span>
+          <h1>A SHARED<br><span>EDGE.</span><span class="copy-hero-star" aria-hidden="true">✳</span></h1>
+          <p>Follow a strategy. Fund your allocation.<br>Copy its future stakes.</p>
+          <button class="button green" id="copy-explore">Explore strategies <svg><use href="#i-arrow"/></svg></button>
+          <div class="copy-hero-bottom"><span>INDEPENDENT STRATEGIES. YOUR CONTROL.</span><span>01 — COPY / STAKE</span></div>
+          <span class="copy-hero-orbit" aria-hidden="true"></span>
+        </div>
+        <aside class="copy-overview" aria-label="Your copy staking overview">
+          <div class="copy-overview-title"><span class="eyebrow">YOUR COPY CAPITAL</span><span class="demo-badge">DEMO</span></div>
+          <span class="copy-capital-label">Copy position value</span>
+          <strong class="copy-capital" id="copy-total-allocated">$0.00</strong>
+          <div class="copy-overview-metrics"><div><span>Copy profit</span><strong id="copy-total-profit">$0.00</strong></div><div><span>Active strategies</span><strong id="copy-active-count">0</strong></div></div>
+          <div class="copy-available"><span>Available wallet balance</span><strong data-balance>$124,500.00</strong></div>
+          <button class="copy-wallet-link" data-wallet="deposit">Add funds to wallet <svg><use href="#i-plus"/></svg></button>
+          <p class="copy-overview-note">Choose a strategy below to deposit into copy staking.</p>
+        </aside>
+      </div>
+      <div class="copy-demo-note"><span class="demo-badge">DEMO EXPERIENCE</span><p>Strategies and performance are illustrative. Returns can vary and stakes can be lost. No real money is transferred.</p></div>
+      <div class="copy-how"><span class="copy-how-heading">HOW IT WORKS <svg><use href="#i-arrow"/></svg></span><div><span>01</span><p>Find your strategy</p></div><div><span>02</span><p>Deposit your allocation</p></div><div><span>03</span><p>Track & manage your funds</p></div></div>
+      <section id="copy-strategies" class="copy-strategies" aria-labelledby="copy-strategies-title">
+        <div class="section-heading copy-section-heading"><div><span class="section-kicker">DIFFERENT APPROACHES. ONE GAME.</span><h2 id="copy-strategies-title">Find your shared edge<span class="green-text">.</span></h2></div><label class="copy-filter-label" for="copy-risk-filter"><span>Strategy style</span><select id="copy-risk-filter"><option value="all">All strategies</option><option value="measured">Measured</option><option value="balanced">Balanced</option><option value="dynamic">Dynamic</option></select></label></div>
+        <div id="copy-strategy-list" class="copy-strategy-grid"></div>
+        <p class="copy-performance-note">Sample performance describes a fictional past period. It does not predict future results.</p>
+      </section>
+      <section class="copy-positions" aria-labelledby="copy-positions-title"><div class="section-heading copy-section-heading"><div><span class="section-kicker">YOUR ALLOCATION. YOUR CALL.</span><h2 id="copy-positions-title">Your copy positions<span class="green-text">.</span></h2></div><div class="copy-position-filters" role="group" aria-label="Filter copy positions"><button class="active" data-copy-position-filter="active">Active</button><button data-copy-position-filter="all">All positions</button></div></div><div id="copy-position-list" class="copy-position-list"></div></section>
+    </section>
+
+    <section id="wallet-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">YOUR MONEY. YOUR MOVE. / 004</span><h1>THE <span class="green-text">WALLET.</span></h1><p>Keep track of every stake, return and transaction.</p></div><div class="wallet-overview"><div class="wallet-total"><span class="eyebrow">AVAILABLE DEMO BALANCE</span><strong data-balance>$124,500.00</strong><div><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit funds</button><button class="button outline" data-wallet="withdraw">Withdraw funds <svg><use href="#i-arrow"/></svg></button></div></div><div class="wallet-overview-stat"><svg><use href="#i-trophy"/></svg><span>Total profit</span><strong data-profit>$24,500.00</strong></div><div class="wallet-overview-stat"><svg><use href="#i-clock"/></svg><span>Active stakes</span><strong data-stakes>$8,500.00</strong></div></div><div class="section-heading transaction-heading"><h2>Transaction history<span class="green-text">.</span></h2><select id="transaction-filter" aria-label="Filter transactions"><option value="all">All transactions</option><option value="deposit">Deposits</option><option value="promo_credit">Promotional credits</option><option value="withdrawal">Withdrawals</option><option value="stake">Stakes</option><option value="return">Returns</option><option value="copy">Copy staking</option></select></div><div class="transaction-table-wrap"><table class="transaction-table"><thead><tr><th>TRANSACTION</th><th>DATE</th><th>AMOUNT</th><th>STATUS</th></tr></thead><tbody id="transaction-body"></tbody></table></div><p class="demo-explanation">Demo wallet • Transactions are saved in this browser. Payment providers and bank transfers are not connected.</p></section>
+
+    <section id="bets-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">EVERY MOVE, IN ONE PLACE / 005</span><h1>YOUR <span class="green-text">PLAYS.</span></h1><p>Follow your active stakes and revisit your results.</p></div><div class="bet-history-tabs"><button class="active" data-bet-filter="active">Active <span id="active-bet-count">2</span></button><button data-bet-filter="settled">Settled</button><button data-bet-filter="all">All bets</button></div><div id="bet-history" class="bet-history"></div></section>
+
+    <section id="admin-page" class="page-panel" hidden aria-labelledby="admin-page-title">
+  <header class="admin-hero">
+    <div><span class="eyebrow"><span class="green-dot"></span> EDGE / OPERATIONS DESK</span><h1 id="admin-page-title">IN <span>CONTROL.</span><span class="admin-hero-star" aria-hidden="true">✳</span></h1><p>Your events. Your markets. Every result, accounted for.</p></div>
+    <div class="admin-hero-meta"><span class="admin-mode-badge" id="admin-mode-badge">ADMIN ACCESS</span><span>GAMES / ODDS / RESULTS</span><span>THE ENGINE BEHIND THE GAME ↗</span></div>
+  </header>
+  <div class="admin-access" id="admin-access"><span class="admin-access-icon"><svg><use href="#i-lock"/></svg></span><h2>Operations access</h2><p id="admin-access-message">Sign in with an administrator account to manage games, odds and settlements.</p><button class="button green" data-admin-signin>Sign in <svg><use href="#i-arrow"/></svg></button></div>
+  <div id="admin-workspace" hidden>
+    <div class="admin-notice" id="admin-preview-notice" hidden><span class="demo-badge">READ-ONLY PREVIEW</span><p>Explore a fictional operations desk. Connect to the Laravel app and sign in as an administrator to publish games, review payments and settle stakes.</p></div>
+    <div class="admin-feedback" id="admin-feedback" role="status" aria-live="polite" hidden></div>
+    <div class="admin-summary" id="admin-summary" aria-label="Operations summary"></div>
+    <div class="admin-toolbar"><div class="admin-tabs" role="tablist" aria-label="Administration sections"><button class="active" role="tab" aria-selected="true" aria-controls="admin-events-tab" id="admin-tab-events" data-admin-tab="events">Games & results <span id="admin-games-count">0</span></button><button role="tab" aria-selected="false" aria-controls="admin-payments-tab" id="admin-tab-payments" data-admin-tab="payments">Payment requests <span id="admin-requests-count">0</span></button><button role="tab" aria-selected="false" aria-controls="admin-copy-tab" id="admin-tab-copy" data-admin-tab="copy">Copy picks <span id="admin-picks-count">0</span></button><button role="tab" aria-selected="false" aria-controls="admin-settings-tab" id="admin-tab-settings" data-admin-tab="settings">Payment settings</button></div><button class="admin-refresh" id="admin-refresh" aria-label="Refresh admin data"><svg><use href="#i-clock"/></svg><span>Refresh desk</span></button></div>
+    <div class="admin-tab-panel" id="admin-events-tab" role="tabpanel" aria-labelledby="admin-tab-events">
+      <div class="admin-content-heading"><div><span class="section-kicker">BUILD THE MARKET / 01</span><h2>The game board<span>.</span></h2><p>Set the schedule, manage odds and publish final scores.</p></div><button class="button green" data-admin-new-event>New game <svg><use href="#i-plus"/></svg></button></div>
+      <div class="admin-board-layout"><div class="admin-board-main"><div class="admin-filters"><label class="admin-search"><svg><use href="#i-search"/></svg><input type="search" id="admin-event-search" placeholder="Search teams or leagues" aria-label="Search admin games"></label><select id="admin-event-status" aria-label="Filter games by status"><option value="all">Every status</option><option value="draft">Draft</option><option value="open">Open</option><option value="live">Live</option><option value="suspended">Suspended</option><option value="finished">Finished</option><option value="void">Voided</option></select></div><div id="admin-event-list" class="admin-event-list"></div></div><aside class="admin-rail"><div class="admin-process-card"><span class="section-kicker">FROM KICKOFF TO PAYOUT</span><h3>ONE RESULT.<br>EVERY STAKE<span>.</span></h3><ol><li><span>01</span><div><strong>Open the market</strong><p>Create a game and publish its odds.</p></div></li><li><span>02</span><div><strong>Close the action</strong><p>Suspend markets when staking ends.</p></div></li><li><span>03</span><div><strong>Make it final</strong><p>Confirm the final score. Eligible returns settle into wallets.</p></div></li></ol><div class="admin-rail-note"><svg><use href="#i-lock"/></svg><p>Stakes keep the odds accepted at placement. Later odds updates apply to new stakes.</p></div></div><div class="admin-audit-card"><div><span class="section-kicker">A RECORD OF EVERY MOVE</span><span class="status-dot"></span></div><h3>Recent activity</h3><div id="admin-audit-list"></div></div></aside></div>
+    </div>
+    <div class="admin-tab-panel" id="admin-payments-tab" role="tabpanel" aria-labelledby="admin-tab-payments" hidden><div class="admin-content-heading"><div><span class="section-kicker">MONEY IN. MONEY OUT. / 02</span><h2>Payment desk<span>.</span></h2><p>Review each request against the actual payment before approving.</p></div><label class="admin-inline-filter">Show<select id="admin-request-status"><option value="pending">Pending requests</option><option value="all">All requests</option><option value="approved">Approved</option><option value="rejected">Rejected</option></select></label></div><div class="admin-payment-note"><svg><use href="#i-wallet"/></svg><p>Review manual deposits and withdrawals against your payment records. Stripe deposits are credited from verified payment notifications. Withdrawal approval records a completed bank transfer; it does not send one.</p></div><div id="admin-request-list" class="admin-request-list"></div></div>
+    <div class="admin-tab-panel" id="admin-copy-tab" role="tabpanel" aria-labelledby="admin-tab-copy" hidden><div class="admin-content-heading"><div><span class="section-kicker">A SHARED EDGE / 03</span><h2>Lead the next play<span>.</span></h2><p>Publish a pick to copy it into eligible funded positions.</p></div><button class="button green" data-admin-new-pick>Publish a pick <svg><use href="#i-plus"/></svg></button></div><div class="admin-copy-explainer"><span class="admin-copy-symbol" aria-hidden="true">✳</span><div><h3>One pick. A shared position.</h3><p>The strategy’s allocation rate determines each copied stake. Paused positions and positions without enough available funds are skipped. Copy stakes settle from the same final game score.</p></div><span class="admin-copy-arrow" aria-hidden="true">↗</span></div><div id="admin-pick-list" class="admin-pick-list"></div></div>
+    <div class="admin-tab-panel" id="admin-settings-tab" role="tabpanel" aria-labelledby="admin-tab-settings" hidden><div class="admin-content-heading"><div><span class="section-kicker">YOUR PAYMENT CHANNELS / 04</span><h2>Set the flow<span>.</span></h2><p>Manage Stripe credentials and configure manual payment methods below.</p></div><button class="button green" data-admin-edit-settings disabled>Edit settings <svg><use href="#i-arrow"/></svg></button></div><div id="admin-payment-settings" aria-live="polite"></div><div class="admin-settings-policy"><svg aria-hidden="true"><use href="#i-lock"/></svg><p>Stripe prohibits gambling, including sports betting. Keep card payments disabled for staking funds. <a href="https://stripe.com/legal/restricted-businesses" target="_blank" rel="noopener noreferrer">View Stripe’s restricted businesses ↗</a></p></div></div>
+    <div class="admin-desk-footer"><span><span class="status-dot"></span> EVERY ACTION HAS A RECORD</span><span id="admin-updated-at">OPERATIONS DESK / EDGE</span></div>
+  </div>
+  <div class="admin-modal-backdrop" id="admin-modal" hidden><section class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="admin-modal-title"><button class="icon-button admin-modal-close" data-admin-close aria-label="Close admin dialog"><svg><use href="#i-close"/></svg></button><div id="admin-modal-content"></div></section></div>
+</section>
+
+    <section id="verification-page" class="page-panel" hidden aria-labelledby="kyc-page-title">
+  <header class="kyc-hero">
+    <div><span class="eyebrow"><span class="green-dot"></span> YOUR ACCOUNT / VERIFICATION</span><h1 id="kyc-page-title">MAKE IT<br><span>OFFICIAL.</span></h1><p>A quick identity check. A more secure account.<br>Get verified before your first withdrawal.</p></div>
+    <div class="kyc-hero-seal" aria-hidden="true"><svg><use href="#i-check"/></svg><span>VERIFIED<br>TO MOVE ↗</span></div>
+    <span class="kyc-hero-index">ONE ACCOUNT. YOUR IDENTITY. / 01</span>
+  </header>
+  <div class="kyc-reason-notice" id="kyc-reason-notice" hidden></div>
+  <div class="kyc-preview-notice" id="kyc-preview-notice" hidden><span class="demo-badge">READ-ONLY PREVIEW</span><p>Identity verification is available in the Laravel app. Do not upload real documents in this preview.</p></div>
+  <div class="kyc-layout">
+    <div id="kyc-customer-content" aria-live="polite"><div class="kyc-empty"><svg><use href="#i-lock"/></svg><h2>Your identity. Your control.</h2><p>Sign in to submit your identity documents for administrator review.</p><button class="button green" data-kyc-signin>Sign in <svg><use href="#i-arrow"/></svg></button></div></div>
+    <aside class="kyc-guide" aria-label="Verification guide"><span class="section-kicker">A CLEAR PATH TO VERIFIED</span><h2>THREE STEPS.<br>ONE <span>YOU.</span></h2><ol><li><span>01</span><div><h3>Your details</h3><p>Enter your legal name and the details shown on your identity document.</p></div></li><li><span>02</span><div><h3>Your documents</h3><p>Upload a clear identity document and a recent selfie. Make sure your face and document details are readable.</p></div></li><li><span>03</span><div><h3>Admin review</h3><p>Our administrator reviews your submission. Approval unlocks withdrawal requests.</p></div></li></ol><div class="kyc-private-note"><svg><use href="#i-lock"/></svg><p>Your files are private. Only you and authorised administrators can access your submission.</p></div></aside>
+  </div>
+</section>
+
+<template id="kyc-admin-template">
+  <div id="admin-kyc-tab" class="admin-tab-panel" role="tabpanel" aria-labelledby="admin-tab-kyc" hidden>
+    <div class="admin-content-heading"><div><span class="section-kicker">KNOW YOUR PLAYERS / 05</span><h2>Identity desk<span>.</span></h2><p>Review identity documents and approve eligible accounts for withdrawals.</p></div><button class="admin-small-button" id="kyc-review-refresh"><svg><use href="#i-clock"/></svg> Refresh KYC</button></div>
+    <nav class="kyc-workspace-nav" aria-label="Identity desk sections"><button type="button" data-kyc-section="reviews" aria-current="page">Review queue</button><button type="button" data-kyc-section="requirements">Requirements & users</button></nav>
+    <div id="kyc-reviews-workspace">
+    <div class="kyc-review-toolbar"><div class="kyc-review-context"><svg><use href="#i-lock"/></svg><span>Private documents / administrator access</span></div><label>Show<select id="kyc-review-status" aria-label="Filter verification requests"><option value="pending">Pending review</option><option value="approved">Approved</option><option value="rejected">Rejected</option><option value="all">All submissions</option></select></label></div>
+    <div class="kyc-message" id="kyc-admin-message" role="status" hidden></div>
+    <div id="kyc-review-list" class="kyc-review-list" aria-live="polite"></div>
+    <div class="kyc-pagination" id="kyc-review-pagination" hidden><button class="admin-small-button" data-kyc-page="previous">Previous</button><span id="kyc-review-page-label"></span><button class="admin-small-button" data-kyc-page="next">Next</button></div>
+    </div>
+    <div id="kyc-requirements-workspace" hidden>
+      <div class="kyc-message" id="kyc-requirements-message" role="status" hidden></div>
+      <div id="kyc-requirements-content" aria-live="polite"></div>
+      <section class="kyc-assignment-desk" aria-labelledby="kyc-assignment-title"><div class="kyc-builder-heading"><div><span class="section-kicker">REQUIREMENTS / INDIVIDUAL ACCOUNTS</span><h3 id="kyc-assignment-title">The right checks for each user<span>.</span></h3><p>Choose an account, then assign the layers and explanation that apply to that user.</p></div></div><form id="kyc-user-search-form" class="kyc-user-search" role="search"><label class="kyc-field"><span>Find a user by name or email</span><input id="kyc-user-search" name="search" type="search" maxlength="150" autocomplete="off" placeholder="Name or email address"></label><button type="submit" class="button outline">Search users <svg><use href="#i-arrow"/></svg></button></form><div class="kyc-message" id="kyc-users-message" role="status" hidden></div><div id="kyc-users-list" class="kyc-users-list" aria-live="polite"></div><div id="kyc-users-pagination" class="kyc-pagination" hidden><button type="button" class="admin-small-button" data-kyc-users-page="previous">Previous</button><span id="kyc-users-page-label"></span><button type="button" class="admin-small-button" data-kyc-users-page="next">Next</button></div><div id="kyc-user-assignment" aria-live="polite"></div></section>
+    </div>
+  </div>
+</template>
+
+<div class="kyc-dialog-backdrop" id="kyc-review-dialog" hidden>
+  <section class="kyc-dialog" role="dialog" aria-modal="true" aria-labelledby="kyc-review-title"><button class="icon-button kyc-dialog-close" data-kyc-close aria-label="Close identity review"><svg><use href="#i-close"/></svg></button><div id="kyc-review-content"></div></section>
+</div>
+
+    <div class="support-widget" id="support-widget">
+  <button class="support-launcher" id="support-launcher" aria-label="Open support chat" aria-controls="support-panel" aria-expanded="false"><span class="support-launcher-icon" aria-hidden="true">✳</span><span>Need a hand?</span><span class="support-launcher-arrow" aria-hidden="true">↗</span></button>
+  <section class="support-panel" id="support-panel" role="dialog" aria-labelledby="support-title" hidden>
+    <header class="support-heading"><span class="support-mark" aria-hidden="true">✳</span><div><span class="support-eyebrow">EDGE / HERE TO HELP</span><h2 id="support-title">Your support line<span>.</span></h2></div><button class="support-close" id="support-close" aria-label="Close support chat">×</button></header>
+    <div class="support-statusbar"><span class="status-dot" aria-hidden="true"></span><span id="support-status">Automated support</span><span id="support-question-count"></span></div>
+    <div class="support-chat-body" id="support-chat-body"><div id="support-guest" class="support-empty" hidden></div><div id="support-customer-thread"><button class="support-older" id="support-load-older" hidden>Load earlier messages ↑</button><div class="support-messages" id="support-messages" role="log" aria-label="Support conversation" aria-live="polite" aria-relevant="additions text"></div><div id="support-thinking" class="support-thinking" role="status" hidden><i></i><i></i><i></i><span>Preparing your answer…</span></div><div class="support-quick" id="support-quick" aria-label="Quick account questions"></div></div></div>
+    <div class="support-error" id="support-error" role="alert" hidden></div>
+    <div class="support-footer" id="support-footer"><div class="support-transfer"><span id="support-assistant-label">Built-in account assistant</span><button id="support-handover" type="button">Talk to admin ↗</button></div><form id="support-chat-form"><label class="support-sr-only" for="support-input">Your message to support</label><textarea id="support-input" name="body" rows="2" maxlength="2000" placeholder="Ask about your account…" required></textarea><button id="support-send" type="submit" aria-label="Send support message"><svg aria-hidden="true"><use href="#i-arrow"/></svg></button></form><button class="support-new button green" id="support-new" hidden>Start a new conversation ↗</button><p class="support-privacy" id="support-privacy">Account help, then a human handover. Never share passwords, card details or identity documents here.</p></div>
+  </section>
+</div>
+
+<template id="support-admin-template">
+  <div class="admin-tab-panel" id="admin-support-tab" role="tabpanel" aria-labelledby="admin-tab-support" hidden>
+    <div class="admin-content-heading"><div><span class="section-kicker">A HUMAN ON YOUR SIDE / SUPPORT</span><h2>The support line<span>.</span></h2><p>Pick up where the account assistant leaves off. Claim a conversation before replying.</p></div><button class="button outline" id="support-inbox-refresh">Refresh inbox <svg aria-hidden="true"><use href="#i-clock"/></svg></button></div>
+    <div class="support-inbox-toolbar"><label for="support-inbox-filter">Show conversations<select id="support-inbox-filter"><option value="waiting">Waiting for admin</option><option value="admin">Admin connected</option><option value="bot">Automated support</option><option value="resolved">Resolved</option><option value="all">All conversations</option></select></label><span id="support-inbox-count"></span></div>
+    <div class="support-error" id="support-admin-error" role="alert" hidden></div>
+    <div class="support-inbox"><aside class="support-inbox-rail" aria-label="Support conversations"><div id="support-inbox-list"></div><div class="support-pagination" id="support-inbox-pagination" hidden><button data-support-page="previous">← Previous</button><span id="support-inbox-page"></span><button data-support-page="next">Next →</button></div></aside><section class="support-admin-thread" id="support-admin-thread" aria-label="Selected support conversation"><div class="support-inbox-empty"><span aria-hidden="true">↗</span><h3>Make the next connection.</h3><p>Choose a conversation to read the account assistant’s messages and help the user.</p></div></section></div>
+    <p class="support-inbox-note">Support messages cannot approve verification, move funds or settle games. Use the corresponding admin desk for account changes.</p>
+  </div>
+</template>
+
+    <template id="promo-wallet-template">
+  <section class="promo-wallet-card" id="promo-wallet-card" aria-labelledby="promo-wallet-title">
+    <div class="promo-wallet-intro"><span class="section-kicker">A LITTLE EXTRA / CREDIT CODES</span><h2 id="promo-wallet-title">Got a credit code<span>?</span></h2><p>Adds to your available wallet for staking or withdrawals. The $100 withdrawal minimum, identity verification and administrator review apply.</p></div>
+    <div class="promo-wallet-action" id="promo-wallet-action"></div>
+    <div class="promo-message" id="promo-redeem-message" role="status" aria-live="polite" hidden></div>
+    <div class="promo-history" id="promo-history" hidden><div class="promo-history-heading"><h3>Your redeemed codes</h3><button class="promo-text-button" type="button" data-promo-history-refresh>Refresh history ↻</button></div><div id="promo-history-list"></div><div class="promo-pagination" id="promo-history-pagination" hidden><button type="button" data-promo-history-page="previous">← Previous</button><span id="promo-history-page"></span><button type="button" data-promo-history-page="next">Next →</button></div></div>
+  </section>
+</template>
+
+<template id="promo-admin-template">
+  <section class="admin-tab-panel" id="admin-promos-tab" role="tabpanel" aria-labelledby="admin-tab-promos" hidden>
+    <div class="admin-content-heading"><div><span class="section-kicker">A CREDIT TO THE COMMUNITY / PROMOTIONS</span><h2>Give the next edge<span>.</span></h2><p>Create a single-use credit code. Anyone holding an active code can redeem its value into their wallet.</p></div><button class="button outline" id="promo-admin-refresh" type="button">Refresh codes <svg aria-hidden="true"><use href="#i-clock"/></svg></button></div>
+    <div class="promo-admin-layout"><section class="promo-create-card" aria-labelledby="promo-create-title"><span class="section-kicker">16 CHARACTERS. ONE CREDIT.</span><h3 id="promo-create-title">Make it count<span>.</span></h3><p>Credit is available for staking and withdrawal requests after redemption. Codes are generated securely when you create them.</p><form id="promo-create-form" autocomplete="off"><label class="promo-field"><span>Credit amount (USD)</span><div class="promo-amount-input"><span aria-hidden="true">$</span><input name="amount" type="text" inputmode="decimal" placeholder="25.00" required maxlength="10" pattern="[0-9]+([.][0-9]{1,2})?" aria-describedby="promo-amount-hint"></div><small id="promo-amount-hint">$1.00–$1,000,000.00 · up to two decimal places</small></label><label class="promo-field"><span>Promotion label <small>(optional)</small></span><input name="label" maxlength="100" placeholder="For example, season launch"><small>Shown in the user’s credit history.</small></label><label class="promo-field"><span>Expiry <small>(optional, your local time)</small></span><input name="expires_at" type="datetime-local"><small>Leave blank for a code with no expiry.</small></label><label class="promo-field"><span>Your admin password</span><input name="current_password" type="password" required maxlength="128" autocomplete="current-password"><small>Confirm before creating withdrawable wallet credit.</small></label><div class="promo-message error" id="promo-create-message" role="alert" hidden></div><button class="button green" id="promo-create-submit" type="submit">Create credit code <svg aria-hidden="true"><use href="#i-plus"/></svg></button></form></section><div class="promo-admin-main"><section class="promo-issued" id="promo-issued" hidden aria-labelledby="promo-issued-title" aria-live="polite"></section><div class="promo-list-toolbar"><label class="promo-field"><span>Show codes</span><select id="promo-admin-status"><option value="all">All codes</option><option value="active">Active</option><option value="redeemed">Redeemed</option><option value="revoked">Revoked</option><option value="expired">Expired</option></select></label><span id="promo-admin-count"></span></div><div class="promo-message error" id="promo-admin-message" role="alert" hidden></div><div class="promo-admin-list" id="promo-admin-list"></div><div class="promo-pagination" id="promo-admin-pagination" hidden><button type="button" data-promo-admin-page="previous">← Previous</button><span id="promo-admin-page"></span><button type="button" data-promo-admin-page="next">Next →</button></div></div></div>
+    <p class="promo-admin-note">Created codes carry wallet value. Share the full code privately with its intended recipient. Revoking an unused code prevents redemption and does not remove a credit already redeemed.</p>
+  </section>
+</template>
+
+<div class="promo-dialog-backdrop" id="promo-revoke-dialog" hidden><section class="promo-dialog" role="dialog" aria-modal="true" aria-labelledby="promo-revoke-title"><button class="promo-close" type="button" data-promo-revoke-close aria-label="Close revoke confirmation">×</button><span class="section-kicker">STOP AN UNUSED CODE</span><h2 id="promo-revoke-title">Revoke this code<span>?</span></h2><p id="promo-revoke-description"></p><form id="promo-revoke-form" autocomplete="off"><label class="promo-field"><span>Your admin password</span><input type="password" name="current_password" autocomplete="current-password" required maxlength="128"></label><label class="promo-confirm"><input name="confirmed" type="checkbox" required><span>I understand this code will no longer be redeemable.</span></label><div class="promo-message error" id="promo-revoke-message" role="alert" hidden></div><div class="promo-dialog-actions"><button class="button outline" type="button" data-promo-revoke-close>Keep code</button><button class="button green" type="submit" id="promo-revoke-submit">Revoke code <svg aria-hidden="true"><use href="#i-close"/></svg></button></div></form></section></div>
+
+    <template id="manual-methods-template">
+  <section class="manual-methods-desk" aria-labelledby="manual-methods-title">
+    <div class="admin-content-heading"><div><span class="section-kicker">MONEY IN. MONEY OUT. / MANUAL METHODS</span><h2 id="manual-methods-title">More ways to move<span>.</span></h2><p>Add your payment image, name and instructions. Choose where each method is available.</p></div><button type="button" class="button green" id="manual-method-new">Add payment method ↗</button></div>
+    <p class="manual-catalog-note">Once you add a method, this list controls manual deposits and withdrawals. The original bank settings apply until then. Disable a method to stop new requests; pending requests retain their original details.</p>
+    <div class="manual-method-toolbar"><span id="manual-method-count"></span><button type="button" class="button outline" id="manual-method-refresh">Refresh methods ↻</button></div>
+    <p id="manual-method-message" class="form-error" role="status" hidden></p>
+    <div id="manual-method-list" class="manual-method-grid"></div>
+  </section>
+</template>
+<div id="manual-method-dialog" class="manual-method-backdrop" hidden><section class="manual-method-dialog" role="dialog" aria-modal="true" aria-labelledby="manual-method-dialog-title"><button type="button" class="icon-button manual-method-close" data-manual-close aria-label="Close payment method editor">×</button><span class="section-kicker">YOUR PAYMENT CHANNELS / MANUAL REVIEW</span><h2 id="manual-method-dialog-title">Create a method<span>.</span></h2><p class="manual-catalog-note">Describe how users should pay or receive funds. Withdrawal fields collect the recipient details your team needs for a payout.</p><form id="manual-method-form" autocomplete="off"><div class="admin-form-grid"><label class="admin-field"><span>Payment method name</span><input name="name" required maxlength="80" placeholder="For example, bank transfer or mobile money"></label><label class="admin-field"><span>Method image <small>(JPG, PNG or WebP · up to 1 MB)</small></span><input name="image" type="file" accept="image/jpeg,image/png,image/webp" required><img id="manual-method-preview" class="manual-method-preview" alt="Payment method image preview" hidden></label></div><label class="admin-field"><span>Payment details and instructions</span><textarea name="instructions" required maxlength="3000" rows="4" placeholder="Deposit destination, account details, payment network, fees, or withdrawal instructions"></textarea></label><div class="manual-method-toggles"><label><input name="enabled" type="checkbox" checked> Enabled</label><label><input name="deposit_enabled" type="checkbox" checked> Deposits</label><label><input name="withdrawal_enabled" type="checkbox"> Withdrawals</label></div><section class="manual-fields-builder" aria-labelledby="manual-fields-title"><div class="manual-fields-heading"><div><h3 id="manual-fields-title">Withdrawal details</h3><p>Users complete these fields when requesting a withdrawal. Never request passwords, PINs, card security codes or seed phrases.</p></div><button type="button" class="button outline" id="manual-field-add">Add field +</button></div><div id="manual-fields-list"></div></section><label class="admin-field"><span>Your current administrator password</span><input name="current_password" type="password" required maxlength="128" autocomplete="current-password"></label><p id="manual-method-save-error" class="form-error" role="alert" hidden></p><div class="manual-method-actions"><button type="button" class="button outline" data-manual-close>Cancel</button><button type="submit" class="button green" id="manual-method-save">Save payment method ↗</button></div></form></section></div>
+
+
+    <section class="bottom-banner"><div><span class="eyebrow">BACK YOUR KNOWLEDGE. OWN YOUR GAME.</span><h2>MAKE YOUR NEXT MOVE<span>.</span></h2></div><span class="bottom-asterisk">✳</span></section>
+  </main>
+  <footer class="site-footer"><a class="brand footer-brand" href="/">EDGE<span class="brand-asterisk">✳</span><sup>®</sup></a><p>For the love of the game.</p><div><button data-info="responsible">Responsible play</button><button data-support-open>Help & support</button><button data-info="terms">Terms</button></div><span class="footer-note">18+ &nbsp; PLAY WITHIN YOUR LIMITS.<br>© 2026 EDGE. Demo experience.</span></footer>
+
+  <div class="modal-backdrop" id="wallet-modal" hidden><section class="modal wallet-modal" role="dialog" aria-modal="true" aria-labelledby="wallet-modal-title"><button class="icon-button modal-close" data-close-modal aria-label="Close dialog"><svg><use href="#i-close"/></svg></button><span class="section-kicker">YOUR WALLET. YOUR CONTROL.</span><h2 id="wallet-modal-title">MAKE A DEPOSIT<span>.</span></h2><p class="modal-description" id="wallet-modal-description">Add demo funds and get ready for your next move.</p><div class="modal-wallet-tabs"><button class="active" data-modal-wallet="deposit">Deposit</button><button data-modal-wallet="withdraw">Withdraw</button></div><form id="wallet-form"><label for="wallet-amount">Amount <span>USD</span></label><div class="amount-input"><span>$</span><input id="wallet-amount" inputmode="decimal" type="number" min="100" step="0.01" placeholder="0.00" required></div><div class="amount-presets"><button type="button" data-amount="1000">$1,000</button><button type="button" data-amount="5000">$5,000</button><button type="button" data-amount="10000">$10,000</button><button type="button" data-amount="25000">$25,000</button></div><label for="wallet-method" id="wallet-method-label">Payment method</label><select id="wallet-method"><option value="bank">Bank transfer (demo)</option><option value="card">Debit card (demo)</option></select><div id="withdraw-fields" hidden><label for="bank-name">Bank</label><select id="bank-name"><option value="">Select your bank</option><option>Access Bank</option><option>First Bank</option><option>GTBank</option><option>Moniepoint</option><option>OPay</option><option>United Bank for Africa</option><option>Zenith Bank</option></select><label for="account-number">Account number</label><input id="account-number" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10-digit account number"><label for="account-name">Account holder name</label><input id="account-name" autocomplete="off" maxlength="80" placeholder="Full name on your account"></div><div class="form-error" id="wallet-error" role="alert" hidden></div><div class="wallet-form-summary"><span>Available balance</span><strong data-balance>$124,500.00</strong></div><button type="submit" class="button green wallet-submit" id="wallet-submit">Add demo funds <svg><use href="#i-arrow"/></svg></button><p class="modal-fine-print"><svg><use href="#i-lock"/></svg> Demo mode. No real money is transferred. Use sample details.</p></form></section></div>
+  <div class="modal-backdrop" id="info-modal" hidden><section class="modal info-modal" role="dialog" aria-modal="true" aria-labelledby="info-title"><button class="icon-button modal-close" data-close-modal aria-label="Close dialog"><svg><use href="#i-close"/></svg></button><div id="info-content"></div></section></div>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+  <button class="mobile-slip-button" id="mobile-slip-button">Bet slip <span id="mobile-slip-count">0</span><svg><use href="#i-chevron"/></svg></button>
+</body>
+</html>

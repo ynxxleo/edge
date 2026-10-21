@@ -2,7 +2,7 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "edge/sports-ui",
     "type": "project",
-    "description": "EDGE sports and games staking interface with a browser-local demo wallet.",
+    "description": "EDGE sports staking system with administrator-managed events, saved odds, transactional wallets and final-score settlement.",
     "keywords": [
         "laravel",
         "sports",
@@ -13,7 +13,8 @@
     "require": {
         "php": "^8.3",
         "laravel/framework": "^13.17",
-        "laravel/tinker": "^3.0"
+        "laravel/tinker": "^3.0",
+        "ext-bcmath": "*"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",

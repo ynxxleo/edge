@@ -68,8 +68,9 @@ test('Copy Staking navigation opens its page with three fundable strategies', a 
   assert.equal(a.$('#copy-page').hidden, false); assert.equal(a.$('#sports-page').hidden, true);
   assert.equal(a.w.location.hash, '#copy'); assert.match(a.w.document.title, /copy/i);
   for (const id of ['touchline', 'court', 'mixed']) assert.ok(a.$(`#copy-strategy-list [data-copy-fund="${id}"]`));
-  assert.match(a.$('#copy-total-allocated').textContent, /0\.00/);
-  assert.match(a.$('#copy-total-profit').textContent, /0\.00/);
+  assert.equal(a.$('#copy-total-allocated').textContent, '$0.00');
+  assert.equal(a.$('#copy-total-profit').textContent, '$0.00');
+  assert.doesNotMatch(a.w.document.body.textContent, /₦|\bNGN\b|\bnaira\b/i);
   assert.equal(a.$('#copy-active-count').textContent.trim(), '0');
   noSave(a);
 });

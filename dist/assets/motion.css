@@ -1,0 +1,34 @@
+[hidden]{display:none!important}
+.edge-page-loader{position:fixed;inset:0;z-index:1000;display:grid;place-content:center;justify-items:center;gap:25px;background:#101410;color:#f5f7ef;text-align:center}
+.edge-loader-mark{display:flex;align-items:center;gap:6px;font-family:var(--display,'Arial Narrow',Arial,sans-serif);font-size:clamp(62px,10vw,110px);line-height:.9;font-weight:900;font-style:italic;letter-spacing:-.065em}
+.edge-loader-mark>span{color:#00ed8b;font-family:Arial,sans-serif;font-style:normal;font-size:.7em;animation:edge-loader-turn 2.6s ease-in-out infinite}
+.edge-loader-caption{font:600 10px/1.5 var(--body,Arial,sans-serif);letter-spacing:.18em;text-transform:uppercase;color:#a9b2a4}
+.edge-loader-track{display:flex;gap:5px;height:3px;margin-top:1px}
+.edge-loader-track i{display:block;width:22px;height:3px;background:#00ed8b;animation:edge-loader-pulse 1.15s ease-in-out infinite}
+.edge-loader-track i:nth-child(2){animation-delay:.16s}.edge-loader-track i:nth-child(3){animation-delay:.32s}
+.edge-is-busy{cursor:progress!important;opacity:.75!important;pointer-events:none}
+.edge-button-spinner{display:inline-block;width:13px;height:13px;flex-shrink:0;border:1.5px solid currentColor;border-right-color:transparent;border-radius:50%;animation:edge-spin .7s linear infinite}
+.edge-request-status{position:fixed;top:0;left:0;right:0;z-index:1100;height:3px;overflow:hidden;pointer-events:none;background:#00ed8b25}
+.edge-request-status::after{content:'';position:absolute;inset:0;background:#00ed8b;animation:edge-request-pulse 1s ease-in-out infinite}
+.edge-request-status>span{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.edge-page-enter{animation:edge-page-in .32s cubic-bezier(.22,.61,.36,1) both}
+.modal-backdrop:not([hidden]){animation:edge-fade-in .18s ease both}
+.modal-backdrop:not([hidden])>.modal{animation:edge-dialog-in .25s cubic-bezier(.2,.7,.3,1) both}
+.popover:not([hidden]){animation:edge-dialog-in .2s ease both;transform-origin:top right}
+.toast:not([hidden]){animation:edge-toast-in .25s cubic-bezier(.2,.7,.3,1) both}
+.odds-button.edge-odds-selected{animation:edge-odds-in .2s ease-out}
+.button,.icon-button,.odds-button,.game-card{transition:background-color .18s ease,color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
+@media(hover:hover){.button:not(:disabled):hover{transform:translateY(-2px)}.game-card:hover{transform:translateY(-3px)}}
+.button:not(:disabled):active,.odds-button:not(:disabled):active{transform:translateY(1px)}
+.edge-reveal-ready{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s cubic-bezier(.2,.7,.3,1)}
+.edge-reveal-ready.edge-is-visible{opacity:1;transform:none}
+@keyframes edge-loader-turn{0%,100%{transform:rotate(0)}50%{transform:rotate(90deg)}}
+@keyframes edge-loader-pulse{0%,100%{opacity:.25;transform:scaleX(.65)}50%{opacity:1;transform:scaleX(1)}}
+@keyframes edge-spin{to{transform:rotate(360deg)}}
+@keyframes edge-request-pulse{0%,100%{opacity:.35}50%{opacity:1}}
+@keyframes edge-fade-in{from{opacity:0}to{opacity:1}}
+@keyframes edge-page-in{from{opacity:.4;transform:translateY(9px)}to{opacity:1;transform:none}}
+@keyframes edge-dialog-in{from{opacity:0;transform:translateY(12px) scale(.985)}to{opacity:1;transform:none}}
+@keyframes edge-toast-in{from{opacity:0;translate:0 9px}to{opacity:1;translate:0 0}}
+@keyframes edge-odds-in{from{box-shadow:0 0 0 0 #00ed8b70}to{box-shadow:0 0 0 5px #00ed8b00}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}*,*::before,*::after{animation:none!important;transition:none!important}.edge-reveal-ready{opacity:1;transform:none}.edge-loader-track i{opacity:1}.edge-button-spinner{border-style:dotted}}

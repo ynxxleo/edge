@@ -8,9 +8,28 @@
   <title>EDGE — Your game. Your edge.</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/app.css">
+  <link rel="stylesheet" href="/assets/admin.css">
+  <link rel="stylesheet" href="/assets/server.css">
+  <link rel="stylesheet" href="/assets/motion.css">
+  <link rel="stylesheet" href="/assets/kyc.css">
+  <link rel="stylesheet" href="/assets/support.css">
+  <link rel="stylesheet" href="/assets/promo.css">
+  <link rel="stylesheet" href="/assets/manual-methods.css">
+  <script src="/assets/motion.js" defer></script>
   <script src="/assets/app.js" defer></script>
+  <script src="/assets/server-app.js" defer></script>
+  <script src="/assets/admin.js" defer></script>
+  <script src="/assets/kyc.js" defer></script>
+  <script src="/assets/support.js" defer></script>
+  <script src="/assets/promo.js" defer></script>
+  <script src="/assets/manual-methods.js" defer></script>
 </head>
-<body>
+<body data-runtime="{{ $serverMode ?? 'static' }}" data-edge-preload="app">
+  <div id="edge-page-loader" class="edge-page-loader" role="status" aria-live="polite" aria-hidden="true" hidden>
+    <div class="edge-loader-mark" aria-hidden="true">EDGE<span>✳</span></div>
+    <span class="edge-loader-caption">Loading your edge</span>
+    <div class="edge-loader-track" aria-hidden="true"><i></i><i></i><i></i></div>
+  </div>
   <svg class="icon-definitions" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 19 19 5M5 5h14v14"/></symbol>
     <symbol id="i-chevron" viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></symbol>
@@ -34,16 +53,17 @@
   </defs></svg>
 
   <header class="site-header">
-    <a class="brand" href="#sports" aria-label="EDGE home">EDGE<span class="brand-asterisk">✳</span><sup>®</sup></a>
+    <a class="brand" href="/" aria-label="EDGE home">EDGE<span class="brand-asterisk">✳</span><sup>®</sup></a>
     <nav class="main-nav" aria-label="Main navigation">
       <button class="nav-link active" data-page="sports">Sports</button>
       <button class="nav-link" data-page="live">Live <span class="nav-dot"></span></button>
       <button class="nav-link" data-page="games">Games</button>
       <button class="nav-link" data-page="copy">Copy Staking</button>
       <button class="nav-link" data-page="bets">My bets <span class="nav-count" id="bets-count">2</span></button>
+      <button class="nav-link" data-page="admin" id="admin-nav">Admin</button>
     </nav>
     <div class="header-actions">
-      <button class="header-wallet" data-page="wallet"><span class="tiny-label">YOUR WALLET</span><strong data-balance>₦124,500.00</strong><svg><use href="#i-chevron"/></svg></button>
+      <button class="header-wallet" data-page="wallet"><span class="tiny-label">YOUR WALLET</span><strong data-balance>$124,500.00</strong><svg><use href="#i-chevron"/></svg></button>
       <button class="button green header-deposit" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit</button>
       <button class="icon-button notification-button" id="notifications-button" aria-label="Notifications"><svg><use href="#i-bell"/></svg><i></i></button>
       <button class="avatar" id="profile-button" aria-label="Open account menu">JA</button>
@@ -51,13 +71,13 @@
     <div class="popover" id="header-popover" hidden></div>
   </header>
 
-  <main class="main-shell">
+  <main class="main-shell" id="app-shell" aria-busy="false">
     <div class="page-topline"><span><span class="status-dot"></span> THE HOME OF YOUR NEXT MOVE</span><span class="topline-right">PLAY SMART. STAY IN CONTROL. <span class="age-badge">18+</span></span></div>
 
     <div id="sports-page" class="page-panel">
       <section class="hero-grid" aria-label="Welcome to EDGE">
         <div class="hero">
-          <img class="hero-image" src="/assets/game-football.jpg" alt="Football player making a decisive kick on the pitch">
+          <img class="hero-image nfl-hero" src="/assets/game-nfl.jpg" alt="NFL quarterback Tom Brady in a New England Patriots helmet preparing to throw a football">
           <div class="hero-shade"></div>
           <div class="hero-content">
             <span class="eyebrow hero-eyebrow"><span class="green-dot"></span> FOR THE LOVE OF THE GAME</span>
@@ -67,15 +87,16 @@
           </div>
           <div class="hero-index"><span>01 / 03</span><span class="hero-progress"><i></i></span><span>BUILT FOR THE GAME ↗</span></div>
           <span class="hero-watermark">E.</span>
+          <span class="nfl-photo-credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Tom_Brady.jpg" target="_blank" rel="noopener noreferrer">Keith Allison</a> · <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 2.0</a></span>
         </div>
         <aside class="wallet-card" aria-label="Your wallet overview">
           <div class="wallet-card-top"><span class="eyebrow">YOUR WALLET</span><span class="wallet-symbol"><svg><use href="#i-wallet"/></svg></span></div>
           <div class="balance-caption">Available balance <span class="demo-badge">DEMO</span></div>
-          <div class="wallet-balance" data-balance>₦124,500<span>.00</span></div>
-          <div class="wallet-profit"><span>↗</span> <strong data-profit>₦24,500.00</strong><span>Total profit</span></div>
+          <div class="wallet-balance" data-balance>$124,500<span>.00</span></div>
+          <div class="wallet-profit"><span>↗</span> <strong data-profit>$24,500.00</strong><span>Total profit</span></div>
           <div class="wallet-actions"><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit</button><button class="button outline" data-wallet="withdraw">Withdraw <svg><use href="#i-arrow"/></svg></button></div>
           <div class="wallet-divider"></div>
-          <div class="wallet-stats"><div><span>Active stakes</span><strong data-stakes>₦8,500.00</strong></div><div><span>Potential returns</span><strong class="green-text" data-returns>₦21,675.00</strong></div></div>
+          <div class="wallet-stats"><div><span>Active stakes</span><strong data-stakes>$8,500.00</strong></div><div><span>Potential returns</span><strong class="green-text" data-returns>$21,675.00</strong></div></div>
           <button class="wallet-history-link" data-page="wallet">View wallet history <svg><use href="#i-arrow"/></svg></button>
           <div class="wallet-security"><svg><use href="#i-lock"/></svg> YOUR WALLET. YOUR CONTROL.</div>
         </aside>
@@ -123,9 +144,9 @@
         <aside class="copy-overview" aria-label="Your copy staking overview">
           <div class="copy-overview-title"><span class="eyebrow">YOUR COPY CAPITAL</span><span class="demo-badge">DEMO</span></div>
           <span class="copy-capital-label">Copy position value</span>
-          <strong class="copy-capital" id="copy-total-allocated">₦0.00</strong>
-          <div class="copy-overview-metrics"><div><span>Copy profit</span><strong id="copy-total-profit">₦0.00</strong></div><div><span>Active strategies</span><strong id="copy-active-count">0</strong></div></div>
-          <div class="copy-available"><span>Available wallet balance</span><strong data-balance>₦124,500.00</strong></div>
+          <strong class="copy-capital" id="copy-total-allocated">$0.00</strong>
+          <div class="copy-overview-metrics"><div><span>Copy profit</span><strong id="copy-total-profit">$0.00</strong></div><div><span>Active strategies</span><strong id="copy-active-count">0</strong></div></div>
+          <div class="copy-available"><span>Available wallet balance</span><strong data-balance>$124,500.00</strong></div>
           <button class="copy-wallet-link" data-wallet="deposit">Add funds to wallet <svg><use href="#i-plus"/></svg></button>
           <p class="copy-overview-note">Choose a strategy below to deposit into copy staking.</p>
         </aside>
@@ -140,15 +161,21 @@
       <section class="copy-positions" aria-labelledby="copy-positions-title"><div class="section-heading copy-section-heading"><div><span class="section-kicker">YOUR ALLOCATION. YOUR CALL.</span><h2 id="copy-positions-title">Your copy positions<span class="green-text">.</span></h2></div><div class="copy-position-filters" role="group" aria-label="Filter copy positions"><button class="active" data-copy-position-filter="active">Active</button><button data-copy-position-filter="all">All positions</button></div></div><div id="copy-position-list" class="copy-position-list"></div></section>
     </section>
 
-    <section id="wallet-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">YOUR MONEY. YOUR MOVE. / 004</span><h1>THE <span class="green-text">WALLET.</span></h1><p>Keep track of every stake, return and transaction.</p></div><div class="wallet-overview"><div class="wallet-total"><span class="eyebrow">AVAILABLE DEMO BALANCE</span><strong data-balance>₦124,500.00</strong><div><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit funds</button><button class="button outline" data-wallet="withdraw">Withdraw funds <svg><use href="#i-arrow"/></svg></button></div></div><div class="wallet-overview-stat"><svg><use href="#i-trophy"/></svg><span>Total profit</span><strong data-profit>₦24,500.00</strong></div><div class="wallet-overview-stat"><svg><use href="#i-clock"/></svg><span>Active stakes</span><strong data-stakes>₦8,500.00</strong></div></div><div class="section-heading transaction-heading"><h2>Transaction history<span class="green-text">.</span></h2><select id="transaction-filter" aria-label="Filter transactions"><option value="all">All transactions</option><option value="deposit">Deposits</option><option value="withdrawal">Withdrawals</option><option value="stake">Stakes</option><option value="return">Returns</option><option value="copy">Copy staking</option></select></div><div class="transaction-table-wrap"><table class="transaction-table"><thead><tr><th>TRANSACTION</th><th>DATE</th><th>AMOUNT</th><th>STATUS</th></tr></thead><tbody id="transaction-body"></tbody></table></div><p class="demo-explanation">Demo wallet • Transactions are saved in this browser. Payment providers and bank transfers are not connected.</p></section>
+    <section id="wallet-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">YOUR MONEY. YOUR MOVE. / 004</span><h1>THE <span class="green-text">WALLET.</span></h1><p>Keep track of every stake, return and transaction.</p></div><div class="wallet-overview"><div class="wallet-total"><span class="eyebrow">AVAILABLE DEMO BALANCE</span><strong data-balance>$124,500.00</strong><div><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit funds</button><button class="button outline" data-wallet="withdraw">Withdraw funds <svg><use href="#i-arrow"/></svg></button></div></div><div class="wallet-overview-stat"><svg><use href="#i-trophy"/></svg><span>Total profit</span><strong data-profit>$24,500.00</strong></div><div class="wallet-overview-stat"><svg><use href="#i-clock"/></svg><span>Active stakes</span><strong data-stakes>$8,500.00</strong></div></div><div class="section-heading transaction-heading"><h2>Transaction history<span class="green-text">.</span></h2><select id="transaction-filter" aria-label="Filter transactions"><option value="all">All transactions</option><option value="deposit">Deposits</option><option value="promo_credit">Promotional credits</option><option value="withdrawal">Withdrawals</option><option value="stake">Stakes</option><option value="return">Returns</option><option value="copy">Copy staking</option></select></div><div class="transaction-table-wrap"><table class="transaction-table"><thead><tr><th>TRANSACTION</th><th>DATE</th><th>AMOUNT</th><th>STATUS</th></tr></thead><tbody id="transaction-body"></tbody></table></div><p class="demo-explanation">Demo wallet • Transactions are saved in this browser. Payment providers and bank transfers are not connected.</p></section>
 
     <section id="bets-page" class="page-panel" hidden><div class="subpage-heading"><span class="section-kicker">EVERY MOVE, IN ONE PLACE / 005</span><h1>YOUR <span class="green-text">PLAYS.</span></h1><p>Follow your active stakes and revisit your results.</p></div><div class="bet-history-tabs"><button class="active" data-bet-filter="active">Active <span id="active-bet-count">2</span></button><button data-bet-filter="settled">Settled</button><button data-bet-filter="all">All bets</button></div><div id="bet-history" class="bet-history"></div></section>
 
+    @include('partials.admin')
+    @include('partials.kyc')
+    @include('partials.support')
+    @include('partials.promo')
+    @include('partials.manual-methods')
+
     <section class="bottom-banner"><div><span class="eyebrow">BACK YOUR KNOWLEDGE. OWN YOUR GAME.</span><h2>MAKE YOUR NEXT MOVE<span>.</span></h2></div><span class="bottom-asterisk">✳</span></section>
   </main>
-  <footer class="site-footer"><a class="brand footer-brand" href="#sports">EDGE<span class="brand-asterisk">✳</span><sup>®</sup></a><p>For the love of the game.</p><div><button data-info="responsible">Responsible play</button><button data-info="help">Help & support</button><button data-info="terms">Terms</button></div><span class="footer-note">18+ &nbsp; PLAY WITHIN YOUR LIMITS.<br>© 2026 EDGE. Demo experience.</span></footer>
+  <footer class="site-footer"><a class="brand footer-brand" href="/">EDGE<span class="brand-asterisk">✳</span><sup>®</sup></a><p>For the love of the game.</p><div><button data-info="responsible">Responsible play</button><button data-support-open>Help & support</button><button data-info="terms">Terms</button></div><span class="footer-note">18+ &nbsp; PLAY WITHIN YOUR LIMITS.<br>© 2026 EDGE. Demo experience.</span></footer>
 
-  <div class="modal-backdrop" id="wallet-modal" hidden><section class="modal wallet-modal" role="dialog" aria-modal="true" aria-labelledby="wallet-modal-title"><button class="icon-button modal-close" data-close-modal aria-label="Close dialog"><svg><use href="#i-close"/></svg></button><span class="section-kicker">YOUR WALLET. YOUR CONTROL.</span><h2 id="wallet-modal-title">MAKE A DEPOSIT<span>.</span></h2><p class="modal-description" id="wallet-modal-description">Add demo funds and get ready for your next move.</p><div class="modal-wallet-tabs"><button class="active" data-modal-wallet="deposit">Deposit</button><button data-modal-wallet="withdraw">Withdraw</button></div><form id="wallet-form"><label for="wallet-amount">Amount <span>NGN</span></label><div class="amount-input"><span>₦</span><input id="wallet-amount" inputmode="decimal" type="number" min="100" step="0.01" placeholder="0.00" required></div><div class="amount-presets"><button type="button" data-amount="1000">₦1,000</button><button type="button" data-amount="5000">₦5,000</button><button type="button" data-amount="10000">₦10,000</button><button type="button" data-amount="25000">₦25,000</button></div><label for="wallet-method" id="wallet-method-label">Payment method</label><select id="wallet-method"><option value="bank">Bank transfer (demo)</option><option value="card">Debit card (demo)</option></select><div id="withdraw-fields" hidden><label for="bank-name">Bank</label><select id="bank-name"><option value="">Select your bank</option><option>Access Bank</option><option>First Bank</option><option>GTBank</option><option>Moniepoint</option><option>OPay</option><option>United Bank for Africa</option><option>Zenith Bank</option></select><label for="account-number">Account number</label><input id="account-number" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10-digit account number"><label for="account-name">Account holder name</label><input id="account-name" autocomplete="off" maxlength="80" placeholder="Full name on your account"></div><div class="form-error" id="wallet-error" role="alert" hidden></div><div class="wallet-form-summary"><span>Available balance</span><strong data-balance>₦124,500.00</strong></div><button type="submit" class="button green wallet-submit" id="wallet-submit">Add demo funds <svg><use href="#i-arrow"/></svg></button><p class="modal-fine-print"><svg><use href="#i-lock"/></svg> Demo mode. No real money is transferred. Use sample details.</p></form></section></div>
+  <div class="modal-backdrop" id="wallet-modal" hidden><section class="modal wallet-modal" role="dialog" aria-modal="true" aria-labelledby="wallet-modal-title"><button class="icon-button modal-close" data-close-modal aria-label="Close dialog"><svg><use href="#i-close"/></svg></button><span class="section-kicker">YOUR WALLET. YOUR CONTROL.</span><h2 id="wallet-modal-title">MAKE A DEPOSIT<span>.</span></h2><p class="modal-description" id="wallet-modal-description">Add demo funds and get ready for your next move.</p><div class="modal-wallet-tabs"><button class="active" data-modal-wallet="deposit">Deposit</button><button data-modal-wallet="withdraw">Withdraw</button></div><form id="wallet-form"><label for="wallet-amount">Amount <span>USD</span></label><div class="amount-input"><span>$</span><input id="wallet-amount" inputmode="decimal" type="number" min="100" step="0.01" placeholder="0.00" required></div><div class="amount-presets"><button type="button" data-amount="1000">$1,000</button><button type="button" data-amount="5000">$5,000</button><button type="button" data-amount="10000">$10,000</button><button type="button" data-amount="25000">$25,000</button></div><label for="wallet-method" id="wallet-method-label">Payment method</label><select id="wallet-method"><option value="bank">Bank transfer (demo)</option><option value="card">Debit card (demo)</option></select><div id="withdraw-fields" hidden><label for="bank-name">Bank</label><select id="bank-name"><option value="">Select your bank</option><option>Access Bank</option><option>First Bank</option><option>GTBank</option><option>Moniepoint</option><option>OPay</option><option>United Bank for Africa</option><option>Zenith Bank</option></select><label for="account-number">Account number</label><input id="account-number" inputmode="numeric" maxlength="10" pattern="[0-9]{10}" placeholder="10-digit account number"><label for="account-name">Account holder name</label><input id="account-name" autocomplete="off" maxlength="80" placeholder="Full name on your account"></div><div class="form-error" id="wallet-error" role="alert" hidden></div><div class="wallet-form-summary"><span>Available balance</span><strong data-balance>$124,500.00</strong></div><button type="submit" class="button green wallet-submit" id="wallet-submit">Add demo funds <svg><use href="#i-arrow"/></svg></button><p class="modal-fine-print"><svg><use href="#i-lock"/></svg> Demo mode. No real money is transferred. Use sample details.</p></form></section></div>
   <div class="modal-backdrop" id="info-modal" hidden><section class="modal info-modal" role="dialog" aria-modal="true" aria-labelledby="info-title"><button class="icon-button modal-close" data-close-modal aria-label="Close dialog"><svg><use href="#i-close"/></svg></button><div id="info-content"></div></section></div>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
   <button class="mobile-slip-button" id="mobile-slip-button">Bet slip <span id="mobile-slip-count">0</span><svg><use href="#i-chevron"/></svg></button>

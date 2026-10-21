@@ -47,6 +47,16 @@ return [
             'report' => false,
         ],
 
+        // Never expose identity files through storage:link or temporary signed public URLs.
+        'kyc' => [
+            'driver' => 'local',
+            'root' => env('KYC_STORAGE_PATH', storage_path('app/kyc')),
+            'serve' => false,
+            'visibility' => 'private',
+            'throw' => true,
+            'report' => false,
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
