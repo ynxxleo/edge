@@ -19,6 +19,8 @@ A push to GitHub alone does not update cPanel. The initial setup uses cPanel's e
 
 Use PHP 8.3 or later with the extensions required by [Laravel 13 deployment](https://laravel.com/docs/13.x/deployment), plus BCMath and the PDO driver for the chosen database. Enable Fileinfo for image uploads. Composer installs dependencies from `composer.lock`. Application assets are already committed in `public/assets`; the Laravel host does not need a Node build to serve them.
 
+MySQL/MariaDB tables must use InnoDB for transactional balances, row locks and foreign keys. The connection configuration explicitly defaults to InnoDB instead of the host’s server default.
+
 Configure the web server to serve only `public/`, with requests routed to `public/index.php`, and enable HTTPS for the final domain. The PHP worker needs write access to `storage/` and `bootstrap/cache/`. Keep the database and private KYC files on persistent storage, including when releases or containers are replaced. Backups must preserve the database, private KYC files and encryption key together.
 
 Create the host's environment variables using `.env.production.example` as a template. Set `APP_ENV=production`, `APP_DEBUG=false`, the real HTTPS `APP_URL`, the actual database connection, and a production `APP_KEY`. Generate the key once for a new empty installation; preserve it across releases. Configure secrets on the host rather than in Git. HTTPS sessions use secure, encrypted cookies. If a reverse proxy terminates HTTPS, configure its trusted proxy addresses for that host before testing sessions.

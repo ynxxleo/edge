@@ -33,3 +33,5 @@ __pycache__/
 error_log
 .user.ini
 /public/.well-known/
+
+/storage/framework/edge-deploy.lock
