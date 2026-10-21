@@ -22,6 +22,15 @@ Route::get('/', function (Request $request) {
 
     return view('landing');
 })->name('home');
+// Explicit public information routes; account and administrator URLs stay separate.
+foreach (array_keys(config('marketing.pages', [])) as $pageIndex => $slug) {
+    Route::get('/'.$slug, fn () => view('marketing.page', [
+        'pageSlug' => $slug,
+        'pageIndex' => $pageIndex + 1,
+        'page' => config('marketing.pages.'.$slug),
+    ]))->name('marketing.'.$slug);
+}
+
 Route::view('/app', 'app', ['serverMode' => 'laravel'])->name('platform');
 Route::view('/admin', 'app', ['serverMode' => 'laravel']);
 

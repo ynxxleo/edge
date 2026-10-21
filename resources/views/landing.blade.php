@@ -10,6 +10,7 @@
   <link rel="preload" href="/assets/fonts/barlow-condensed-800.ttf" as="font" type="font/ttf" crossorigin>
   <link rel="stylesheet" href="/assets/fonts.css">
   <link rel="stylesheet" href="/assets/landing.css">
+  <link rel="stylesheet" href="/assets/marketing.css">
   <link rel="stylesheet" href="/assets/motion.css">
   <script src="/assets/motion.js" defer></script>
   <script src="/assets/landing.js" defer></script>
@@ -17,15 +18,7 @@
 <body class="landing-body" data-edge-preload="page">
   <a class="skip-link" href="#main-content">Skip to content</a>
   <div id="edge-page-loader" class="edge-page-loader" aria-hidden="true" hidden><span class="edge-loader-mark">EDGE<span>✳</span></span><span class="edge-loader-caption">GETTING THE GAME READY</span></div>
-  <header class="landing-header">
-    <a class="landing-brand" href="/" aria-label="EDGE home">EDGE<span aria-hidden="true">✳</span><sup>®</sup></a>
-    <button class="landing-menu-toggle" type="button" aria-expanded="false" aria-controls="landing-navigation" hidden><span>Menu</span><i aria-hidden="true"></i></button>
-    <nav class="landing-navigation" id="landing-navigation" aria-label="Main navigation">
-      <a href="#the-game">The game</a><a href="#copy-staking">Copy staking</a><a href="#your-wallet">Your wallet</a><a href="#questions">FAQs</a>
-      <a class="mobile-signin" href="/app?auth=login#sports">Sign in ↗</a>
-    </nav>
-    <div class="landing-header-actions"><a class="landing-signin" href="/app?auth=login#sports">Sign in</a><a class="landing-button compact green" href="/app?auth=register#sports">Get started <span aria-hidden="true">↗</span></a></div>
-  </header>
+  @include('marketing.header')
 
   <main id="main-content">
     <section class="landing-hero" aria-labelledby="hero-title">
@@ -101,7 +94,8 @@
       </div>
     </section>
 
-    <section class="landing-final" aria-labelledby="final-title"><div class="final-topline"><span>THE NEXT MOVE IS YOURS.</span><span class="final-plus" aria-hidden="true">+</span><span>YOUR GAME. YOUR EDGE.</span></div><div class="final-content" data-reveal><h2 id="final-title">GET IN.<br><span>FIND YOUR EDGE.</span></h2><a class="final-cta" href="/app?auth=register#sports" aria-label="Create an EDGE account"><span>LET’S GO</span><i aria-hidden="true">↗</i></a></div><div class="landing-footer"><a class="landing-brand" href="/" aria-label="EDGE home">EDGE<span aria-hidden="true">✳</span></a><p>18+ only. Play responsibly.<br>Stakes can be lost. Returns are not guaranteed.</p><nav aria-label="Footer navigation"><a href="/app#sports">Explore sports ↗</a><a href="/app?auth=login#sports">Sign in ↗</a></nav><span>© EDGE</span></div></section>
+    <section class="landing-final" aria-labelledby="final-title"><div class="final-topline"><span>THE NEXT MOVE IS YOURS.</span><span class="final-plus" aria-hidden="true">+</span><span>YOUR GAME. YOUR EDGE.</span></div><div class="final-content" data-reveal><h2 id="final-title">GET IN.<br><span>FIND YOUR EDGE.</span></h2><a class="final-cta" href="/app?auth=register#sports" aria-label="Create an EDGE account"><span>LET’S GO</span><i aria-hidden="true">↗</i></a></div></section>
   </main>
+  @include('marketing.footer')
 </body>
 </html>

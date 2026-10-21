@@ -1,0 +1,87 @@
+/* Public information pages share the EDGE landing page's type, palette and navigation. */
+.landing-navigation>[aria-current=page]{color:var(--green)}
+.landing-navigation{gap:clamp(12px,2vw,28px)}
+.marketing-footer.landing-footer{margin:0;padding:46px 4.4% 25px;background:var(--ink);color:var(--paper);display:grid;grid-template-columns:1fr 1.5fr;gap:38px 9%;border-top:1px solid #35382f}
+.marketing-footer-brand>p{font-size:12px;margin-top:20px;color:#a7ad9e}
+.marketing-footer-links>.landing-eyebrow{color:#959d8c;margin-bottom:18px}
+.marketing-footer-links>nav{display:grid;grid-template-columns:1fr 1fr;gap:0 30px}
+.marketing-footer-links>nav>a{display:flex;justify-content:space-between;gap:14px;font-size:12px;line-height:1.6;padding:12px 0;border-bottom:1px solid #30362b}
+.marketing-footer-links>nav>a:hover,.marketing-footer-links [aria-current=page]{color:var(--green)}
+.marketing-footer-links>nav>a>span{color:var(--green)}
+.marketing-footer-bottom{grid-column:1/-1;border-top:1px solid #35382f;padding-top:24px;display:flex;align-items:center;gap:30px;justify-content:space-between;color:#b5bbad;font-size:10px;line-height:1.7}
+.marketing-footer-bottom>a{color:var(--paper)}
+.marketing-footer-bottom>a:hover{color:var(--green)}
+.marketing-hero{padding:26px 4.4% 60px;background:var(--ink);color:var(--paper)}
+.marketing-breadcrumb{display:flex;align-items:center;gap:12px;color:#b4baab;font-size:10px;padding-bottom:23px;border-bottom:1px solid #35382f}
+.marketing-breadcrumb>a:hover{color:var(--green)}
+.marketing-index{margin-left:auto;color:var(--green);letter-spacing:.1em;font-size:9px}
+.marketing-hero-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:7%;align-items:center;margin-top:42px;min-height:410px}
+.marketing-hero h1{font:800 clamp(56px,6.1vw,95px)/.94 var(--display);letter-spacing:-.035em;margin-top:24px;overflow-wrap:break-word}
+.marketing-hero h1>span{color:var(--green)}
+.marketing-description{font-size:14px;color:#b6bead;line-height:1.85;max-width:535px;margin:28px 0}
+.marketing-hero-copy>.landing-button{margin-top:1px}
+.marketing-visual{position:relative;background:#1c211a;border:1px solid #353d2e;min-width:0}
+.visual-sports{height:460px;overflow:hidden;border:0}
+.visual-sports>img{object-position:50% 35%;filter:saturate(.7)}
+.visual-sports:after{content:'';position:absolute;inset:0;background:linear-gradient(0deg,#111310c9,transparent 65%);pointer-events:none}
+.marketing-photo-label{position:absolute;left:25px;right:25px;bottom:43px;font:700 35px var(--display);z-index:1;display:flex;justify-content:space-between;align-items:center}
+.marketing-photo-label>b{font:400 50px var(--body);color:var(--green)}
+.marketing-photo-credit{position:absolute;bottom:15px;left:25px;z-index:1;font-size:8px;color:#ddd}
+.marketing-photo-credit>a{text-decoration:underline}
+.visual-copy,.visual-wallet,.visual-steps,.visual-brand{padding:30px}
+.marketing-demo-top{display:flex;justify-content:space-between;align-items:center;gap:12px;color:#b3bda6;font-size:10px}
+.marketing-demo-top>span:last-child{color:var(--green)}
+.marketing-demo-value{display:block;font:600 69px/1 var(--display);margin-top:18px;letter-spacing:-.025em}
+.marketing-demo-value>span{color:#a2ac95;font-size:.55em}
+.marketing-demo-chart{width:100%;height:auto;display:block;margin:15px 0}
+.demo-grid{stroke:#384231;stroke-width:1;fill:none}
+.demo-area{fill:#00ee9112}
+.demo-line{fill:none;stroke:var(--green);stroke-width:3;stroke-linejoin:round}
+.demo-dots{fill:var(--green);stroke:#1c211a;stroke-width:3}
+.marketing-demo-game{padding:13px 0;border-top:1px solid #35412d;display:flex;justify-content:space-between;gap:16px;font-size:11px}
+.marketing-demo-game>b{font-weight:500;color:var(--green);white-space:nowrap}
+.marketing-demo-game>.demo-loss{color:#ffa99d}
+.marketing-demo-note{font-size:9px;line-height:1.8;color:#a7b19b;margin-top:17px}
+.marketing-balance-label{display:block;margin-top:40px;color:#a7b19b;font-size:12px}
+.marketing-wallet-pills{display:flex;gap:12px;margin:27px 0 36px}
+.marketing-wallet-pills>span{border:1px solid #4d5d40;padding:12px 15px;font-size:11px}
+.marketing-wallet-pills>span:first-child{background:var(--green);color:var(--ink);border-color:var(--green)}
+.marketing-visual-steps{padding:0;margin:25px 0 0;list-style:none}
+.marketing-visual-steps>li{display:grid;grid-template-columns:40px 1fr;gap:2px 15px;align-items:center;padding:19px 0;border-top:1px solid #35412d}
+.marketing-visual-steps>li>span{color:var(--green);font-size:10px;grid-row:span 2}
+.marketing-visual-steps strong{font:600 43px/1 var(--display)}
+.marketing-visual-steps small{color:#a7b19b;font-size:10px}
+.visual-brand{text-align:center;overflow:hidden}
+.marketing-brand-orbit{border:1px solid #4d5d40;border-radius:50%;width:230px;height:230px;margin:27px auto;display:flex;align-items:center;justify-content:center;position:relative}
+.marketing-brand-orbit:before{content:'';position:absolute;width:80%;height:80%;border:1px solid #35412d;border-radius:50%}
+.marketing-brand-orbit>span{font-size:158px;line-height:1;color:var(--green)}
+.marketing-brand-caption{font:600 30px/1 var(--display)}
+.marketing-hero.is-document .marketing-hero-grid{grid-template-columns:1fr 200px;min-height:300px;gap:45px}
+.marketing-hero.is-document h1{font-size:clamp(55px,6.5vw,100px)}
+.marketing-hero.is-document .marketing-description{max-width:700px;margin-bottom:0}
+.marketing-document-mark{color:var(--green);font:400 150px/1 Arial,sans-serif;text-align:center}
+.marketing-document-mark>span{display:block;font:500 9px/1.6 var(--body);letter-spacing:.08em;color:#b4baab;margin-top:10px}
+.marketing-reading-layout{display:grid;grid-template-columns:260px minmax(0,780px);gap:8%;padding:64px 4.4% 70px;justify-content:space-between}
+.marketing-contents{align-self:start;position:sticky;top:30px}
+.marketing-contents>.landing-eyebrow{color:#606a53;margin-bottom:20px}
+.marketing-contents>nav{display:flex;flex-direction:column}
+.marketing-contents nav>a{padding:12px 0;border-bottom:1px solid var(--line);font-size:11px;line-height:1.7;display:flex;gap:15px;align-items:baseline}
+.marketing-contents nav>a>span{font-size:9px;color:#67725a;min-width:15px}
+.marketing-contents nav>a:hover{color:#007b47}
+.marketing-back{display:inline-block;margin-top:25px;font-size:10px;color:#606a53}
+.marketing-article{display:grid;grid-template-columns:34px minmax(0,1fr);gap:20px;padding:32px 0;border-top:1px solid var(--line);scroll-margin-top:30px}
+.marketing-section-number{font-size:10px;color:#657258;padding-top:10px}
+.marketing-article h2{font:600 37px/1.1 var(--display);letter-spacing:-.01em;margin-bottom:17px}
+.marketing-article p,.marketing-article li{font-size:13px;line-height:1.9;color:#505949;overflow-wrap:anywhere}
+.marketing-article ul{padding-left:18px;margin:15px 0 0}
+.marketing-article li{padding-left:4px;margin-top:6px}
+.marketing-article li::marker{color:#008d52}
+.marketing-article .landing-text-link{margin-top:23px}
+.marketing-faq{border-top:1px solid var(--line);padding-top:35px;margin-top:15px}
+.marketing-faq h2{font:600 38px var(--display);margin-bottom:20px}
+.marketing-faq .faq-list{max-width:none}
+.marketing-next{margin:0 4.4% 65px;padding:32px;border-top:3px solid var(--ink);background:#e6eadf;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:20px}
+.marketing-next>.landing-eyebrow{width:100%;color:#536447}
+.marketing-next h2{font:700 37px/1 var(--display);max-width:650px}
+@media(min-width:621px) and (max-width:1050px){.landing-header{gap:20px}.landing-header-actions{margin-left:0;gap:15px}.landing-navigation{gap:14px}.landing-navigation>a{font-size:10px}.landing-signin{display:none}.marketing-hero-grid{gap:5%;grid-template-columns:1.2fr 1fr}.marketing-hero h1{font-size:7vw}.marketing-reading-layout{grid-template-columns:210px minmax(0,1fr);gap:6%}.marketing-visual{padding:23px}.visual-sports{padding:0}.marketing-hero.is-document .marketing-hero-grid{grid-template-columns:1fr 140px}.marketing-document-mark{font-size:110px}.marketing-brand-orbit{width:180px;height:180px}.marketing-brand-orbit>span{font-size:130px}}
+@media(max-width:620px){.landing-navigation{flex-wrap:wrap}.landing-js .landing-navigation{flex-wrap:nowrap}.marketing-hero{padding:21px 6% 36px}.marketing-breadcrumb{font-size:9px;padding-bottom:20px}.marketing-index{font-size:8px}.marketing-hero-grid,.marketing-hero.is-document .marketing-hero-grid{grid-template-columns:1fr;gap:32px;margin-top:30px;min-height:0}.marketing-hero h1,.marketing-hero.is-document h1{font-size:clamp(45px,11.5vw,72px);line-height:.98;margin-top:20px}.marketing-description{font-size:12px;line-height:1.85;margin:20px 0 24px}.marketing-hero-copy>.landing-button{min-height:48px;font-size:11px}.visual-sports{height:350px}.visual-copy,.visual-wallet,.visual-steps,.visual-brand{padding:25px}.marketing-document-mark{display:none}.marketing-reading-layout{grid-template-columns:minmax(0,1fr);gap:32px;padding:35px 6% 40px}.marketing-contents{position:static}.marketing-contents>.landing-eyebrow{margin-bottom:12px}.marketing-contents>nav{display:grid;grid-template-columns:1fr 1fr;gap:0 18px}.marketing-contents nav>a{font-size:10px;gap:8px;line-height:1.6}.marketing-back{display:none}.marketing-article{padding:26px 0;grid-template-columns:22px minmax(0,1fr);gap:12px}.marketing-article h2{font-size:30px}.marketing-article p,.marketing-article li{font-size:12px}.marketing-section-number{font-size:9px;padding-top:8px}.marketing-article .landing-text-link{font-size:11px;gap:20px}.marketing-faq h2{font-size:32px}.marketing-next{margin:0 6% 40px;padding:24px;gap:20px}.marketing-next h2{font-size:30px}.marketing-next>.landing-eyebrow{font-size:8px}.marketing-footer.landing-footer{padding:35px 6% 25px;grid-template-columns:1fr;gap:30px}.marketing-footer-brand>p{margin-top:15px;font-size:11px}.marketing-footer-links>nav{gap:0 20px}.marketing-footer-links>nav>a{font-size:11px;align-items:baseline;gap:7px}.marketing-footer-bottom{gap:18px;align-items:flex-start;flex-wrap:wrap;font-size:9px}.marketing-footer-bottom>span{width:100%}.marketing-visual-steps>li{padding:16px 0}}

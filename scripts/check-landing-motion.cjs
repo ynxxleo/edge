@@ -6,6 +6,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
+const { execFileSync } = require('node:child_process');
 let JSDOM, VirtualConsole;
 try { ({ JSDOM, VirtualConsole } = require(process.env.EDGE_JSDOM_PATH || 'jsdom')); }
 catch { console.error('Install jsdom outside the repository and set EDGE_JSDOM_PATH.'); process.exit(1); }
@@ -15,7 +16,9 @@ const tick = async () => { for (let i = 0; i < 8; i++) await new Promise(resolve
 const member = { id: 1, name: 'Test Member', email: 'member@example.test', is_admin: false, kyc_status: 'approved' };
 let passed = 0, failed = 0;
 
+const marketingMarkup = JSON.parse(execFileSync('php', [path.join(root,'scripts/render-marketing.php')], {cwd:root,encoding:'utf8',maxBuffer:4*1024*1024}));
 function markup(kind) {
+  if(kind==='landing')return marketingMarkup['/'];
   return read(`resources/views/${kind === 'landing' ? 'landing' : 'app'}.blade.php`)
     .replace("{{ $serverMode ?? 'static' }}", 'laravel')
     .replace("@include('partials.admin')", read('resources/views/partials/admin.blade.php'))
@@ -142,7 +145,9 @@ async function test(name, kind, options, fn) {
     await a.click('.landing-menu-toggle');
     assert.equal(toggle.getAttribute('aria-expanded'), 'true');
     assert.equal(nav.classList.contains('is-open'), true);
-    await a.click('#landing-navigation a[href="#copy-staking"]');
+    // jsdom does not navigate between documents; the href itself is checked below.
+    a.$('#landing-navigation a[href="/copy-staking"]').addEventListener('click', event => event.preventDefault(), {once:true});
+    await a.click('#landing-navigation a[href="/copy-staking"]');
     assert.equal(toggle.getAttribute('aria-expanded'), 'false');
     assert.equal(nav.classList.contains('is-open'), false);
     await a.click('.landing-menu-toggle');

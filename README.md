@@ -33,6 +33,14 @@ php artisan serve --host=127.0.0.1 --port=8135
 
 The administrator command prompts privately for a password of at least 12 characters with letters and numbers. It can also reset/promote an existing account. There is no built-in administrator password. Rerunning the seeder preserves administrator edits and results.
 
+## Public information pages
+
+The landing page and each public information page share five navigation links: **Sports**, **Copy staking**, **Wallet**, **How it works**, and **About**. The footer links to **Help centre**, **Contact**, **Responsible play**, **Terms of use**, **Privacy policy**, **Cookie policy**, **KYC & verification**, and **Payments & withdrawals**. No public footer links to the admin desk.
+
+Each link opens a complete, guest-accessible Laravel page with its own title, description, section navigation and links to the relevant account screens. Contact directs users to the existing private support chat. Product examples are labelled illustrative. Policy text describes the implemented platform and makes no claims about licensing, guaranteed returns or payout times.
+
+Content lives in `config/marketing.php`; shared Blade templates live in `resources/views/marketing/`. `npm run build` renders the same Blade pages through `scripts/render-marketing.php` into the static preview, including all 13 public pages. Building therefore requires the normal Laravel PHP dependencies. The live application serves these routes directly through Laravel.
+
 ## Email sign-up and login codes
 
 Both sign-up and password login return a verification challenge (HTTP 202). Enter the six-digit email code in the platform to finish authentication. Sign-up creates the account only after the email is verified. Admins follow the same login flow. Codes expire after 10 minutes, allow five attempts, and can be resent after 60 seconds (eight messages per address per hour). Resending invalidates the previous code. A pending challenge resumes after refreshing the page in the same browser session.
