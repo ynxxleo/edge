@@ -2,6 +2,16 @@
 
 Target repository: `https://github.com/ynxxleo/edge.git`. Target host: Namecheap cPanel, `https://edgepremiums.com`. Commit author: `ynxxleo <ynxxleo@edgepremiums.com>`. Server connection details and authenticated Git access are verified separately before deployment. The existing `.openai/hosting.json` and `dist/` belong to the earlier static preview; the Laravel site's web root is `public/`.
 
+## Current server configuration
+
+The Namecheap deployment uses SSH host `business45.web-hosting.com`, port `21098`, and account `remibctq`. cPanel manages the `main` checkout at `/home/remibctq/repositories/edge`. The domain's original document root `/home/remibctq/edgepremiums.com` is a symbolic link to the checkout's `public/` directory; the original directory and domain settings were retained privately for recovery. Application code, `.env`, the database connection and KYC storage stay outside the public directory.
+
+The domain uses PHP 8.3. The shell's unqualified `php` command still selects 8.2, so run Laravel commands with `/opt/alt/php83/usr/bin/php`. Composer is installed privately at `/home/remibctq/.config/edge/composer.phar`. The hook reads its verified paths from `/home/remibctq/.config/edge/deploy.env`, which is not in Git. The dedicated database is `remibctq_edge`; every application table uses InnoDB. The production encryption key and database password are configured only on the host.
+
+The cPanel deployment hook successfully applied the migrations and initialized the three strategy definitions without importing local users, fixtures, wallet funds or payment credentials. A separate production administrator was created for `ynxxleo@edgepremiums.com`; its generated login is in the Git-ignored local file `.local/deploy/production-admin-login.json`. Unconfigured payment channels remain disabled until the administrator adds payment details. The scheduler runs every minute with the explicit PHP 8.3 binary, preserving the account's other cron jobs.
+
+For later releases, push to GitHub, then use **cPanel → Git Version Control → EDGE Laravel → Manage → Pull or Deploy → Update from Remote → Deploy HEAD Commit**. The deployment hook retains the production database, key, private documents and settings. cPanel/PHP logs, upload configuration, ACME files and the deployment lock are excluded from Git so they do not block a clean checkout.
+
 ## Namecheap cPanel setup
 
 The checked-in `.cpanel.yml` runs `scripts/deploy-cpanel.sh`. cPanel supports pulling updates from a remote repository and deploying the checked-in tasks through its Git Version Control interface ([cPanel deployment documentation](https://docs.cpanel.net/knowledge-base/web-services/guide-to-git-deployment/), [Namecheap Git instructions](https://www.namecheap.com/support/knowledgebase/article.aspx/10113/2210/how-to-use-git-version-control-cpanel-plugin/)). The server checkout must stay outside the domain's publicly served directory.

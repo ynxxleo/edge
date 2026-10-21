@@ -2,6 +2,10 @@
 
 A Laravel 13 application with a public landing page, persistent user accounts, administrator-managed games and odds, transactional wallets, single and multiple stakes, copy staking, and settlement from final scores. The existing black, white, and neon green interface is retained. This update is prepared locally; the earlier hosted URL remains a static UI preview.
 
+## Hosted installation
+
+The Laravel application is deployed at https://edgepremiums.com and the admin desk is at https://edgepremiums.com/admin. Production uses a separate MySQL database with no imported local test funds or sample games. See [DEPLOYMENT.md](DEPLOYMENT.md) for the verified Namecheap paths and Git release workflow.
+
 ## Open this workspace
 
 The SQLite database is migrated and seeded with fictional future fixtures and three copy strategies. A local administrator was created with a generated password, stored in the ignored, private file [.local/admin-login.txt](.local/admin-login.txt). No balances are preloaded.
