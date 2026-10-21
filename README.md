@@ -1,6 +1,6 @@
 # EDGE — Laravel staking system
 
-A Laravel 13 application with a public landing page, persistent user accounts, administrator-managed games and odds, transactional wallets, single and multiple stakes, copy staking, and settlement from final scores. The existing black, white, and neon green interface is retained. This update is prepared locally; the earlier hosted URL remains a static UI preview.
+A Laravel 13 application with a public landing page, persistent user accounts, administrator-managed games and odds, transactional wallets, single and multiple stakes, copy staking, and settlement from final scores. The existing black, white, and neon green interface is retained. The Laravel application is hosted at edgepremiums.com.
 
 ## Hosted installation
 
@@ -32,6 +32,16 @@ php artisan serve --host=127.0.0.1 --port=8135
 ```
 
 The administrator command prompts privately for a password of at least 12 characters with letters and numbers. It can also reset/promote an existing account. There is no built-in administrator password. Rerunning the seeder preserves administrator edits and results.
+
+## Email sign-up and login codes
+
+Both sign-up and password login return a verification challenge (HTTP 202). Enter the six-digit email code in the platform to finish authentication. Sign-up creates the account only after the email is verified. Admins follow the same login flow. Codes expire after 10 minutes, allow five attempts, and can be resent after 60 seconds (eight messages per address per hour). Resending invalidates the previous code. A pending challenge resumes after refreshing the page in the same browser session.
+
+Configure a real mail transport before using authentication. Production supports SMTP, sendmail, SES, Postmark, or Resend and rejects log/array mail transports. Namecheap can use `MAIL_MAILER=sendmail` and `MAIL_SENDMAIL_PATH="/usr/sbin/sendmail -t -i"`; configure `MAIL_FROM_ADDRESS` for the sending domain. Confirm the admin account has a working inbox before deployment. For local development, the default log transport writes the email to the private Laravel development log; use an SMTP sandbox when testing delivery.
+
+The API endpoints are `POST /api/auth/register`, `POST /api/auth/login`, `POST /api/auth/verify` with `{ "code": "123456" }`, and `POST /api/auth/resend` with an empty JSON object. All require CSRF and session cookies. Verification creates a new authenticated session and rotates the CSRF token. Codes are hashed, pending details are encrypted, and consumed challenges are deleted. The scheduler removes stale challenges. No code is returned to the browser or logged in production.
+
+Run `python3 scripts/check-email-otp-api.py` for isolated verification, expiry, lockout, resend, session ownership, administrator gating and mail failure checks. It captures test mail without external delivery. Existing financial HTTP fixtures also complete the OTP step through an array mail transport in their disposable routers; no production authentication bypass exists.
 
 ## Git deployment
 

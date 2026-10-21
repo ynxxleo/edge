@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from otp_test_mail import complete_otp_fixture
 """Exercise the actual HTTP stack against a disposable SQLite database.
 
 Sessions, CSRF, authentication, authorization, input validation and the full
@@ -57,7 +58,7 @@ class Client:
         return response.status, body
 
     def expect(self, status, path, method="GET", data=None, **kwargs):
-        code, body = self.request(path, method, data, **kwargs)
+        code, body = complete_otp_fixture(self, status, path, self.request(path, method, data, **kwargs))
         check(code == status, f"{method} {path}: expected {status}, received {code}: {body}")
         return body
 
@@ -80,8 +81,11 @@ with tempfile.TemporaryDirectory(prefix="edge-api-") as directory:
         port_socket.bind(("127.0.0.1", 0))
         port = port_socket.getsockname()[1]
     base = f"http://127.0.0.1:{port}"
+    Client.otp_mail = Path(str(database) + '.otp-mail.json')
     log = open(Path(directory) / "server.log", "w+")
-    server = subprocess.Popen(["php", "artisan", "serve", "--host=127.0.0.1", "--port=" + str(port), "--no-reload"], cwd=ROOT, env=env, stdout=log, stderr=log)
+    router = Path(directory) / 'router.php'
+    router.write_text("<?php require '" + str(ROOT) + "/vendor/autoload.php'; $app = require '" + str(ROOT) + "/bootstrap/app.php'; $app->make(Illuminate\\Contracts\\Http\\Kernel::class)->bootstrap(); require getcwd().'/scripts/fixtures/capture-otp-mail.php'; $app->handleRequest(Illuminate\\Http\\Request::capture());")
+    server = subprocess.Popen(['php', '-S', f'127.0.0.1:{port}', '-t', str(ROOT / 'public'), str(router)], cwd=ROOT, env=env, stdout=log, stderr=log)
     try:
         member = Client(base)
         for _ in range(100):

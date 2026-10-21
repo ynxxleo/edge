@@ -24,6 +24,7 @@
     try{return await operation();}finally{pendingActions.delete(actionKey);release();}
   }
   let user=null,csrf='',events=[],strategies=[],state={bets:[],transactions:[],copy_positions:[],wallet_requests:[],balance_cents:0,profit_cents:0},selections=[],betType='single',stake='',sport='all',league='all',query='',liveOnly=false,expanded=false,page='sports',betFilter='active',copyFilter='active',walletMode='deposit',lastFocus=null,toastTimer,refreshSequence=0;
+  let otpChallenge=null,otpTimer;
   let betSubmissionKey=key();
   const copyChartSelection=new Map();
   let depositInstructions='Contact the platform administrator for verified bank transfer instructions. Submit the funding reference for review.';
@@ -60,8 +61,16 @@
   function info(title,body){$('#info-content').innerHTML=`<span class="section-kicker">YOUR GAME. YOUR EDGE.</span><h2 id="info-title">${title}<span>.</span></h2>${body}`;openModal('info-modal');}
   function auth(mode='login'){
     if(pendingForms.size)return;
+    if(otpChallenge){showOtp(otpChallenge);return;}
     request('/api/session').catch(e=>toast(errors(e)));
     info(mode==='login'?'WELCOME BACK':'JOIN THE GAME',`<p>${mode==='login'?'Sign in to manage your wallet and place stakes.':'Create your account. Use at least 12 characters, including letters and numbers. Your wallet starts at zero.'}</p><form id="auth-form" class="copy-funding-form" data-mode="${mode}">${mode==='register'?'<label for="auth-name">Full name</label><input id="auth-name" autocomplete="name" maxlength="100" required>':''}<label for="auth-email">Email</label><input id="auth-email" type="email" autocomplete="email" required maxlength="255"><label for="auth-password">Password</label><input id="auth-password" type="password" autocomplete="${mode==='register'?'new-password':'current-password'}" minlength="${mode==='register'?12:1}" required>${mode==='register'?'<label for="auth-confirmation">Confirm password</label><input id="auth-confirmation" type="password" autocomplete="new-password" minlength="12" required>':''}<p class="form-error" id="auth-error" role="alert" hidden></p><button class="button green wallet-submit" type="submit">${mode==='login'?'Sign in':'Create account'} ${icon('arrow')}</button></form><button class="auth-switch" data-auth="${mode==='login'?'register':'login'}">${mode==='login'?'New to EDGE? Create an account':'Already a member? Sign in'}</button>`);
+  }
+  function showOtp(challenge){
+    otpChallenge=challenge;clearInterval(otpTimer);
+    const resendAt=Date.now()+Number(challenge.resend_after||0)*1000;
+    info('CHECK YOUR EMAIL',`<p>We sent a six-digit code to <strong>${esc(challenge.email_hint)}</strong>. Enter it below to finish signing in. The code expires in 10 minutes.</p><form id="otp-form" class="copy-funding-form"><label for="auth-code">Verification code</label><input id="auth-code" name="code" type="text" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" minlength="6" maxlength="6" placeholder="000000" required style="font-size:28px;letter-spacing:.35em;text-align:center"><p class="form-error" id="otp-error" role="alert" hidden></p><button class="button green wallet-submit" type="submit">Verify & continue ${icon('arrow')}</button></form><p class="otp-help">Check your spam folder if the email hasn’t arrived.</p><button class="auth-switch" id="otp-resend" type="button">Resend code</button><button class="auth-switch" id="otp-change" type="button">Use another account</button>`);
+    const tick=()=>{const button=$('#otp-resend');if(!button||!button.isConnected){clearInterval(otpTimer);return;}const seconds=Math.max(0,Math.ceil((resendAt-Date.now())/1000));if(!pendingActions.has('otp-resend')){button.disabled=seconds>0;button.textContent=seconds?`Resend code in ${seconds}s`:'Resend code';}};
+    tick();otpTimer=setInterval(tick,1000);$('#auth-code')?.focus();
   }
   function requireUser(){if(user)return true;auth();return false;}
   async function refresh(){
@@ -322,7 +331,8 @@
   document.addEventListener('submit',e=>{
     const f=e.target;
     if(f.id==='auth-form'){e.preventDefault();submit(f,async()=>{const mode=f.dataset.mode;const payload={email:$('#auth-email').value,password:$('#auth-password').value};if(mode==='register'){payload.name=$('#auth-name').value;payload.password_confirmation=$('#auth-confirmation').value;}
-      const session=await request(`/api/auth/${mode}`,{method:'POST',body:payload});user=session.user;await refresh();announceSession();closeModal(true);toast(mode==='login'?'You’re signed in.':'Your account is ready.');},'#auth-error');}
+      const challenge=await request(`/api/auth/${mode}`,{method:'POST',body:payload});showOtp(challenge);},'#auth-error');}
+    if(f.id==='otp-form'){e.preventDefault();submit(f,async()=>{const session=await request('/api/auth/verify',{method:'POST',body:{code:$('#auth-code').value.trim()}});otpChallenge=null;clearInterval(otpTimer);user=session.user;await refresh();announceSession();closeModal(true);toast('Email verified. You’re signed in.');},'#otp-error');}
     if(f.id==='wallet-form'){e.preventDefault();submit(f,async()=>{
       const withdraw=walletMode==='withdraw',card=!withdraw&&$('#wallet-method').value==='stripe';
       const amount=cents($('#wallet-amount').value);
@@ -366,6 +376,8 @@
       if(b.id==='refresh-card-payments'){if(!requireUser())return;await action(b,'Refreshing…',()=>refresh());return;}
       if(b.dataset.page){navigate(b.dataset.page);return;}
       if(b.matches('.brand')){if(b.getAttribute('href')==='/')return;e.preventDefault();navigate('sports');return;}
+      if(b.id==='otp-resend'){if(pendingForms.size)return;await action(b,'Sending code…',async()=>{const challenge=await request('/api/auth/resend',{method:'POST',body:{}});showOtp(challenge);toast('A new code has been sent.');});return;}
+      if(b.id==='otp-change'){if(pendingForms.size||pendingActions.has('otp-resend'))return;otpChallenge=null;clearInterval(otpTimer);auth();return;}
       if(b.dataset.auth){auth(b.dataset.auth);return;}
       if(b.dataset.wallet||b.dataset.modalWallet){await wallet(b.dataset.wallet||b.dataset.modalWallet,b);return;}
       if(b.hasAttribute('data-close-modal')){closeModal();return;}
@@ -412,7 +424,7 @@
   render();
   (async()=>{
     let connected=false;
-    try{const session=await request('/api/session');user=session.user;announceSession();await refresh();connected=true;if(page==='admin')window.dispatchEvent(new CustomEvent('edge:navigate',{detail:{page:'admin'}}));}
+    try{const session=await request('/api/session');user=session.user;otpChallenge=session.auth_challenge;announceSession();await refresh();connected=true;if(!user&&otpChallenge)showOtp(otpChallenge);if(page==='admin')window.dispatchEvent(new CustomEvent('edge:navigate',{detail:{page:'admin'}}));}
     catch(e){toast(`Could not connect to the staking server. ${errors(e)}`);}
     finally{window.EdgeMotion?.ready?.();}
     const authMode=returnParameters.get('auth');

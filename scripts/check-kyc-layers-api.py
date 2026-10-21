@@ -39,6 +39,7 @@ def main():
             listener.bind(('127.0.0.1', 0))
             port = listener.getsockname()[1]
         base = f'http://127.0.0.1:{port}'
+        h.Client.otp_mail = Path(str(database) + '.otp-mail.json')
         env = os.environ | {
             'APP_ENV': 'local', 'APP_DEBUG': 'false', 'APP_URL': base,
             'APP_KEY': 'base64:' + base64.b64encode(os.urandom(32)).decode(),
@@ -55,6 +56,7 @@ define('LARAVEL_START', microtime(true));
 require getenv('EDGE_KYC_TEST_ROOT').'/vendor/autoload.php';
 $app = require getenv('EDGE_KYC_TEST_ROOT').'/bootstrap/app.php';
 $app->make(Illuminate\\Contracts\\Http\\Kernel::class)->bootstrap();
+require getcwd().'/scripts/fixtures/capture-otp-mail.php';
 Illuminate\\Support\\Facades\\Http::preventStrayRequests();
 $app->handleRequest(Illuminate\\Http\\Request::capture());
 """)

@@ -59,7 +59,12 @@ async function setup(options = {}) {
     else if (url === '/api/copy/strategies') data = { strategies: [strategy] };
     else if (url === '/api/state') data = { ...backend.state, user: backend.user };
     else if (url === '/api/auth/login' || url === '/api/auth/register') {
-      backend.user = { ...member, name: call.body.name || member.name, email: call.body.email, is_admin: !!options.loginAdmin };
+      backend.pending = { ...member, name: call.body.name || member.name, email: call.body.email, is_admin: !!options.loginAdmin };
+      data = {requires_otp:true,email_hint:'m***@test.invalid',resend_after:60};
+    } else if (url === '/api/auth/resend') {
+      data = {requires_otp:true,email_hint:'m***@test.invalid',resend_after:60};
+    } else if (url === '/api/auth/verify') {
+      backend.user = backend.pending;
       backend.state.user = backend.user;
       backend.token = 'csrf-auth-rotated';
       data = { user: backend.user, csrf_token: backend.token, currency: 'USD' };
@@ -201,12 +206,20 @@ async function stake(a, amount = '10.01') { a.input('#server-stake', amount); aw
     a.w.EdgeAPI.openAuth(); a.input('#auth-email', 'member@test.invalid'); a.input('#auth-password', 'Password123456'); await a.submit('#auth-form');
     const login = a.callsFor('/api/auth/login')[0]; assert.deepEqual(login.body, { email: 'member@test.invalid', password: 'Password123456' });
     assert.equal(login.headers['X-CSRF-TOKEN'], 'csrf-initial');
+    assert.equal(a.w.EdgeAPI.user,null);assert.ok(a.$('#otp-form'));assert.equal(a.$('#otp-resend').disabled,true);
+    a.input('#auth-code','123456');await a.submit('#otp-form');
+    assert.deepEqual(a.callsFor('/api/auth/verify')[0].body,{code:'123456'});
     await choose(a); await stake(a);
     assert.equal(a.callsFor('/api/bets')[0].headers['X-CSRF-TOKEN'], 'csrf-auth-rotated');
   }, { guest: true });
   await test('Registration sends name and password confirmation without role or balance fields', async a => {
     a.w.EdgeAPI.openAuth('register'); a.input('#auth-name', 'New Member'); a.input('#auth-email', 'new@test.invalid'); a.input('#auth-password', 'Password123456'); a.input('#auth-confirmation', 'Password123456'); await a.submit('#auth-form');
     assert.deepEqual(a.callsFor('/api/auth/register')[0].body, { name: 'New Member', email: 'new@test.invalid', password: 'Password123456', password_confirmation: 'Password123456' });
+    assert.equal(a.w.EdgeAPI.user,null);assert.equal(a.w.document.querySelector('#auth-password'),null);
+    a.failNext('/api/auth/verify',422,{errors:{code:['That code is incorrect or expired.']}});
+    a.input('#auth-code','000000');await a.submit('#otp-form');
+    assert.match(a.$('#otp-error').textContent,/incorrect or expired/);assert.equal(a.w.EdgeAPI.user,null);
+    a.input('#auth-code','123456');await a.submit('#otp-form');
     assert.equal(a.w.EdgeAPI.user.name, 'New Member');
   }, { guest: true });
   await test('Deposit requests remain pending without optimistic wallet credit', async a => {

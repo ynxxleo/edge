@@ -29,6 +29,8 @@ Route::prefix('api')->group(function (): void {
     Route::get('/session', [AuthController::class, 'session']);
     Route::post('/auth/register', [AuthController::class, 'register'])->middleware('throttle:6,1');
     Route::post('/auth/login', [AuthController::class, 'login'])->middleware('throttle:6,1');
+    Route::post('/auth/verify', [AuthController::class, 'verify'])->middleware('throttle:12,1,otp-verify');
+    Route::post('/auth/resend', [AuthController::class, 'resend'])->middleware('throttle:6,1,otp-resend');
     Route::post('/auth/logout', [AuthController::class, 'logout'])->middleware('auth');
     Route::get('/events', [StakingController::class, 'events']);
     Route::get('/copy/strategies', [StakingController::class, 'strategies']);

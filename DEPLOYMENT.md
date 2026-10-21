@@ -81,3 +81,9 @@ This runs the existing hourly pruning of expired pending payment credentials. Th
 Check `/up`, `/`, `/app`, and `/admin` over HTTPS. Sign in, confirm sessions and CSRF-protected requests work, confirm new wallets start at zero, and verify private KYC downloads require the owner or an admin. Confirm the chosen database and private uploads survive a release restart. Test new payment methods and review flows with an explicitly authorized test account. Configure any Stripe webhook with the hosted HTTPS URL; existing card-provider eligibility and production-mode restrictions remain in effect.
 
 Git excludes real environment files, local credentials and backups, SQLite database files, dependencies, runtime logs/caches, and private KYC uploads. Only blank/example environment templates are committed. The Git repository does not transfer current local test funds or payment credentials.
+
+## Email OTP release
+
+Authentication now requires a code sent to the account email for every sign-up and password login, including administrator login. Before releasing, confirm that the administrator can receive mail at the email stored on their account. Configure a real mail transport in the private server `.env`; `log` and `array` are rejected in production.
+
+On Namecheap, use `MAIL_MAILER=sendmail`, `MAIL_SENDMAIL_PATH="/usr/sbin/sendmail -t -i"`, and a sender address on the verified domain. The domain has SPF and DKIM records; verify actual inbox delivery separately. The release hook migrates `auth_challenges`, rebuilds configuration/routes/views, and the existing scheduler prunes old challenges. Keep the existing `APP_KEY` and enable session encryption. Do not use development mail captures or read production codes out of the database to test login.

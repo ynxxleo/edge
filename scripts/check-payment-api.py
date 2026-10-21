@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from otp_test_mail import complete_otp_fixture
 """Check payment settings and signed webhook boundaries over real local HTTP.
 
 Uses an isolated SQLite database, dummy test keys, and no Stripe API requests.
@@ -69,7 +70,7 @@ class Client:
         return response.status, body, response.headers
 
     def expect(self, status, path, method="GET", data=None, **kwargs):
-        code, body, headers = self.request(path, method, data, **kwargs)
+        code, body, headers = complete_otp_fixture(self, status, path, self.request(path, method, data, **kwargs))
         allowed = status if isinstance(status, tuple) else (status,)
         check(code in allowed, f"{method} {path}: expected {allowed}, received {code}: {body}")
         return body
@@ -83,6 +84,7 @@ def main():
             port_socket.bind(("127.0.0.1", 0))
             port = port_socket.getsockname()[1]
         base = f"http://127.0.0.1:{port}"
+        Client.otp_mail = Path(str(database) + '.otp-mail.json')
         env = os.environ | {
             "APP_ENV": "local", "APP_DEBUG": "false", "APP_URL": base,
             "APP_KEY": "base64:" + base64.b64encode(os.urandom(32)).decode(),
@@ -102,6 +104,7 @@ define('LARAVEL_START', microtime(true));
 require getenv('EDGE_PAYMENT_TEST_ROOT').'/vendor/autoload.php';
 $app = require getenv('EDGE_PAYMENT_TEST_ROOT').'/bootstrap/app.php';
 $app->make(Illuminate\\Contracts\\Http\\Kernel::class)->bootstrap();
+require getcwd().'/scripts/fixtures/capture-otp-mail.php';
 Illuminate\\Support\\Facades\\Http::preventStrayRequests();
 $app->handleRequest(Illuminate\\Http\\Request::capture());
 """)

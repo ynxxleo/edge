@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+from otp_test_mail import complete_otp_fixture
 """Exercise KYC ownership, private uploads, reviews and withdrawal gating over HTTP.
 
 Uses a disposable database and upload directory with synthetic identity details
@@ -91,7 +92,7 @@ class Client:
         return response.status, body, response.headers, raw
 
     def expect(self, status, path, method='GET', data=None, **kwargs):
-        actual, body, headers, raw = self.request(path, method, data, **kwargs)
+        actual, body, headers, raw = complete_otp_fixture(self, status, path, self.request(path, method, data, **kwargs))
         allowed = status if isinstance(status, tuple) else (status,)
         check(actual in allowed, f'{method} {path}: expected {allowed}, received {actual}: {body}')
         return body
@@ -110,6 +111,7 @@ def main():
             listener.bind(('127.0.0.1', 0))
             port = listener.getsockname()[1]
         base = f'http://127.0.0.1:{port}'
+        Client.otp_mail = Path(str(database) + '.otp-mail.json')
         env = os.environ | {
             'APP_ENV': 'local', 'APP_DEBUG': 'false', 'APP_URL': base,
             'APP_KEY': 'base64:' + base64.b64encode(os.urandom(32)).decode(),
@@ -126,6 +128,7 @@ define('LARAVEL_START', microtime(true));
 require getenv('EDGE_KYC_TEST_ROOT').'/vendor/autoload.php';
 $app = require getenv('EDGE_KYC_TEST_ROOT').'/bootstrap/app.php';
 $app->make(Illuminate\\Contracts\\Http\\Kernel::class)->bootstrap();
+require getcwd().'/scripts/fixtures/capture-otp-mail.php';
 Illuminate\\Support\\Facades\\Http::preventStrayRequests();
 $app->handleRequest(Illuminate\\Http\\Request::capture());
 """)
