@@ -39,7 +39,7 @@ function test(name, fn) {
   finally { app?.close(); }
 }
 function openDeposit(a, amount) { a.click('[data-wallet="deposit"]'); a.input('#wallet-amount', amount); }
-function openWithdraw(a, amount, { bank = 'GTBank', account = '0123456789', name = 'Demo User' } = {}) {
+function openWithdraw(a, amount, { bank = 'GTBank', account = '0123456789', name = 'User' } = {}) {
   a.click('[data-wallet="withdraw"]'); a.input('#wallet-amount', amount);
   a.input('#bank-name', bank, 'change'); a.input('#account-number', account); a.input('#account-name', name);
 }
@@ -198,13 +198,13 @@ test('Saved balances, bets and transactions survive reload', a => {
   finally { b.close(); }
 });
 
-test('Malformed localStorage falls back to the demo wallet', a => {
+test('Malformed localStorage falls back to the wallet', a => {
   for (const state of ['{bad json', '{}', {balance:'invalid',bets:[],transactions:[]}]) {
     const b = setup({ state }); try { assert.deepEqual(b.errors, []); assert.match(b.$('[data-balance]').textContent, /124,500\.00/); } finally { b.close(); }
   }
 });
 
-test('Profile reset restores demo state after mutation', a => {
+test('Profile reset restores state after mutation', a => {
   openDeposit(a, 1000); a.submit('#wallet-form'); a.click('#info-modal [data-close-modal]');
   a.click('#profile-button'); a.click('[data-info="account"]'); a.click('#reset-demo');
   assert.equal(a.stateNow().balance, 124500); assert.equal(a.stateNow().transactions.length, 6); assert.equal(a.$('#info-modal').hidden, true);

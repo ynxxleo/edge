@@ -118,7 +118,7 @@ async function choose(a, id = 101, outcome = 'home') { await a.click(`[data-serv
 async function stake(a, amount = '10.01') { a.input('#server-stake', amount); await a.submit('#server-stake-form'); }
 
 (async () => {
-  await test('Laravel mode loads server fixtures and ignores the demo wallet', async a => {
+  await test('Laravel mode loads server fixtures and ignores the wallet', async a => {
     assert.equal(a.w.EdgeAPI.serverMode, true);
     assert.ok(a.callsFor('/api/session').length);
     assert.ok(a.callsFor('/api/events').length);

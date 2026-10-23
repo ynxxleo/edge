@@ -295,7 +295,7 @@ test('An older saved wallet without copyPositions keeps its balance and activity
   assert.equal(s.transactions.length, 2); assert.equal(s.transactions[1].id, 'TX-LEGACY');
 }, { state: { balance: 10000, profit: 321, bets: [], transactions: [{ id: 'TX-LEGACY', type: 'deposit', title: 'Legacy deposit', amount: 10000, date: '2026-10-15T08:00:00.000Z' }] }, hash: '#copy' });
 
-test('Profile reset clears copy allocations and restores the demo wallet', a => {
+test('Profile reset clears copy allocations and restores the wallet', a => {
   fund(a); closeModal(a); a.click('#profile-button'); a.click('[data-info="account"]'); a.click('#reset-demo');
   const s = a.stateNow(); assert.equal(s.balance, 124500); assert.equal(s.profit, 24500);
   assert.deepEqual(s.copyPositions, []); assert.equal(s.transactions.length, 6);

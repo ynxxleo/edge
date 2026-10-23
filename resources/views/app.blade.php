@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#111310">
-  <meta name="description" content="Your game. Your edge. Explore sports and games, build a bet slip and manage your demo wallet.">
+  <meta name="description" content="Your game. Your edge. Explore sports and games, build a bet slip and manage your wallet.">
   <title>EDGE — Your game. Your edge.</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="/assets/app.css">
