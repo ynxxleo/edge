@@ -5,6 +5,6 @@
     "build": "node scripts/build-preview.mjs",
     "dev": "php artisan serve --host=127.0.0.1 --port=8000",
     "preview": "php -S 127.0.0.1:8080 -t dist",
-    "check": "node --check public/assets/app.js && node --check public/assets/server-app.js && node --check public/assets/admin.js && node --check public/assets/landing.js && node --check public/assets/motion.js && node --check public/assets/kyc.js && node --check public/assets/support.js && node --check public/assets/promo.js && node --check public/assets/manual-methods.js && node --check scripts/build-preview.mjs"
+    "check": "node --check public/assets/app.js && node --check public/assets/server-app.js && node --check public/assets/transfers.js && node --check public/assets/admin.js && node --check public/assets/landing.js && node --check public/assets/motion.js && node --check public/assets/kyc.js && node --check public/assets/support.js && node --check public/assets/promo.js && node --check public/assets/manual-methods.js && node --check scripts/build-preview.mjs"
   }
 }

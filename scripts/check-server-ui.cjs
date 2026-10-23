@@ -9,7 +9,7 @@ try { ({ JSDOM, VirtualConsole } = require(process.env.EDGE_JSDOM_PATH || 'jsdom
 catch { console.error('Install jsdom outside the repository and set EDGE_JSDOM_PATH.'); process.exit(1); }
 const root = path.resolve(__dirname, '..');
 const clone = value => JSON.parse(JSON.stringify(value));
-const member = { id: 1, name: 'Test Member', email: 'member@test.invalid', is_admin: false, kyc_status: 'approved' };
+const member = { id: 1, name: 'Test Member', email: 'member@test.invalid', is_admin: false, kyc_status: 'approved', account_number:'1234567890' };
 const strategy = { id: 11, name: 'Touchline Method', slug: 'touchline', sport: 'football', description: 'Copies administrator picks.', risk: 'balanced', stake_percentage: 10, active: true, min_deposit_cents: 10000 };
 const future = new Date(Date.now() + 86400000).toISOString();
 const past = new Date(Date.now() - 86400000).toISOString();
@@ -52,6 +52,9 @@ async function setup(options = {}) {
     }
     let data;
     if (url === '/api/session') data = { user: backend.user, csrf_token: backend.token, currency: 'USD', payment_mode: 'manual_review', deposit_instructions: 'Use only verified payment instructions.' };
+    else if (url.startsWith('/api/wallet/transfers?page=')) data={account_number:backend.user?.account_number,transfers:backend.transfers||[],pagination:{current_page:1,last_page:1,total:(backend.transfers||[]).length}};
+    else if (url==='/api/wallet/transfers/recipient') data={recipient:{name:'Recipient P.',account_number:call.body.account_number},confirmation_token:'test-confirmation'};
+    else if (url==='/api/wallet/transfers'){backend.state.balance_cents-=call.body.amount_cents;const transfer={reference:'internal-transfer-test',direction:'sent',amount_cents:call.body.amount_cents,counterparty:{name:'Recipient P.',account_number:call.body.account_number},created_at:future,status:'completed'};backend.transfers=[transfer];data={transfer};}
     else if (url === '/api/payment-methods') data = backend.methods;
     else if (url === '/api/kyc') data = {kyc:{status:(opts.method || 'GET') === 'POST'?'pending':backend.user?.kyc_status || 'not_submitted'}};
     else if (url === '/api/payments/stripe/checkout') data = { checkout_url: options.checkoutUrl || 'https://checkout.stripe.com/c/pay/cs_test_example', reference: 'stripe-test-reference', session_id: 'cs_test_example', mode: 'test', ...(options.checkoutPaid ? {payment:{status:'paid'},checkout_url:null}: {}) };
@@ -91,6 +94,7 @@ async function setup(options = {}) {
   w.addEventListener('error', e => errors.push(e.error?.message || e.message));
   w.eval(fs.readFileSync(path.join(root, 'public/assets/app.js'), 'utf8'));
   w.eval(fs.readFileSync(path.join(root, 'public/assets/server-app.js'), 'utf8'));
+  if(options.transfers)w.eval(fs.readFileSync(path.join(root,'public/assets/transfers.js'),'utf8'));
   await tick();
   const $ = selector => { const element = w.document.querySelector(selector); assert.ok(element, `Missing ${selector}`); return element; };
   const $$ = selector => [...w.document.querySelectorAll(selector)];
@@ -391,6 +395,28 @@ async function stake(a, amount = '10.01') { a.input('#server-stake', amount); aw
     await a.click('[data-wallet="withdraw"]');a.input('#wallet-amount','100');a.input('[data-payment-field="f_account"]','123');a.input('[data-payment-field="f_network"]','One','change');
     a.backend.methods.manual_methods[0].version=99;a.backend.methods.manual_methods[0].fields=[];await a.w.EdgeAPI.refresh();await a.submit('#wallet-form');assert.equal(a.callsFor('/api/wallet/requests')[0].body.details.method_version,3);
   },{methods:manualCatalog});
+  await test('Internal transfer confirms the recipient before password-authorised movement',async a=>{
+    assert.equal(a.$('#internal-account-number').textContent,'1234567890');
+    await a.click('[data-transfer-open]');a.input('#transfer-account','9876543210');a.input('#transfer-amount','12.34');await a.submit('#transfer-recipient-form');
+    assert.match(a.$('.transfer-review').textContent,/Recipient P\./);assert.match(a.$('.transfer-review').textContent,/\$12\.34/);assert.equal(a.callsFor('/api/wallet/transfers').length,0);
+    a.input('#transfer-password','SyntheticPassword123');await a.submit('#transfer-send-form');
+    const request=a.callsFor('/api/wallet/transfers')[0];assert.equal(request.body.amount_cents,1234);assert.equal(request.body.account_number,'9876543210');assert.equal(request.body.confirmation_token,'test-confirmation');assert.ok(request.body.idempotency_key);
+    assert.match(a.$('#transfer-title').textContent,/COMPLETE/);assert.match(a.$('#transfer-history').textContent,/Recipient P\./);assert.equal(a.w.document.querySelector('#transfer-password'),null);
+  },{transfers:true,hash:'#wallet'});
+  await test('An uncertain transfer retry retains its key and never optimistically debits',async a=>{
+    await a.click('[data-transfer-open]');a.input('#transfer-account','9876543210');a.input('#transfer-amount','25');await a.submit('#transfer-recipient-form');
+    a.failNext('/api/wallet/transfers');a.input('#transfer-password','SyntheticPassword123');await a.submit('#transfer-send-form');
+    assert.match(a.$('#transfer-error').textContent,/Network/);assert.equal(a.backend.state.balance_cents,100000);
+    const key=a.callsFor('/api/wallet/transfers')[0].body.idempotency_key;
+    await a.click('[data-transfer-close]');await a.click('[data-transfer-open]');a.input('#transfer-password','SyntheticPassword123');await a.submit('#transfer-send-form');
+    assert.equal(a.callsFor('/api/wallet/transfers')[1].body.idempotency_key,key);assert.equal(a.backend.state.balance_cents,97500);
+  },{transfers:true,hash:'#wallet'});
+  await test('Signing out clears transfer recipients, account number and history',async a=>{
+    await a.click('[data-transfer-open]');a.input('#transfer-account','9876543210');a.input('#transfer-amount','25');await a.submit('#transfer-recipient-form');
+    await a.click('[data-transfer-close]');await a.click('#profile-button');await a.click('#server-logout');
+    assert.equal(a.$('#transfer-modal').hidden,true);assert.equal(a.w.document.querySelector('#internal-account-number'),null);assert.doesNotMatch(a.$('#wallet-transfers').textContent,/1234567890|Recipient/);
+    assert.doesNotMatch(a.$('#transfer-content').textContent,/Recipient/);
+  },{transfers:true,hash:'#wallet'});
   console.log(`${passed} server UI checks passed; ${failed} failed.`);
   if (failed) process.exitCode = 1;
 })().catch(error => { console.error(error); process.exitCode = 1; });

@@ -22,6 +22,7 @@ class StakingData
 
         return [
             'id' => $user->id, 'name' => $user->name, 'email' => $user->email, 'is_admin' => (bool) $user->is_admin,
+            'account_number' => $user->internal_account_number,
             'kyc_status' => $kyc['status'],
             'kyc' => ['status' => $kyc['status'], 'withdrawal_requires_approval' => $kyc['withdrawal_requires_approval']],
         ];

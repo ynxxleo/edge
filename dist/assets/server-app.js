@@ -57,7 +57,7 @@
   }
   function toast(text){clearTimeout(toastTimer);$('#toast').textContent=text;$('#toast').hidden=false;toastTimer=setTimeout(()=>$('#toast').hidden=true,6000);}
   function openModal(id){lastFocus=document.activeElement;$$('.modal-backdrop').forEach(m=>m.hidden=m.id!==id);document.body.style.overflow='hidden';$('button,input,select',document.getElementById(id))?.focus();}
-  function closeModal(force=false){if(!force&&pendingForms.size)return;$$('#manual-withdraw-fields input,#manual-withdraw-fields textarea').forEach(input=>input.value='');$$('#manual-withdraw-fields select').forEach(input=>input.selectedIndex=0);$$('.modal-backdrop').forEach(m=>m.hidden=true);document.body.style.overflow='';if(lastFocus?.isConnected)lastFocus.focus();}
+  function closeModal(force=false){if(!force&&(pendingForms.size||document.querySelector('#transfer-modal[aria-busy="true"]')))return;$$('#manual-withdraw-fields input,#manual-withdraw-fields textarea').forEach(input=>input.value='');$$('#manual-withdraw-fields select').forEach(input=>input.selectedIndex=0);$$('.modal-backdrop').forEach(m=>m.hidden=true);document.body.style.overflow='';if(lastFocus?.isConnected)lastFocus.focus();}
   function info(title,body){$('#info-content').innerHTML=`<span class="section-kicker">YOUR GAME. YOUR EDGE.</span><h2 id="info-title">${title}<span>.</span></h2>${body}`;openModal('info-modal');}
   function auth(mode='login'){
     if(pendingForms.size)return;
@@ -146,8 +146,8 @@
   }
   function renderTransactions(){
     const filter=$('#transaction-filter').value;
-    const list=(state.transactions||[]).filter(t=>filter==='all'||(filter==='return'?['payout','refund'].includes(t.type):filter==='copy'?t.type.startsWith('copy'):t.type===filter));
-    $('#transaction-body').innerHTML=list.length?list.map(t=>`<tr><td>${esc(t.type==='promo_credit'?'Promotional credit':t.type.replaceAll('_',' '))}<small class="ledger-ref">${esc(t.reference)}</small></td><td>${date(t.created_at)}</td><td class="${t.amount_cents>=0?'amount-positive':'amount-negative'}">${t.amount_cents>=0?'+':'−'}${money(Math.abs(t.amount_cents))}</td><td><span class="transaction-status">Recorded</span></td></tr>`).join(''):'<tr><td colspan="4">No transactions yet.</td></tr>';
+    const list=(state.transactions||[]).filter(t=>filter==='all'||(filter==='transfer'?['transfer_in','transfer_out'].includes(t.type):filter==='return'?['payout','refund'].includes(t.type):filter==='copy'?t.type.startsWith('copy'):t.type===filter));
+    $('#transaction-body').innerHTML=list.length?list.map(t=>`<tr><td>${esc(t.type==='promo_credit'?'Promotional credit':t.type==='transfer_in'?'Transfer received':t.type==='transfer_out'?'Transfer sent':t.type.replaceAll('_',' '))}<small class="ledger-ref">${esc(t.reference)}</small></td><td>${date(t.created_at)}</td><td class="${t.amount_cents>=0?'amount-positive':'amount-negative'}">${t.amount_cents>=0?'+':'−'}${money(Math.abs(t.amount_cents))}</td><td><span class="transaction-status">Recorded</span></td></tr>`).join(''):'<tr><td colspan="4">No transactions yet.</td></tr>';
   }
   function renderRequests(){
     let section=$('#server-wallet-requests');

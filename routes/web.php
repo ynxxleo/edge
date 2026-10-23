@@ -48,6 +48,9 @@ Route::prefix('api')->group(function (): void {
 
     Route::middleware('auth')->group(function (): void {
         Route::get('/manual-payment-methods/{manualPaymentMethod}/image', [ManualPaymentMethodController::class, 'image']);
+        Route::get('/wallet/transfers', [\App\Http\Controllers\TransferController::class, 'index']);
+        Route::post('/wallet/transfers/recipient', [\App\Http\Controllers\TransferController::class, 'recipient'])->middleware('throttle:10,1,transfer-recipient');
+        Route::post('/wallet/transfers', [\App\Http\Controllers\TransferController::class, 'store'])->middleware('throttle:6,1,transfer-send');
         Route::get('/state', [StakingController::class, 'state']);
         Route::get('/promo-codes', [PromoCodeController::class, 'index']);
         Route::post('/promo-codes/redeem', [PromoCodeController::class, 'redeem'])->middleware('throttle:6,1,promo-redeem');

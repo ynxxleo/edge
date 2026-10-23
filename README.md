@@ -33,6 +33,18 @@ php artisan serve --host=127.0.0.1 --port=8135
 
 The administrator command prompts privately for a password of at least 12 characters with letters and numbers. It can also reset/promote an existing account. There is no built-in administrator password. Rerunning the seeder preserves administrator edits and results.
 
+## Internal wallet transfers
+
+Each existing and new user receives a permanent, random 10-digit EDGE account number. This identifies an internal USD wallet, not a bank account. Find it under **Wallet → EDGE transfers** and use **Copy** to share it.
+
+Choose **Send money**, enter the recipient number and amount, check the masked recipient name and total, then enter your current password to confirm. Sending requires administrator-approved KYC. Transfers use available funds only, carry no platform fee, and allow $1–$1,000,000 per instruction within existing wallet limits. Self-transfers are rejected. Received funds are ordinary wallet funds; existing withdrawal rules still apply. Completed transfers cannot be cancelled.
+
+Both parties receive a private, paginated receipt history, and the main transaction filter includes **Transfers**. Recipient discovery returns only a name with the last name reduced to an initial and an account number. There is no public account directory. Lookup and send endpoints have separate request limits. Recipient confirmations expire after 10 minutes and are bound to the sender and recipient. Passwords are checked again against the locked sender record and never stored in receipts.
+
+Transfers lock both users in ID order, then create the receipt, debit and credit in one database transaction. A sender-scoped request key makes exact retries safe, while reusing the key with a different amount or recipient fails. Ledger entries net to zero and are immutable. The account-number migration preserves all existing balances; future model changes cannot replace an assigned number.
+
+Run `php scripts/check-transfers.php` for migration, validation, rollback and concurrent duplicate/overspend checks; `python3 scripts/check-transfers-api.py` checks real OTP sessions, CSRF, KYC, receipt ownership and rate limits. Both use disposable databases and synthetic funds.
+
 ## Public information pages
 
 The landing page and each public information page share five navigation links: **Sports**, **Copy staking**, **Wallet**, **How it works**, and **About**. The footer links to **Help centre**, **Contact**, **Responsible play**, **Terms of use**, **Privacy policy**, **Cookie policy**, **KYC & verification**, and **Payments & withdrawals**. No public footer links to the admin desk.
