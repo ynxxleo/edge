@@ -397,12 +397,15 @@ async function stake(a, amount = '10.01') { a.input('#server-stake', amount); aw
   },{methods:manualCatalog});
   await test('Internal transfer confirms the recipient before password-authorised movement',async a=>{
     assert.equal(a.$('#internal-account-number').textContent,'1234567890');
-    await a.click('[data-transfer-open]');a.input('#transfer-account','9876543210');a.input('#transfer-amount','12.34');await a.submit('#transfer-recipient-form');
+    assert.equal(a.$('.wallet-card [data-wallet-account-number]').textContent,'1234567890');
+    let copied;Object.defineProperty(a.w.navigator,'clipboard',{value:{writeText:async value=>{copied=value;}}});
+    await a.click('.wallet-card [data-transfer-copy]');assert.equal(copied,'1234567890');
+    await a.click('.wallet-card [data-transfer-open]');a.input('#transfer-account','9876543210');a.input('#transfer-amount','12.34');await a.submit('#transfer-recipient-form');
     assert.match(a.$('.transfer-review').textContent,/Recipient P\./);assert.match(a.$('.transfer-review').textContent,/\$12\.34/);assert.equal(a.callsFor('/api/wallet/transfers').length,0);
     a.input('#transfer-password','SyntheticPassword123');await a.submit('#transfer-send-form');
     const request=a.callsFor('/api/wallet/transfers')[0];assert.equal(request.body.amount_cents,1234);assert.equal(request.body.account_number,'9876543210');assert.equal(request.body.confirmation_token,'test-confirmation');assert.ok(request.body.idempotency_key);
-    assert.match(a.$('#transfer-title').textContent,/COMPLETE/);assert.match(a.$('#transfer-history').textContent,/Recipient P\./);assert.equal(a.w.document.querySelector('#transfer-password'),null);
-  },{transfers:true,hash:'#wallet'});
+    assert.match(a.$('#transfer-title').textContent,/COMPLETE/);a.w.EdgeAPI.navigate('wallet');await tick();assert.match(a.$('#transfer-history').textContent,/Recipient P\./);assert.equal(a.w.document.querySelector('#transfer-password'),null);
+  },{transfers:true});
   await test('An uncertain transfer retry retains its key and never optimistically debits',async a=>{
     await a.click('[data-transfer-open]');a.input('#transfer-account','9876543210');a.input('#transfer-amount','25');await a.submit('#transfer-recipient-form');
     a.failNext('/api/wallet/transfers');a.input('#transfer-password','SyntheticPassword123');await a.submit('#transfer-send-form');
@@ -416,6 +419,8 @@ async function stake(a, amount = '10.01') { a.input('#server-stake', amount); aw
     await a.click('[data-transfer-close]');await a.click('#profile-button');await a.click('#server-logout');
     assert.equal(a.$('#transfer-modal').hidden,true);assert.equal(a.w.document.querySelector('#internal-account-number'),null);assert.doesNotMatch(a.$('#wallet-transfers').textContent,/1234567890|Recipient/);
     assert.doesNotMatch(a.$('#transfer-content').textContent,/Recipient/);
+    assert.equal(a.$('.wallet-card [data-wallet-account-number]').textContent,'Sign in to view');
+    assert.equal(a.$('.wallet-card [data-transfer-copy]').disabled,true);
   },{transfers:true,hash:'#wallet'});
   console.log(`${passed} server UI checks passed; ${failed} failed.`);
   if (failed) process.exitCode = 1;

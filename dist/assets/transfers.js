@@ -11,7 +11,14 @@
   const modal = document.createElement('div');modal.className = 'modal-backdrop';modal.id = 'transfer-modal';modal.hidden = true;
   modal.innerHTML = '<section class="modal info-modal transfer-dialog" role="dialog" aria-modal="true" aria-labelledby="transfer-title"><button class="icon-button modal-close" type="button" data-transfer-close aria-label="Close transfer">×</button><div id="transfer-content"></div></section>';
   document.body.append(modal);
+  function syncWalletCard() {
+    const serverMode=api()?.serverMode,number=serverMode?api()?.user?.account_number:null;
+    document.querySelectorAll('[data-wallet-account-number]').forEach(element=>{element.textContent=number||(serverMode?'Sign in to view':'Live account only');});
+    document.querySelectorAll('[data-transfer-copy="wallet-card"]').forEach(button=>{button.disabled=!number;button.textContent='Copy';});
+    document.querySelectorAll('.wallet-card [data-transfer-open]').forEach(button=>{button.disabled=!serverMode;});
+  }
   function shell() {
+    syncWalletCard();
     if (!api()?.serverMode) {panel.innerHTML = '<h2>EDGE transfers</h2><p>Internal account numbers and transfers are available in the live Laravel app.</p>';return;}
     const user = api().user;
     if (!user) {panel.innerHTML = '<h2>EDGE transfers</h2><p>Sign in to see your account number and send funds to another EDGE user.</p><button class="button green" data-transfer-signin>Sign in ↗</button>';return;}
@@ -26,7 +33,7 @@
       if (accountEpoch !== epoch || seq !== serial || !api()?.user) return;
       page = data.pagination.current_page;lastLoaded = Date.now();
       $('#internal-account-number').textContent = data.account_number;
-      $('[data-transfer-copy]').disabled = !data.account_number;
+      $('#wallet-transfers [data-transfer-copy]').disabled = !data.account_number;
       $('#transfer-history').innerHTML = data.transfers.length ? data.transfers.map(t => `<article class="transfer-history-row"><div><strong>${t.direction==='sent'?'To':'From'} ${esc(t.counterparty.name)}</strong><span>EDGE ${esc(t.counterparty.account_number)} · ${esc(new Date(t.created_at).toLocaleString())}</span><small>${esc(t.reference)}</small></div><div><strong class="${t.direction==='sent'?'amount-negative':'amount-positive'}">${t.direction==='sent'?'−':'+'}${money(t.amount_cents)}</strong><span>Completed</span></div></article>`).join('') : '<p class="transfer-empty">Sent and received transfers appear here. Funds move directly between EDGE wallets.</p>';
       $('#transfer-pagination').hidden = data.pagination.last_page <= 1;
       $('#transfer-page-label').textContent = `Page ${page} of ${data.pagination.last_page}`;
@@ -103,7 +110,11 @@
     if(button.hasAttribute('data-transfer-refresh'))history();
     if(button.dataset.transferPage)history(page+(button.dataset.transferPage==='next'?1:-1));
     if(button.hasAttribute('data-transfer-copy')){
-      try {await navigator.clipboard.writeText($('#internal-account-number').textContent);button.textContent='Copied';setTimeout(()=>{if(button.isConnected)button.textContent='Copy';},1800);}catch(_){const range=document.createRange();range.selectNodeContents($('#internal-account-number'));getSelection().removeAllRanges();getSelection().addRange(range);button.textContent='Select & copy';}
+      const accountEpoch=epoch;
+      const target=button.dataset.transferCopy==='wallet-card'?$('[data-wallet-account-number]'):$('#internal-account-number');
+      const number=api()?.user?.account_number;
+      if(!number||!target)return;
+      try {await navigator.clipboard.writeText(number);if(accountEpoch!==epoch)return;button.textContent='Copied';setTimeout(()=>{if(button.isConnected)button.textContent='Copy';},1800);}catch(_){if(accountEpoch!==epoch)return;const range=document.createRange();range.selectNodeContents(target);getSelection().removeAllRanges();getSelection().addRange(range);button.textContent='Select & copy';}
     }
   });
   document.addEventListener('keydown',event=>{
@@ -116,6 +127,7 @@
     }
   },true);
   function accountChanged() {
+    syncWalletCard();
     const next=api()?.user?.id||null;
     if(next!==identity){identity=next;++epoch;++serial;loading=false;pending=false;intent=null;page=1;lastLoaded=0;close(true);$('#transfer-content').replaceChildren();shell();}
     if(next&&active()&&Date.now()-lastLoaded>15000)history();

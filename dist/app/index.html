@@ -96,7 +96,8 @@
           <div class="balance-caption">Available balance <span class="demo-badge">DEMO</span></div>
           <div class="wallet-balance" data-balance>$124,500<span>.00</span></div>
           <div class="wallet-profit"><span>↗</span> <strong data-profit>$24,500.00</strong><span>Total profit</span></div>
-          <div class="wallet-actions"><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit</button><button class="button outline" data-wallet="withdraw">Withdraw <svg><use href="#i-arrow"/></svg></button></div>
+          <div class="wallet-card-account"><span>EDGE ACCOUNT NUMBER</span><div><strong data-wallet-account-number>Sign in to view</strong><button type="button" data-transfer-copy="wallet-card" aria-label="Copy your EDGE account number" disabled>Copy</button></div></div>
+          <div class="wallet-actions wallet-card-actions"><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit</button><button class="button outline" data-wallet="withdraw">Withdraw <svg><use href="#i-arrow"/></svg></button><button type="button" class="button outline wallet-card-transfer" data-transfer-open disabled>Transfer <svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
           <div class="wallet-divider"></div>
           <div class="wallet-stats"><div><span>Active stakes</span><strong data-stakes>$8,500.00</strong></div><div><span>Potential returns</span><strong class="green-text" data-returns>$21,675.00</strong></div></div>
           <button class="wallet-history-link" data-page="wallet">View wallet history <svg><use href="#i-arrow"/></svg></button>
