@@ -33,6 +33,16 @@ php artisan serve --host=127.0.0.1 --port=8135
 
 The administrator command prompts privately for a password of at least 12 characters with letters and numbers. It can also reset/promote an existing account. There is no built-in administrator password. Rerunning the seeder preserves administrator edits and results.
 
+## Administrator account top-ups
+
+Open **Admin → Account top-ups**, search by name, email or EDGE account number, and select a user. Enter $1–$1,000,000 and a reason, review the recipient and amount, then confirm with your current administrator password. This creates an immediate direct wallet credit. It does not debit an administrator wallet or claim that an external payment was received. Ordinary withdrawal and transfer rules still apply.
+
+The user sees **Admin top-up** in the wallet ledger and recent transactions, with its own history filter. The administrator desk has a paginated receipt history recording the operator, recipient, amount, reason, reference, and before/after balances. Reasons are encrypted and available only in admin receipts; they are omitted from user responses and the general audit feed.
+
+The credit, immutable receipt and audit commit together. Administrator status and the password are checked on the locked current account, and the recipient number must match. A request key protects retries from duplicate credits; changing the recipient, amount or reason with the same key is rejected. The UI retains the key after an uncertain response and clears password inputs after submission or leaving the tab.
+
+Run `php scripts/check-admin-topups.php` for validation, audit rollback and concurrent retries; `python3 scripts/check-admin-topups-api.py` checks OTP sessions, CSRF, permissions, private history and duplicate handling. These checks use disposable databases and synthetic credits. No real top-ups are issued during setup or deployment.
+
 ## Internal wallet transfers
 
 Each existing and new user receives a permanent, random 10-digit EDGE account number. This identifies an internal USD wallet, not a bank account. Find it under **Wallet → EDGE transfers** and use **Copy** to share it.

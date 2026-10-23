@@ -71,6 +71,9 @@ Route::prefix('api')->group(function (): void {
         Route::post('/copy/positions/{position}/close', [StakingController::class, 'closeCopy']);
 
         Route::prefix('admin')->middleware('admin')->group(function (): void {
+            Route::get('/top-ups/users', [\App\Http\Controllers\AdminTopupController::class, 'users'])->middleware('throttle:30,1,admin-topup-search');
+            Route::get('/top-ups', [\App\Http\Controllers\AdminTopupController::class, 'index']);
+            Route::post('/users/{user}/top-ups', [\App\Http\Controllers\AdminTopupController::class, 'store'])->middleware('throttle:10,1,admin-topup-credit');
             Route::get('/promo-codes', [PromoCodeController::class, 'adminIndex']);
             Route::post('/promo-codes', [PromoCodeController::class, 'store'])->middleware('throttle:10,1,promo-issue');
             Route::post('/promo-codes/{promoCode}/revoke', [PromoCodeController::class, 'revoke'])->middleware('throttle:10,1,promo-revoke');

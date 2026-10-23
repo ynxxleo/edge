@@ -26,7 +26,7 @@ class WalletService
 
     private function move(User $user, int $signedAmount, string $type, string $reference, array $metadata): WalletTransaction
     {
-        if ($signedAmount === 0 || strlen($reference) > 120 || ! in_array($type, ['deposit', 'promo_credit', 'stake', 'payout', 'withdrawal', 'refund', 'copy_allocation', 'copy_return', 'transfer_in', 'transfer_out'], true) || (in_array($type, ['promo_credit', 'transfer_in'], true) && $signedAmount < 0) || ($type === 'transfer_out' && $signedAmount > 0)) {
+        if ($signedAmount === 0 || strlen($reference) > 120 || ! in_array($type, ['deposit', 'promo_credit', 'stake', 'payout', 'withdrawal', 'refund', 'copy_allocation', 'copy_return', 'transfer_in', 'transfer_out', 'admin_topup'], true) || (in_array($type, ['promo_credit', 'transfer_in', 'admin_topup'], true) && $signedAmount < 0) || ($type === 'transfer_out' && $signedAmount > 0)) {
             StakingRules::fail('amount', 'Invalid wallet transaction.');
         }
         return StakingTransaction::run(function () use ($user, $signedAmount, $type, $reference, $metadata) {

@@ -177,7 +177,7 @@
     $('#admin-audit-list').innerHTML = audits.length ? audits.slice(0,5).map(item => `<div class="admin-audit-item"><p>${escape(item.description || item.action?.replace(/[._]/g,' ') || 'Operations update')}${item.subject_id || item.entity_id ? ` / #${escape(item.subject_id || item.entity_id)}` : ''}</p><span>${escape(date(item.created_at))}</span></div>`).join('') : '<div class="admin-audit-item"><p>No operations recorded yet.</p><span>Your next update will appear here.</span></div>';
   }
   function selectTab(tab) {
-    if (!['events','payments','copy','settings','kyc','support','promos'].includes(tab)) return;
+    if (!['events','payments','topups','copy','settings','kyc','support','promos'].includes(tab)) return;
     if (state.tab === 'settings' && tab !== 'settings') closeModal();
     state.tab = tab;
     $$('[data-admin-tab]').forEach(button => { const active = button.dataset.adminTab === tab;button.classList.toggle('active',active);button.setAttribute('aria-selected',String(active));button.tabIndex = active ? 0 : -1; });
@@ -431,6 +431,7 @@
     $('#admin-modal').addEventListener('click',event => {if (event.target.id === 'admin-modal') closeModal();});
     document.addEventListener('keydown',keydown);
     window.addEventListener('edge:session',event => applySession(event.detail || {}));
+    window.addEventListener('edge:admin-topup',()=>{if(canWrite())refresh();});
     window.addEventListener('edge:navigate',event => {if (event.detail?.page === 'admin' && canWrite()) refresh();else if (event.detail?.page !== 'admin') closeModal();});
     selectTab('events');
     applySession({user:window.EdgeAPI?.user || null,serverMode:window.EdgeAPI?.serverMode === true});

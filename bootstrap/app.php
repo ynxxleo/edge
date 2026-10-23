@@ -21,6 +21,13 @@ return Application::configure(basePath: dirname(__DIR__))
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->dontFlash(['current_password', 'password', 'password_confirmation', 'stripe_secret_key', 'stripe_webhook_secret', 'legal_name', 'date_of_birth', 'country', 'address', 'document_number', 'id_document', 'selfie', 'answers', 'reason', 'body', 'code', 'definition', 'image', 'details']);
         $exceptions->respond(function ($response, \Throwable $error, Request $request) {
+            if ($request->is('api/admin/top-ups', 'api/admin/top-ups/*', 'api/admin/users/*/top-ups')) {
+                if ($response->getStatusCode() >= 500) {
+                    $response = response()->json(['message' => 'The top-up could not be confirmed. Check top-up history before retrying.'], $response->getStatusCode());
+                }
+                $response->headers->set('Cache-Control', 'no-store, private');
+                $response->headers->set('X-Content-Type-Options', 'nosniff');
+            }
             if ($request->is('api/wallet/transfers', 'api/wallet/transfers/*')) {
                 if ($response->getStatusCode() >= 500) {
                     $response = response()->json(['message' => 'The transfer could not be confirmed. Check your transfer history before retrying.'], $response->getStatusCode());

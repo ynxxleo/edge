@@ -17,6 +17,8 @@ async function setup(options={}){
   const vc=new VirtualConsole();vc.on('jsdomError',e=>errors.push(e.message));
   const dom=new JSDOM(`<!doctype html><body>${markup}</body>`,{runScripts:'outside-only',url:'http://localhost:8000/#admin',virtualConsole:vc});
   const w=dom.window;
+  let credited=null,creditCount=0,loseResponse=options.loseTopupResponse;
+  const target={id:22,name:'Topup Recipient',email:'recipient@topup.test.invalid',account_number:'1234567890',balance_cents:50000};
   const responses={
     '/api/admin/events':{events:structuredClone(options.events || baseEvents)},
     '/api/admin/wallet-requests':{requests:[{id:4,user:{name:'Example User',email:'test@example.test'},type:'deposit',amount_cents:500000,status:'pending',method:'bank',created_at:past}]},
@@ -24,14 +26,14 @@ async function setup(options={}){
     '/api/admin/copy-picks':{picks:[]},
     '/api/admin/overview':{counts:{open_bets:12},recent_audits:[]}
   };
-  if(options.serverMode!==false)w.EdgeAPI={serverMode:true,user:options.user===undefined?{id:1,is_admin:true}:options.user,request:async(url,opts={})=>{calls.push({url,...opts});if(opts.method){if(options.rejectMutations)throw Object.assign(new Error('Request rejected'),{errors:{status:['This event was already finalized.']}});return{ok:true};}return responses[url];}};
-  w.eval(code);w.document.dispatchEvent(new w.Event('DOMContentLoaded'));await flush();await flush();
+  if(options.serverMode!==false)w.EdgeAPI={serverMode:true,user:options.user===undefined?{id:1,is_admin:true}:options.user,request:async(url,opts={})=>{calls.push({url,...opts});if(opts.method){if(options.rejectMutations)throw Object.assign(new Error('Request rejected'),{errors:{status:['This event was already finalized.']}});if(url==='/api/admin/users/22/top-ups'){const input=opts.body;const body=typeof input==='string'?JSON.parse(input):input;if(!credited){creditCount++;credited={reference:'admin-topup-fixture',amount_cents:body.amount_cents,balance_before_cents:target.balance_cents,balance_after_cents:target.balance_cents+body.amount_cents,reason:body.reason,user:target,admin:{id:1,name:'Operator'},created_at:future};}if(loseResponse){loseResponse=false;throw new Error('Connection lost after sending.');}return{topup:credited,idempotent:creditCount===1};}return{ok:true};}if(url.startsWith('/api/admin/top-ups/users'))return{users:[target]};if(url.startsWith('/api/admin/top-ups?page='))return{topups:credited?[credited]:[],pagination:{current_page:1,last_page:1,total:credited?1:0}};return responses[url];}};
+  w.eval(code);if(options.topups){w.document.querySelector('#admin-page').hidden=false;w.eval(fs.readFileSync(path.join(root,'public/assets/topups.js'),'utf8'));}w.document.dispatchEvent(new w.Event('DOMContentLoaded'));await flush();await flush();
   const $=selector=>{const el=w.document.querySelector(selector);assert.ok(el,`Missing ${selector}`);return el;};
   const $$=selector=>[...w.document.querySelectorAll(selector)];
   const click=selector=>$(selector).click();
   const input=(selector,value,type='input')=>{const el=$(selector);el.value=String(value);el.dispatchEvent(new w.Event(type,{bubbles:true}));};
   const submit=async selector=>{$(selector).dispatchEvent(new w.Event('submit',{bubbles:true,cancelable:true}));await flush();await flush();};
-  return{w,$,$$,click,input,submit,calls,errors,close:()=>w.close()};
+  return{w,$,$$,click,input,submit,calls,errors,creditCount:()=>creditCount,close:()=>w.close()};
 }
 let passed=0,failed=0;
 async function test(name,fn,options){let a;try{a=await setup(options);await fn(a);assert.deepEqual(a.errors,[]);console.log(`PASS ${name}`);passed++;}catch(e){console.error(`FAIL ${name}: ${e.message}`);failed++;}finally{a?.close();}}
@@ -54,5 +56,25 @@ await test('Publishing copy picks uses current strategy and event odds',async a=
 await test('Session demotion clears the workspace and closes admin forms',async a=>{a.click('[data-admin-edit="1"]');a.w.dispatchEvent(new a.w.CustomEvent('edge:session',{detail:{serverMode:true,user:{id:2,is_admin:false}}}));assert.equal(a.$('#admin-workspace').hidden,true);assert.equal(a.$('#admin-modal').hidden,true);});
 await test('Untrusted event names render as text without injecting elements',async a=>{assert.equal(a.$$('#admin-event-list script').length,0);assert.match(a.$('#admin-event-list').textContent,/<script>/);a.click('[data-admin-result="3"]');assert.equal(a.$$('#admin-modal-content script').length,0);},{events:baseEvents.map(e=>e.id===3?{...e,home_name:'<script>alert(1)</script>'}:e)});
 await test('Tabs support keyboard navigation and maintain accessible selection',async a=>{const tab=a.$('[data-admin-tab=events]');tab.dispatchEvent(new a.w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));assert.equal(a.$('[data-admin-tab=payments]').getAttribute('aria-selected'),'true');assert.equal(a.$('#admin-payments-tab').hidden,false);});
+await test('Admin top-up reviews the selected account and requires password plus confirmation',async a=>{
+ a.click('[data-admin-tab=topups]');await flush();await flush();
+ assert.match(a.$('#topup-user-results').textContent,/recipient@topup/);a.click('[data-topup-user="22"]');
+ a.input('#topup-amount','123.45');a.input('#topup-reason','Synthetic correction reason');await a.submit('#topup-draft-form');
+ assert.match(a.$('#topup-review').textContent,/1234567890/);assert.match(a.$('#topup-review').textContent,/\$123\.45/);assert.equal(a.calls.filter(c=>c.url.includes('/top-ups')&&c.method).length,0);
+ await a.submit('#topup-confirm-form');assert.equal(a.creditCount(),0);
+ a.input('#topup-password','SyntheticAdminTopup123');a.$('#topup-confirm-form [name=confirmed]').checked=true;await a.submit('#topup-confirm-form');
+ const call=a.calls.find(c=>c.url==='/api/admin/users/22/top-ups');assert.equal(call.body.amount_cents,12345);assert.equal(call.body.account_number,'1234567890');assert.equal(call.body.confirmed,true);assert.ok(call.body.idempotency_key);assert.equal(a.creditCount(),1);
+ assert.match(a.$('#topup-feedback').textContent,/credited/);assert.match(a.$('#topup-history-list').textContent,/Synthetic correction reason/);assert.equal(a.w.document.querySelector('#topup-password'),null);
+},{topups:true});
+await test('An uncertain admin top-up retains the key and retry receives one credit',async a=>{
+ a.click('[data-admin-tab=topups]');await flush();await flush();a.click('[data-topup-user="22"]');a.input('#topup-amount','10');a.input('#topup-reason','Synthetic retry reason');await a.submit('#topup-draft-form');a.input('#topup-password','SyntheticAdminTopup123');a.$('#topup-confirm-form [name=confirmed]').checked=true;await a.submit('#topup-confirm-form');
+ assert.match(a.$('#topup-feedback').textContent,/uncertain/);assert.equal(a.$('#topup-password').value,'');const first=a.calls.find(c=>c.url==='/api/admin/users/22/top-ups').body.idempotency_key;
+ a.click('[data-topup-edit]');await a.submit('#topup-draft-form');a.input('#topup-password','SyntheticAdminTopup123');a.$('#topup-confirm-form [name=confirmed]').checked=true;await a.submit('#topup-confirm-form');const calls=a.calls.filter(c=>c.url==='/api/admin/users/22/top-ups');assert.equal(calls[1].body.idempotency_key,first);assert.equal(a.creditCount(),1);
+},{topups:true,loseTopupResponse:true});
+await test('Demotion clears private top-up details and pending confirmation',async a=>{
+ a.click('[data-admin-tab=topups]');await flush();await flush();a.click('[data-topup-user="22"]');a.input('#topup-amount','10');a.input('#topup-reason','Synthetic private reason');await a.submit('#topup-draft-form');a.input('#topup-password','SyntheticAdminTopup123');
+ a.w.dispatchEvent(new a.w.CustomEvent('edge:session',{detail:{serverMode:true,user:{id:1,is_admin:false}}}));
+ assert.equal(a.$('#topup-workspace').hidden,true);assert.equal(a.$('#topup-review').textContent,'');assert.equal(a.$('#topup-user-results').textContent,'');assert.equal(a.$('#topup-history-list').textContent,'');assert.equal(a.creditCount(),0);
+},{topups:true});
 console.log(`\n${passed} admin UI checks passed; ${failed} failed.`);process.exitCode=failed?1:0;
 })();
