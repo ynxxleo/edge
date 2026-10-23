@@ -144,10 +144,19 @@
     const list=(state.bets||[]).filter(b=>betFilter==='all'||(betFilter==='active'?b.status==='pending':b.status!=='pending'));
     $('#bet-history').innerHTML=list.length?list.map(b=>`<article class="history-card"><div class="history-top"><span>${esc(b.reference)} · ${date(b.created_at)}</span><span class="history-status">${esc(b.status.toUpperCase())}</span></div><h3>${b.type==='multiple'?`${b.selections?.length||0}-selection multiple`:'Single stake'}</h3>${(b.selections||[]).map(s=>`<p>${esc(s.home_name||s.event?.home_name)} vs ${esc(s.away_name||s.event?.away_name)}<br>${esc(s.outcome.toUpperCase())} · ${Number(s.odds).toFixed(2)} · ${esc(s.status)}</p>`).join('')}<div class="history-values"><div><span>STAKE</span><strong>${money(b.stake_cents)}</strong></div><div><span>${b.status==='pending'?'POTENTIAL RETURN':'SETTLED RETURN'}</span><strong class="green-text">${money(b.status==='pending'?b.potential_return_cents:b.payout_cents)}</strong></div></div><p class="server-bet-note">${b.status==='pending'?'Settles after the administrator publishes final results.':'Settlement recorded in your wallet ledger.'}</p></article>`).join(''):`<div class="empty-history">${user?'No stakes in this category yet.':'Sign in to view your stakes.'}</div>`;
   }
+  const transactionLabel=type=>({deposit:'Deposit',promo_credit:'Promotional credit',transfer_in:'Transfer received',transfer_out:'Transfer sent',stake:'Stake',payout:'Winning return',withdrawal:'Withdrawal',refund:'Refund',copy_allocation:'Copy allocation',copy_return:'Copy return'}[type]||String(type||'Transaction').replaceAll('_',' '));
+  function renderRecentTransactions(){
+    const target=$('#recent-transactions-list');if(!target)return;
+    $('#recent-transactions-view-all').hidden=!user;
+    if(!user){target.innerHTML='<li class="recent-transactions-empty">Sign in to see your previous transactions. <button type="button" class="text-button" data-auth="login">Sign in ↗</button></li>';return;}
+    const recent=[...(state.transactions||[])].sort((a,b)=>(new Date(b.created_at||0)-new Date(a.created_at||0))||(Number(b.id||0)-Number(a.id||0))).slice(0,5);
+    target.innerHTML=recent.length?recent.map(t=>`<li class="recent-transaction-row"><span class="recent-transaction-icon ${t.amount_cents>=0?'is-credit':'is-debit'}" aria-hidden="true">${t.amount_cents>=0?'↙':'↗'}</span><div class="recent-transaction-details"><strong>${esc(transactionLabel(t.type))}</strong><span>${esc(date(t.created_at))}</span><small title="${esc(t.reference)}">${esc(t.reference)}</small></div><div class="recent-transaction-value"><strong class="${t.amount_cents>=0?'amount-positive':'amount-negative'}">${t.amount_cents>=0?'+':'−'}${money(Math.abs(t.amount_cents))}</strong><span>Recorded</span></div></li>`).join(''):'<li class="recent-transactions-empty">No transactions yet. Your deposits, stakes, returns and transfers will appear here.</li>';
+  }
   function renderTransactions(){
     const filter=$('#transaction-filter').value;
     const list=(state.transactions||[]).filter(t=>filter==='all'||(filter==='transfer'?['transfer_in','transfer_out'].includes(t.type):filter==='return'?['payout','refund'].includes(t.type):filter==='copy'?t.type.startsWith('copy'):t.type===filter));
-    $('#transaction-body').innerHTML=list.length?list.map(t=>`<tr><td>${esc(t.type==='promo_credit'?'Promotional credit':t.type==='transfer_in'?'Transfer received':t.type==='transfer_out'?'Transfer sent':t.type.replaceAll('_',' '))}<small class="ledger-ref">${esc(t.reference)}</small></td><td>${date(t.created_at)}</td><td class="${t.amount_cents>=0?'amount-positive':'amount-negative'}">${t.amount_cents>=0?'+':'−'}${money(Math.abs(t.amount_cents))}</td><td><span class="transaction-status">Recorded</span></td></tr>`).join(''):'<tr><td colspan="4">No transactions yet.</td></tr>';
+    $('#transaction-body').innerHTML=list.length?list.map(t=>`<tr><td>${esc(transactionLabel(t.type))}<small class="ledger-ref">${esc(t.reference)}</small></td><td>${date(t.created_at)}</td><td class="${t.amount_cents>=0?'amount-positive':'amount-negative'}">${t.amount_cents>=0?'+':'−'}${money(Math.abs(t.amount_cents))}</td><td><span class="transaction-status">Recorded</span></td></tr>`).join(''):'<tr><td colspan="4">No transactions yet.</td></tr>';
+    renderRecentTransactions();
   }
   function renderRequests(){
     let section=$('#server-wallet-requests');
@@ -374,6 +383,7 @@
     try{
       if(b.hasAttribute('data-copy-chart-point')){selectCopyChartPoint(b);return;}
       if(b.id==='refresh-card-payments'){if(!requireUser())return;await action(b,'Refreshing…',()=>refresh());return;}
+      if(b.id==='recent-transactions-view-all'){$('#transaction-filter').value='all';renderTransactions();}
       if(b.dataset.page){navigate(b.dataset.page);return;}
       if(b.matches('.brand')){if(b.getAttribute('href')==='/')return;e.preventDefault();navigate('sports');return;}
       if(b.id==='otp-resend'){if(pendingForms.size)return;await action(b,'Sending code…',async()=>{const challenge=await request('/api/auth/resend',{method:'POST',body:{}});showOtp(challenge);toast('A new code has been sent.');});return;}

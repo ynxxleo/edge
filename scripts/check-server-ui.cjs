@@ -138,6 +138,10 @@ async function stake(a, amount = '10.01') { a.input('#server-stake', amount); aw
     assert.equal(a.$('#server-total-stake').textContent, '$1,000.00');
     assert.match(a.$('#bet-history').textContent, /\$10\.01/);
     assert.match(a.$('#transaction-body').textContent, /\+\$100\.25/);
+    assert.match(a.$('#recent-transactions-list').textContent, /USD-TRANSFER/);
+    assert.match(a.$('#recent-transactions-list').textContent, /\+\$100\.25/);
+    assert.equal(a.$('.activity-strip').previousElementSibling.classList.contains('recent-transactions'),true);
+    await a.click('#recent-transactions-view-all');assert.equal(a.$('#wallet-page').hidden,false);
     assert.match(a.$('#server-wallet-requests').textContent, /\$200\.50/);
     assert.match(a.$('#server-card-payments').textContent, /\$300\.75/);
     for (const action of ['deposit', 'withdraw']) {
@@ -252,12 +256,14 @@ async function stake(a, amount = '10.01') { a.input('#server-stake', amount); aw
     await a.click('#profile-button'); await a.click('#server-logout');
     assert.equal(a.w.EdgeAPI.user, null); assert.match(a.$('[data-balance]').textContent, /0\.00/); assert.equal(a.$('#bets-count').textContent, '0');
     assert.equal(a.$('#admin-nav').hidden, true); assert.match(a.$('#transaction-body').textContent, /No transactions/);
+    assert.doesNotMatch(a.$('#recent-transactions-list').textContent,/PRIVATE-TRANSFER/);assert.match(a.$('#recent-transactions-list').textContent,/Sign in/);
   }, { admin: true, state: { profit_cents: 5000, bets: [{ id: 1, reference: 'Private bet', status: 'pending', type: 'single', stake_cents: 1000, potential_return_cents: 2000, selections: [], created_at: future }], transactions: [{ id: 1, reference: 'PRIVATE-TRANSFER', type: 'deposit', amount_cents: 100000, created_at: future }] } });
   await test('An expired session clears previously rendered private state', async a => {
     a.failNext('/api/state', 401, { message: 'Unauthenticated.' });
     await a.intervals[0](); await tick();
     assert.equal(a.w.EdgeAPI.user, null); assert.equal(a.$('#admin-nav').hidden, true);
     assert.match(a.$('[data-balance]').textContent, /0\.00/); assert.doesNotMatch(a.$('#transaction-body').textContent, /PRIVATE-TRANSFER/);
+    assert.doesNotMatch(a.$('#recent-transactions-list').textContent,/PRIVATE-TRANSFER/);assert.equal(a.$('#recent-transactions-view-all').hidden,true);
   }, { admin: true, state: { transactions: [{ id: 1, reference: 'PRIVATE-TRANSFER', type: 'deposit', amount_cents: 100000, created_at: future }] } });
 
   const bothMethods = { stripe: { enabled: true, mode: 'test' }, manual: { enabled: true, bank_name: 'Example Bank', account_name: 'EDGE Payments', account_number: '1234567890', instructions: 'Transfer only to the displayed account.', reference_label: 'Transfer reference', support_contact: 'payments@example.test' } };

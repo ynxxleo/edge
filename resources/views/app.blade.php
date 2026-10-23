@@ -105,6 +105,11 @@
         </aside>
       </section>
 
+      <section class="recent-transactions" aria-labelledby="recent-transactions-title">
+        <div class="recent-transactions-heading"><div><span class="section-kicker">YOUR LATEST WALLET ACTIVITY</span><h2 id="recent-transactions-title">Recent transactions<span class="green-text">.</span></h2></div><button class="text-button" type="button" data-page="wallet" id="recent-transactions-view-all" hidden>View all <svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+        <ul class="recent-transactions-list" id="recent-transactions-list"><li class="recent-transactions-empty">Sign in to view your previous transactions.</li></ul>
+      </section>
+
       <div class="activity-strip"><span><i></i> <strong>THE GAME NEVER STOPS</strong></span><span>124 <small>live events</small></span><span>32 <small>sports to explore</small></span><span class="strip-end">FIND YOUR NEXT PLAY <svg><use href="#i-arrow"/></svg></span></div>
 
       <section class="sports-section" id="markets-section">
