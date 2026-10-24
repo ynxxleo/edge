@@ -7,7 +7,7 @@
   <meta name="description" content="Your game. Your edge. Explore sports and games, build a bet slip and manage your wallet.">
   <title>EDGE — Your game. Your edge.</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/app.css">
+  <link rel="stylesheet" href="/assets/app.css?v=20261024-wallet">
   <link rel="stylesheet" href="/assets/admin.css">
   <link rel="stylesheet" href="/assets/server.css">
   <link rel="stylesheet" href="/assets/motion.css">
@@ -79,30 +79,21 @@
     <div class="page-topline"><span><span class="status-dot"></span> THE HOME OF YOUR NEXT MOVE</span><span class="topline-right">PLAY SMART. STAY IN CONTROL. <span class="age-badge">18+</span></span></div>
 
     <div id="sports-page" class="page-panel">
-      <section class="hero-grid" aria-label="Welcome to EDGE">
-        <div class="hero">
-          <img class="hero-image nfl-hero" src="/assets/game-nfl.jpg" alt="NFL quarterback Tom Brady in a New England Patriots helmet preparing to throw a football">
-          <div class="hero-shade"></div>
-          <div class="hero-content">
-            <span class="eyebrow hero-eyebrow"><span class="green-dot"></span> FOR THE LOVE OF THE GAME</span>
-            <h1>YOUR GAME.<br>YOUR <span>EDGE.</span><span class="headline-star">✳</span></h1>
-            <p>Big moments. Bold moves.<br>A whole new way to get in the game.</p>
-            <button class="button white hero-cta" id="explore-button">Explore sports <svg><use href="#i-arrow"/></svg></button>
+      <section class="wallet-overview" aria-label="Your wallet">
+        <aside class="wallet-card wallet-card-primary" aria-label="Your wallet overview">
+          <div class="wallet-card-top"><h1 class="eyebrow">YOUR WALLET</h1><span class="wallet-symbol"><svg><use href="#i-wallet"/></svg></span></div>
+          <div class="wallet-card-summary">
+            <div class="balance-caption">Available balance <span class="demo-badge">DEMO</span></div>
+            <div class="wallet-balance" data-balance>$124,500<span>.00</span></div>
+            <div class="wallet-profit"><span>↗</span> <strong data-profit>$24,500.00</strong><span>Total profit</span></div>
+            <div class="wallet-card-account"><span>EDGE ACCOUNT NUMBER</span><div><strong data-wallet-account-number>Sign in to view</strong><button type="button" data-transfer-copy="wallet-card" aria-label="Copy your EDGE account number" disabled>Copy</button></div></div>
           </div>
-          <div class="hero-index"><span>01 / 03</span><span class="hero-progress"><i></i></span><span>BUILT FOR THE GAME ↗</span></div>
-          <span class="hero-watermark">E.</span>
-          <span class="nfl-photo-credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Tom_Brady.jpg" target="_blank" rel="noopener noreferrer">Keith Allison</a> · <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 2.0</a></span>
-        </div>
-        <aside class="wallet-card" aria-label="Your wallet overview">
-          <div class="wallet-card-top"><span class="eyebrow">YOUR WALLET</span><span class="wallet-symbol"><svg><use href="#i-wallet"/></svg></span></div>
-          <div class="balance-caption">Available balance <span class="demo-badge">DEMO</span></div>
-          <div class="wallet-balance" data-balance>$124,500<span>.00</span></div>
-          <div class="wallet-profit"><span>↗</span> <strong data-profit>$24,500.00</strong><span>Total profit</span></div>
-          <div class="wallet-card-account"><span>EDGE ACCOUNT NUMBER</span><div><strong data-wallet-account-number>Sign in to view</strong><button type="button" data-transfer-copy="wallet-card" aria-label="Copy your EDGE account number" disabled>Copy</button></div></div>
-          <div class="wallet-actions wallet-card-actions"><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit</button><button class="button outline" data-wallet="withdraw">Withdraw <svg><use href="#i-arrow"/></svg></button><button type="button" class="button outline wallet-card-transfer" data-transfer-open disabled>Transfer <svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
-          <div class="wallet-divider"></div>
-          <div class="wallet-stats"><div><span>Active stakes</span><strong data-stakes>$8,500.00</strong></div><div><span>Potential returns</span><strong class="green-text" data-returns>$21,675.00</strong></div></div>
-          <button class="wallet-history-link" data-page="wallet">View wallet history <svg><use href="#i-arrow"/></svg></button>
+          <div class="wallet-card-controls">
+            <div class="wallet-actions wallet-card-actions"><button class="button green" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit</button><button class="button outline" data-wallet="withdraw">Withdraw <svg><use href="#i-arrow"/></svg></button><button type="button" class="button outline wallet-card-transfer" data-transfer-open disabled>Transfer <svg aria-hidden="true"><use href="#i-arrow"/></svg></button></div>
+            <div class="wallet-divider"></div>
+            <div class="wallet-stats"><div><span>Active stakes</span><strong data-stakes>$8,500.00</strong></div><div><span>Potential returns</span><strong class="green-text" data-returns>$21,675.00</strong></div></div>
+            <button class="wallet-history-link" data-page="wallet">View wallet history <svg><use href="#i-arrow"/></svg></button>
+          </div>
           <div class="wallet-security"><svg><use href="#i-lock"/></svg> YOUR WALLET. YOUR CONTROL.</div>
         </aside>
       </section>
