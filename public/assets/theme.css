@@ -1,0 +1,162 @@
+/* Appearance is set before the first paint by theme.js. */
+html{color-scheme:light}
+html[data-theme="dark"]{color-scheme:dark;--bg:#111611;--paper:#1b221c;--ink:#f0f4ec;--muted:#a8b4a2;--line:#374236;--soft:#242e25;--theme-subtle:#242e25;--theme-field:#131b15;--theme-positive:#64efad;--theme-negative:#ffb09c;--theme-warning:#f1cc83}
+.theme-toggle{width:36px;height:36px;min-width:36px;display:grid;place-items:center;flex-shrink:0;padding:8px;border:1px solid var(--line);border-radius:50%;background:var(--soft);color:var(--ink)}
+.theme-toggle:hover{background:var(--green);color:#151714;border-color:#00b86c}
+.theme-toggle svg{width:18px;height:18px}
+.theme-toggle .theme-icon-sun{display:none}
+html[data-theme="dark"] .theme-toggle .theme-icon-sun{display:block}
+html[data-theme="dark"] .theme-toggle .theme-icon-moon{display:none}
+
+/* Header, navigation and shared controls. */
+html[data-theme="dark"] :is(.nav-count,.avatar,.demo-badge,.toggle){background:var(--theme-subtle);color:var(--ink);border-color:var(--line)}
+html[data-theme="dark"] :is(.tiny-label,.topline-right,.section-kicker,.popover p,.site-footer>p,.site-footer>div button,.footer-note,.activity-strip small,.bottom-banner .eyebrow,.subpage-heading p,.demo-explanation){color:var(--muted)}
+html[data-theme="dark"] :is(.age-badge,.outline,.wallet-symbol,.empty-slip-icon,.cashout-button,.copy-how>div>span,.copy-empty-symbol){border-color:var(--line)}
+html[data-theme="dark"] :is(.outline:hover,.icon-button:hover,.sport-tab:hover:not(.active),.view-all-button:hover,.stake-presets button:hover,.amount-presets button:hover){background:#2e3c30;border-color:#688166}
+html[data-theme="dark"] :is(.nav-link:hover,.site-footer>div button:hover,.match-more:hover,.copy-wallet-link:hover,.auth-switch){color:var(--green)}
+html[data-theme="dark"] :is(.button.green,.button.white:hover,.odds-button.selected,.empty-slip-icon>span,.success-symbol,.support-footer form>button){color:#151714}
+html[data-theme="dark"] .cashout-button:hover{color:#151714}
+html[data-theme="dark"] :is(.sport-tab.active,.betslip-title h3 span){background:var(--green);color:#151714;border-color:var(--green)}
+html[data-theme="dark"] .sport-tab.active svg{color:#151714}
+html[data-theme="dark"] .toast{background:#263329;color:var(--ink);border-color:#61735e}
+html[data-theme="dark"] .mobile-slip-button{background:#263329;color:var(--ink);border:1px solid #61735e}
+html[data-theme="dark"] .mobile-slip-button span{color:#151714}
+html[data-theme="dark"] :is(button,a,input,select,textarea):focus-visible{outline-color:var(--green)}
+
+/* Markets and the bet slip. Team crests and game artwork retain their colors. */
+html[data-theme="dark"] :is(.sport-tab span,.league-tabs button,.match-meta,.match-meta svg,.match-time,.odds-button>span,.match-more,.view-all-button span,.empty-slip p,.slip-note,.slip-selection p,.stake-input>span,.slip-summary,.clear-slip,.game-details p,.match-search svg,.empty-events p,.empty-events svg){color:var(--muted)}
+html[data-theme="dark"] :is(.league-tabs button.active,.odds-button,.betslip-title,.slip-tabs,.stake-presets button,.amount-presets button,.modal-wallet-tabs,.bet-history-tabs span,.transaction-icon){background:var(--theme-subtle)}
+html[data-theme="dark"] :is(.league-tabs button.active,.slip-tabs button.active,.modal-wallet-tabs button.active){color:var(--ink)}
+html[data-theme="dark"] :is(.slip-tabs button.active,.modal-wallet-tabs button.active){background:#344737}
+html[data-theme="dark"] :is(.betslip,.history-card,.mini-game){background:var(--paper);border-color:var(--line)}
+html[data-theme="dark"] .betslip-title{border-color:var(--line)}
+html[data-theme="dark"] .odds-button:hover{background:#2d4937;border-color:#689678}
+html[data-theme="dark"] .odds-button.selected{background:var(--green);border-color:#00c878}
+html[data-theme="dark"] .odds-button.selected>span{color:#154a31}
+html[data-theme="dark"] .live-tag{background:#203c2b;color:var(--theme-positive)}
+html[data-theme="dark"] .score-column.muted{color:#7a8a73}
+html[data-theme="dark"] .games-info{background:var(--theme-subtle);border-color:var(--line);color:var(--muted)}
+
+/* Wallet, transactions and internal transfers. */
+html[data-theme="dark"] :is(.wallet-overview,.internal-transfers){background:var(--theme-subtle);border-color:var(--line)}
+html[data-theme="dark"] :is(.wallet-card:not(.wallet-card-primary),.recent-transactions){background:var(--paper);border-color:var(--line)}
+html[data-theme="dark"] :is(.wallet-card:not(.wallet-card-primary) .balance-caption,.wallet-card:not(.wallet-card-primary) .wallet-balance span,.wallet-card:not(.wallet-card-primary) .wallet-profit>span:last-child,.wallet-card:not(.wallet-card-primary) .wallet-stats span,.wallet-card:not(.wallet-card-primary) .wallet-security,.wallet-card:not(.wallet-card-primary) .wallet-card-account>span,.wallet-overview-stat>span,.wallet-overview-stat>svg,.transaction-table th,.transaction-table td,.history-top,.history-card p,.history-values span,.recent-transactions-heading .section-kicker,.recent-transaction-details>span,.recent-transaction-details>small,.recent-transaction-value>span,.recent-transactions-empty){color:var(--muted)}
+html[data-theme="dark"] .wallet-card:not(.wallet-card-primary) :is(.wallet-security,.wallet-card-account,.wallet-card-account>div>button){border-color:var(--line)}
+html[data-theme="dark"] .wallet-card:not(.wallet-card-primary) .wallet-divider{background:var(--line)}
+html[data-theme="dark"] :is(.transaction-table th,.recent-transaction-icon.is-debit){background:var(--theme-subtle)}
+html[data-theme="dark"] .transaction-table td:first-child{color:var(--ink)}
+html[data-theme="dark"] :is(.transaction-status,.history-status,.recent-transaction-icon){background:#24402b;color:var(--theme-positive)}
+html[data-theme="dark"] :is(.empty-history,.history-top,.transfer-history-heading,.transfer-history-row,.transfer-review>div){border-color:var(--line)}
+html[data-theme="dark"] :is(.internal-transfers>p,.transfer-panel-top p,.transfer-history-row span,.transfer-history-row small,.transfer-empty,.transfer-dialog p,.transfer-review dt,.server-bet-note,.server-requests>p,.ledger-ref){color:var(--muted)}
+html[data-theme="dark"] :is(.manual-payment-details,.payment-return){background:var(--theme-subtle);border-color:var(--line)}
+html[data-theme="dark"] :is(.manual-payment-details>div>span,.manual-payment-details p,.payment-return p){color:var(--muted)}
+html[data-theme="dark"] :is(.payment-mode-tag,.payment-return.confirmed){background:#243b2b;border-color:#496b4f;color:var(--theme-positive)}
+
+/* The primary wallet stays green in both appearances, with fixed dark ink. */
+html[data-theme="dark"] .wallet-card.wallet-card-primary{background:var(--green);color:#151714;border-color:#00b86c}
+html[data-theme="dark"] .wallet-card-primary :is(.balance-caption,.wallet-balance span,.wallet-profit>span,.wallet-profit strong,.wallet-stats span,.wallet-stats .green-text,.wallet-security,.wallet-card-account>span){color:#154a31}
+html[data-theme="dark"] .wallet-card-primary .demo-badge{background:#b2ffdc;color:#154a31}
+html[data-theme="dark"] .wallet-card-primary :is(.wallet-symbol,.wallet-card-account,.wallet-card-account>div>button,.wallet-actions .outline,.wallet-security){border-color:#157447}
+html[data-theme="dark"] .wallet-card-primary .wallet-actions .green{background:#151714;color:#fff}
+html[data-theme="dark"] .wallet-card-primary .wallet-actions .green:hover{background:#234b34}
+html[data-theme="dark"] .wallet-card-primary .wallet-actions .outline:hover:not(:disabled){background:#b2ffdc}
+html[data-theme="dark"] .wallet-card-primary .wallet-actions .wallet-card-transfer{background:transparent;color:#151714}
+html[data-theme="dark"] .wallet-card-primary .wallet-divider{background:#157447}
+html[data-theme="dark"] .wallet-card-primary :is(button,a):focus-visible{outline-color:#151714}
+
+/* Form fields, modal dialogs and readable feedback. */
+html[data-theme="dark"] :is(.stake-input,.match-search,.amount-input,.wallet-modal select,.wallet-modal input:not(#wallet-amount),.copy-funding-form>input,.copy-funding-form select,.copy-filter-label select,.transaction-heading select,.admin-field input,.admin-field select,.admin-field textarea,.admin-filters select,.admin-inline-filter select,.topup-layout input:not([type=checkbox]),.topup-layout textarea,.topup-layout .amount-input,.promo-wallet-action input,.promo-field input,.promo-field select,.promo-amount-input,.kyc-field input,.kyc-field select,.kyc-field textarea,.kyc-review-toolbar select,.support-inbox-toolbar select,.support-footer form,.support-admin-composer textarea,#manual-withdraw-fields textarea){background:var(--theme-field);color:var(--ink);border-color:#50634d}
+html[data-theme="dark"] :is(input,select,textarea){color:var(--ink)}
+html[data-theme="dark"] :is(input,textarea)::placeholder{color:#94a78b}
+html[data-theme="dark"] :is(.amount-input input,.stake-input input,.match-search input,.promo-amount-input input,.topup-layout .amount-input input,.support-footer textarea){background:transparent;color:var(--ink)}
+html[data-theme="dark"] :is(.modal,.admin-modal,.kyc-dialog,.promo-dialog,.manual-method-dialog){background:var(--paper);color:var(--ink);border-color:var(--line)}
+html[data-theme="dark"] :is(.modal-description,.modal-wallet-tabs button,.wallet-modal label>span,.amount-input>span,.wallet-form-summary,.modal-fine-print,.info-modal p,.info-modal li,.success-details>div,.copy-funding-form label>span,.copy-funding-form .copy-funding-check){color:var(--muted)}
+html[data-theme="dark"] :is(.form-error,.admin-modal-error,.admin-feedback.error,.kyc-message.error,.promo-message.error,.support-error,#topup-feedback.error){background:#44281f;color:var(--theme-negative);border-color:#815443}
+html[data-theme="dark"] :is(.slip-error,.kyc-file-feedback.error,.transfer-dialog .form-error){color:var(--theme-negative)}
+html[data-theme="dark"] :is(.success-symbol,.dice-art .server-game-symbol){color:#151714}
+html[data-theme="dark"] .dice-result{color:var(--theme-positive)}
+html[data-theme="dark"] .crash-number{color:#cba4f3}
+
+/* Copy staking and settled performance. */
+html[data-theme="dark"] .copy-hero{background:#111d15;border:1px solid var(--line)}
+html[data-theme="dark"] :is(.copy-overview,.copy-strategy-card,.copy-position-card){background:var(--paper);border-color:var(--line)}
+html[data-theme="dark"] :is(.copy-capital-label,.copy-overview-metrics span,.copy-available,.copy-overview-note,.copy-demo-note p,.copy-how>div>span,.copy-filter-label,.copy-strategy-tag,.copy-strategy-description,.copy-metrics>div>span,.copy-chart-label,.copy-chart>span,.copy-strategy-footer>div,.copy-strategy-footer small,.copy-performance-note,.copy-position-top p,.copy-position-values span,.copy-position-note,.copy-position-activity,.copy-position-activity>span,.copy-position-activity p,.copy-close-button,.copy-empty p,.copy-master-heading .section-kicker,.copy-master-heading>span,.copy-game-teams>strong>span,.copy-game-teams>small,.copy-game-change small){color:var(--muted)}
+html[data-theme="dark"] :is(.copy-overview-metrics div+div,.copy-available,.copy-chart,.copy-empty,.copy-empty-symbol,.copy-simulate,.copy-simulate>span){border-color:var(--line)}
+html[data-theme="dark"] :is(.copy-overview-title .demo-badge,.copy-position-filters,.copy-empty,.copy-simulate,.copy-master-empty){background:var(--theme-subtle);color:var(--muted)}
+html[data-theme="dark"] :is(.copy-position-filters button,.copy-position-filters button.active){color:var(--ink)}
+html[data-theme="dark"] .copy-position-filters button.active{background:#344737}
+html[data-theme="dark"] :is(.copy-overview-metrics div:first-child strong,.copy-metrics strong.green-text,.copy-strategy-tag[data-risk="measured"],.copy-chart,.copy-performance-card .positive,.copy-master-heading h4>span){color:var(--theme-positive)}
+html[data-theme="dark"] :is(.copy-chart.negative,.copy-performance-card .negative){color:var(--theme-negative)}
+html[data-theme="dark"] .copy-performance-card .neutral{color:var(--muted)}
+html[data-theme="dark"] :is(.copy-status,.copy-game-status.won,.copy-risk){background:#243b2b;border-color:#496b4f;color:var(--theme-positive)}
+html[data-theme="dark"] :is(.copy-status.closed,.copy-game-status){background:var(--theme-subtle);color:var(--muted)}
+html[data-theme="dark"] .copy-risk.balanced{background:#293442;border-color:#4f607b;color:#c3d0ef}
+html[data-theme="dark"] :is(.copy-risk.dynamic,.copy-status.paused,.copy-game-status.pending){background:#3a3323;border-color:#685b3d;color:var(--theme-warning)}
+html[data-theme="dark"] .copy-game-status.lost{background:#44281f;color:var(--theme-negative)}
+html[data-theme="dark"] .copy-simulate:hover:not(:disabled){background:#304432;border-color:#688166}
+
+/* Administration and manual payment methods. */
+html[data-theme="dark"] :is(.admin-access,.admin-pick-card,.admin-search,.admin-settings-card,.topup-search-card,.topup-credit-card,.topup-receipt,.manual-method-card){background:var(--paper);border-color:var(--line)}
+html[data-theme="dark"] :is(.admin-access p,.admin-notice p,.admin-stat>span,.admin-stat small,.admin-stat-icon,.admin-tabs button,.admin-refresh,.admin-content-heading p,.admin-event-meta,.admin-event-meta>svg,.admin-event-date,.admin-pick-top>span:first-child,.admin-pick-card>p,.admin-pick-bottom>span,.admin-desk-footer,.admin-modal-close,.admin-modal .section-kicker,.admin-modal-description,.admin-field>span,.admin-field>span>small,.admin-field-note,.admin-form-subheading,.admin-score-fields>span,.admin-confirm-score div>span,.admin-confirm-score>span,.admin-confirm-label,.admin-review-summary>div>span,.admin-settings-channel,.admin-settings-card dt,.admin-settings-card>p,.admin-settings-webhook>span,.admin-settings-webhook p,.admin-settings-policy,.topup-credit-card>p,.topup-empty,.topup-layout small,#topup-selected-user p,#topup-review dt,#topup-search-status,#topup-history-status,.topup-receipt p,.topup-receipt small,.manual-catalog-note,.manual-method-toolbar>span,.manual-method-card>p,.manual-method-card-footer>span,.manual-fields-heading p,.manual-field-top>strong,.manual-answer-field>small){color:var(--muted)}
+html[data-theme="dark"] :is(.admin-stat:nth-child(2) strong,.topup-receipt h4>span,.admin-settings-policy a,.admin-settings-endpoint,.admin-settings-webhook code,.admin-setting-toggle,.topup-user:hover){color:var(--theme-positive)}
+html[data-theme="dark"] :is(.admin-tabs button>span,.admin-small-button,.admin-form-subheading,.admin-modal-actions,.admin-review-options label,.manual-method-card-footer,.manual-method-preview,.manual-field-row){border-color:var(--line)}
+html[data-theme="dark"] :is(.admin-small-button:hover,.admin-tabs button.active>span,.admin-confirm-score,.admin-review-summary,.admin-final-note,.admin-funding-preview,.admin-settings-webhook,.admin-settings-endpoint,.admin-settings-loading,.admin-settings-load-error,#topup-selected-user,.topup-receipt .topup-reason,.manual-method-badges>span,.manual-method-empty,.manual-field-row){background:var(--theme-subtle);color:var(--muted);border-color:var(--line)}
+html[data-theme="dark"] :is(.admin-final-note strong,.admin-funding-preview strong,.manual-method-empty h3){color:var(--ink)}
+html[data-theme="dark"] :is(.admin-small-button.primary,.admin-review-options label:has(input:checked),.admin-feedback,.admin-settings-mode,#topup-feedback){background:#243b2b;border-color:#496b4f;color:var(--theme-positive)}
+html[data-theme="dark"] :is(.admin-status,.admin-status.finished,.admin-status.lost){background:var(--theme-subtle);border-color:var(--line);color:var(--muted)}
+html[data-theme="dark"] :is(.admin-status.open,.admin-status.approved,.admin-status.won,.admin-status.live){background:#243b2b;border-color:#496b4f;color:var(--theme-positive)}
+html[data-theme="dark"] :is(.admin-status.suspended,.admin-status.pending,.admin-settings-mode.live,.admin-modal-preview-note){background:#3a3323;border-color:#685b3d;color:var(--theme-warning)}
+html[data-theme="dark"] :is(.admin-status.void,.admin-status.rejected,.admin-small-button.danger:hover){background:#44281f;border-color:#815443;color:var(--theme-negative)}
+html[data-theme="dark"] :is(.admin-small-button.danger,.manual-remove-field){color:var(--theme-negative)}
+html[data-theme="dark"] :is(.admin-field input:disabled,.admin-field select:disabled,.admin-field textarea:disabled){background:#283227;color:var(--muted)}
+
+/* Identity verification, its builder and review workspace. */
+html[data-theme="dark"] :is(.kyc-guide,.kyc-form-card,.kyc-review-row,.kyc-requirements-card,.kyc-assignment-desk,.kyc-field-editor){background:var(--paper);border-color:var(--line)}
+html[data-theme="dark"] :is(.kyc-wallet-notice,.kyc-wallet-notice.approved,.kyc-empty,.kyc-empty.approved,.kyc-empty.rejected,.kyc-upload,.kyc-extra-layer .kyc-upload,.kyc-customer-loading,.kyc-review-toolbar,.kyc-review-details,.kyc-review-document,.kyc-review-options label,.kyc-review-confirmation,.kyc-reviewed-record,.kyc-reason-notice,.kyc-extra-layer,.kyc-review-context-note,.kyc-workspace-nav,.kyc-layer-editor,.kyc-builder-empty,.kyc-snapshot-note,.kyc-user-row,.kyc-assignment-form,.kyc-layer-choices>label){background:var(--theme-subtle);border-color:var(--line)}
+html[data-theme="dark"] :is(.kyc-guide>.section-kicker,.kyc-guide li>span,.kyc-guide li p,.kyc-private-note p,.kyc-wallet-notice>div>span,.kyc-empty p,.kyc-empty .kyc-status-date,.kyc-status-actions>a,.kyc-form-heading .section-kicker,.kyc-form-heading p,.kyc-form-step,.kyc-field small,.kyc-document-section>p,.kyc-upload>small,.kyc-upload input,.kyc-consent,.kyc-form-footer>span,.kyc-review-context,.kyc-review-toolbar>label,.kyc-review-person>span,.kyc-review-meta>small,.kyc-pagination,.kyc-dialog-close,.kyc-dialog .section-kicker,.kyc-review-person-heading,.kyc-review-details dt,.kyc-review-document small,.kyc-review-confirmation>p,.kyc-reviewed-record,.kyc-reason-notice .section-kicker,.kyc-reason-notice p,.kyc-extra-layer>legend>span,.kyc-extra-layer>p,.kyc-extra-layer .kyc-field>span>small,.kyc-review-layer>p,.kyc-review-context-note p,.kyc-workspace-nav>button,.kyc-builder-heading .section-kicker,.kyc-builder-heading p,.kyc-builder-divider p,.kyc-builder-divider>span,.kyc-layer-number,.kyc-layer-editor-heading small,.kyc-field-editor-heading>span,.kyc-field-editor-heading>span>small,.kyc-builder-check,.kyc-limit-label,.kyc-builder-empty,.kyc-snapshot-note,.kyc-builder-save>span,.kyc-user-row>div:first-child>span,.kyc-user-row small,.kyc-layer-choices small,.kyc-layer-choices>p){color:var(--muted)}
+html[data-theme="dark"] :is(.kyc-field>span,.kyc-upload>span:first-child,.kyc-upload>strong,.kyc-consent strong,.kyc-review-details dd,.kyc-review-document,.kyc-review-options label,.kyc-extra-layer>legend,.kyc-review-layer h3,.kyc-review-context-note>strong,.kyc-layer-choices>legend,.kyc-layer-choices strong){color:var(--ink)}
+html[data-theme="dark"] :is(.kyc-guide li>span,.kyc-private-note,.kyc-form-step,.kyc-upload-icon,.kyc-reason-notice>div+div){border-color:var(--line)}
+html[data-theme="dark"] :is(.kyc-private-note svg,.kyc-wallet-notice>svg,.kyc-wallet-notice.approved>svg,.kyc-empty>svg,.kyc-empty.approved>svg,.kyc-upload-icon,.kyc-file-feedback,.kyc-customer-loading .kyc-submit-spinner,.kyc-text-button,.kyc-required,.kyc-guide h2>span,.kyc-form-heading h2>span,.kyc-dialog h2>span,.kyc-builder-heading h3>span){color:var(--theme-positive)}
+html[data-theme="dark"] :is(.kyc-status-badge,.kyc-status-badge.approved,.kyc-message,.kyc-review-options label:has(input:checked),.kyc-layer-choices>label:has(input:checked)){background:#243b2b;border-color:#496b4f;color:var(--theme-positive)}
+html[data-theme="dark"] :is(.kyc-status-badge.pending,.kyc-status-badge.additional_required,.kyc-preview-notice,.kyc-review-blocked,.kyc-status-note){background:#3a3323;border-color:#685b3d;color:var(--theme-warning)}
+html[data-theme="dark"] .kyc-preview-notice p{color:var(--theme-warning)}
+html[data-theme="dark"] :is(.kyc-status-badge.rejected,.kyc-text-button.danger,.kyc-empty.rejected>svg){color:var(--theme-negative)}
+html[data-theme="dark"] .kyc-status-badge.rejected{background:#44281f}
+html[data-theme="dark"] .kyc-empty.pending>svg{color:var(--theme-warning)}
+html[data-theme="dark"] :is(.kyc-sensitive-warning,.kyc-review-confirmation>blockquote){background:#273d2c;color:var(--muted);border-color:#496b4f}
+html[data-theme="dark"] .kyc-workspace-nav>button[aria-current="page"]{background:#344737;color:var(--ink)}
+html[data-theme="dark"] .kyc-upload input::file-selector-button{background:#344737;color:var(--ink);border-color:#61795b}
+
+/* Promotional credits. The issued-code panel already has a dark palette. */
+html[data-theme="dark"] :is(.promo-wallet-card,.promo-create-card,.promo-code-row,.promo-empty-large){background:var(--paper);border-color:var(--line)}
+html[data-theme="dark"] :is(.promo-wallet-intro .section-kicker,.promo-create-card>.section-kicker,.promo-wallet-intro>p,.promo-create-card>p,.promo-wallet-action form>small,.promo-access-note,.promo-text-button,.promo-history-row>div>span,.promo-history-row>div>p,.promo-empty,.promo-pagination>button,.promo-pagination>span,.promo-field>span,.promo-field>span>small,.promo-field>small,.promo-amount-input>span,.promo-list-toolbar>span,.promo-code-mask,.promo-code-main p,.promo-code-meta,.promo-admin-note,.promo-empty-large p,.promo-dialog>.section-kicker,.promo-dialog>p,.promo-close,.promo-confirm,.promo-loading){color:var(--muted)}
+html[data-theme="dark"] :is(.promo-wallet-intro h2,.promo-create-card h3,.promo-history-heading h3,.promo-history-row>div>strong,.promo-code-main strong,.promo-empty-large h3){color:var(--ink)}
+html[data-theme="dark"] :is(.promo-wallet-intro h2>span,.promo-create-card h3>span,.promo-history-row>strong,.promo-dialog h2>span,.promo-empty-large>span){color:var(--theme-positive)}
+html[data-theme="dark"] :is(.promo-history,.promo-history-row,.promo-pagination,.promo-code-meta){border-color:var(--line)}
+html[data-theme="dark"] :is(.promo-message,.promo-status.active,.promo-status.redeemed){background:#243b2b;border-color:#496b4f;color:var(--theme-positive)}
+html[data-theme="dark"] :is(.promo-status,.promo-status.expired){background:var(--theme-subtle);color:var(--muted)}
+html[data-theme="dark"] .promo-status.revoked{background:#3a3323;color:var(--theme-warning)}
+html[data-theme="dark"] .promo-code-main>.admin-small-button{color:var(--theme-warning);border-color:#685b3d}
+
+/* Customer support and the administrator inbox. */
+html[data-theme="dark"] :is(.support-panel,.support-footer,.support-inbox){background:var(--paper);border-color:var(--line)}
+html[data-theme="dark"] :is(.support-statusbar,.support-inbox-rail,.support-admin-assigned,.support-connection-note){background:var(--theme-subtle);border-color:var(--line)}
+html[data-theme="dark"] :is(.support-statusbar>span:last-child,.support-statusbar>span:nth-child(2),.support-message-meta,.support-message-meta strong,.support-message.system p,.support-thinking,.support-transfer>span,.support-privacy,.support-empty p,.support-older,.support-inbox-toolbar label,.support-inbox-toolbar>span,.support-inbox-row>span,.support-inbox-row>small,.support-pagination button,.support-pagination span,.support-inbox-empty,.support-inbox-empty p,.support-inbox-list-empty,.support-admin-thread-heading p,.support-admin-assigned,.support-admin-composer label,.support-admin-composer small,.support-inbox-note,.support-inbox-loading,.support-connection-note){color:var(--muted)}
+html[data-theme="dark"] .support-message p{background:#263329;border-color:#4b6047;color:var(--ink)}
+html[data-theme="dark"] .support-message.user p{background:#264331;border-color:#4e7958;color:var(--ink)}
+html[data-theme="dark"] .support-message.system p{background:transparent;border-color:transparent}
+html[data-theme="dark"] :is(.support-quick button,.support-thread-badge){background:var(--theme-subtle);border-color:#50634d;color:var(--ink)}
+html[data-theme="dark"] :is(.support-quick button:hover,.support-inbox-row:hover,.support-inbox-row.selected){background:#304432;border-color:#688166}
+html[data-theme="dark"] :is(.support-inbox-row>strong,.support-inbox-empty h3,.support-admin-thread-heading h3){color:var(--ink)}
+html[data-theme="dark"] :is(.support-transfer>button,.support-inbox-empty>span,.support-empty>span){color:var(--theme-positive)}
+html[data-theme="dark"] :is(.support-statusbar,.support-footer,.support-inbox-row,.support-pagination,.support-admin-thread-heading,.support-admin-composer){border-color:var(--line)}
+html[data-theme="dark"] .support-thread-badge.waiting{background:#3a3323;color:var(--theme-warning)}
+html[data-theme="dark"] .support-thread-badge.admin{background:#243b2b;color:var(--theme-positive)}
+html[data-theme="dark"] .support-thread-badge.resolved{background:var(--theme-subtle);color:var(--muted)}
+html[data-theme="dark"] .kyc-submit-spinner{border-color:#78906f55;border-top-color:currentColor}
+
+/* Match the shared icon-button hover specificity so the action remains legible. */
+html[data-theme="dark"] .theme-toggle.icon-button:hover{background:var(--green);color:#151714;border-color:#00b86c}
+
+@media(max-width:760px){.theme-toggle{width:34px;height:34px;min-width:34px;padding:7px}}
+@media(max-width:380px){.theme-toggle{width:32px;height:32px;min-width:32px;padding:6px}}

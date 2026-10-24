@@ -7,12 +7,13 @@
   <meta name="description" content="Your game. Your edge. Explore sports and games, build a bet slip and manage your wallet.">
   <title>EDGE — Your game. Your edge.</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="/assets/app.css?v=20261024-wallet">
+  <script src="/assets/theme.js?v=20261024-theme-1"></script>
+  <link rel="stylesheet" href="/assets/app.css?v=20261024-layout-2">
   <link rel="stylesheet" href="/assets/admin.css">
   <link rel="stylesheet" href="/assets/server.css">
   <link rel="stylesheet" href="/assets/motion.css">
   <link rel="stylesheet" href="/assets/kyc.css">
-  <link rel="stylesheet" href="/assets/support.css">
+  <link rel="stylesheet" href="/assets/support.css?v=20261024-layout-2">
   <link rel="stylesheet" href="/assets/promo.css">
   <link rel="stylesheet" href="/assets/manual-methods.css">
   <script src="/assets/motion.js" defer></script>
@@ -27,6 +28,7 @@
   <script src="/assets/support.js" defer></script>
   <script src="/assets/promo.js" defer></script>
   <script src="/assets/manual-methods.js" defer></script>
+  <link rel="stylesheet" href="/assets/theme.css?v=20261024-theme-1">
 </head>
 <body data-runtime="static" data-edge-preload="app">
   <div id="edge-page-loader" class="edge-page-loader" role="status" aria-live="polite" aria-hidden="true" hidden>
@@ -68,6 +70,7 @@
     </nav>
     <div class="header-actions">
       <button class="header-wallet" data-page="wallet"><span class="tiny-label">YOUR WALLET</span><strong data-balance>$124,500.00</strong><svg><use href="#i-chevron"/></svg></button>
+      <button class="icon-button theme-toggle" type="button" data-theme-toggle aria-label="Switch to dark mode" title="Switch to dark mode" aria-pressed="false"><svg class="theme-icon-moon" viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 13A8.5 8.5 0 0 1 11 3.5 8.5 8.5 0 1 0 20.5 13Z"/></svg><svg class="theme-icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"/></svg></button>
       <button class="button green header-deposit" data-wallet="deposit"><svg><use href="#i-plus"/></svg> Deposit</button>
       <button class="icon-button notification-button" id="notifications-button" aria-label="Notifications"><svg><use href="#i-bell"/></svg><i></i></button>
       <button class="avatar" id="profile-button" aria-label="Open account menu">JA</button>
@@ -79,7 +82,7 @@
     <div class="page-topline"><span><span class="status-dot"></span> THE HOME OF YOUR NEXT MOVE</span><span class="topline-right">PLAY SMART. STAY IN CONTROL. <span class="age-badge">18+</span></span></div>
 
     <div id="sports-page" class="page-panel">
-      <section class="wallet-overview" aria-label="Your wallet">
+      <section class="home-overview" aria-label="Your wallet and sports">
         <aside class="wallet-card wallet-card-primary" aria-label="Your wallet overview">
           <div class="wallet-card-top"><h1 class="eyebrow">YOUR WALLET</h1><span class="wallet-symbol"><svg><use href="#i-wallet"/></svg></span></div>
           <div class="wallet-card-summary">
@@ -96,6 +99,18 @@
           </div>
           <div class="wallet-security"><svg><use href="#i-lock"/></svg> YOUR WALLET. YOUR CONTROL.</div>
         </aside>
+        <div class="hero wallet-promo" aria-labelledby="wallet-promo-title">
+          <img class="hero-image nfl-hero" src="/assets/game-nfl.jpg" alt="NFL quarterback Tom Brady in a New England Patriots helmet preparing to throw a football">
+          <div class="hero-shade"></div>
+          <div class="hero-content">
+            <span class="eyebrow hero-eyebrow"><span class="green-dot"></span> FOR THE LOVE OF THE GAME</span>
+            <h2 id="wallet-promo-title">YOUR GAME.<br>YOUR <span>EDGE.</span></h2>
+            <p>Big moments. Bold moves.<br>A whole new way to get in the game.</p>
+            <button class="button white hero-cta" id="explore-button">Explore sports <svg><use href="#i-arrow"/></svg></button>
+          </div>
+          <div class="hero-index"><span>01 / 03</span><span class="hero-progress"><i></i></span><span>BUILT FOR THE GAME ↗</span></div>
+          <span class="nfl-photo-credit">Photo: <a href="https://commons.wikimedia.org/wiki/File:Tom_Brady.jpg" target="_blank" rel="noopener noreferrer">Keith Allison</a> · <a href="https://creativecommons.org/licenses/by-sa/2.0/" target="_blank" rel="noopener noreferrer">CC BY-SA 2.0</a></span>
+        </div>
       </section>
 
       <section class="recent-transactions" aria-labelledby="recent-transactions-title">
