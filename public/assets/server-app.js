@@ -91,6 +91,8 @@
   const getStrategy=id=>strategies.find(s=>String(s.id)===String(id)||s.slug===String(id));
   const outcomeLabel=(event,outcome)=>outcome==='home'?`${event.home_name} to win`:outcome==='away'?`${event.away_name} to win`:'Draw';
   function render(){
+    const name=typeof user?.name==='string'?user.name.trim():'';
+    $('#wallet-greeting').textContent=name?`Good morning, ${name}`:'Good morning';
     $$('[data-balance]').forEach(el=>el.textContent=user?money(balance()):'$0.00');
     $$('[data-profit]').forEach(el=>el.textContent=money(state.profit_cents));
     $$('[data-stakes]').forEach(el=>el.textContent=money(state.active_stakes_cents));

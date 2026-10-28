@@ -8,7 +8,7 @@
   <title>EDGE — Your game. Your edge.</title>
   <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
   <script src="/assets/theme.js?v=20261024-theme-1"></script>
-  <link rel="stylesheet" href="/assets/app.css?v=20261024-layout-2">
+  <link rel="stylesheet" href="/assets/app.css?v=20261028-greeting">
   <link rel="stylesheet" href="/assets/admin.css">
   <link rel="stylesheet" href="/assets/server.css">
   <link rel="stylesheet" href="/assets/motion.css">
@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="/assets/manual-methods.css">
   <script src="/assets/motion.js" defer></script>
   <script src="/assets/app.js" defer></script>
-  <script src="/assets/server-app.js" defer></script>
+  <script src="/assets/server-app.js?v=20261028-greeting" defer></script>
   <link rel="stylesheet" href="/assets/transfers.css">
   <script src="/assets/transfers.js" defer></script>
   <script src="/assets/admin.js" defer></script>
@@ -82,6 +82,7 @@
     <div class="page-topline"><span><span class="status-dot"></span> THE HOME OF YOUR NEXT MOVE</span><span class="topline-right">PLAY SMART. STAY IN CONTROL. <span class="age-badge">18+</span></span></div>
 
     <div id="sports-page" class="page-panel">
+      <p class="wallet-greeting" id="wallet-greeting">Good morning</p>
       <section class="home-overview" aria-label="Your wallet and sports">
         <aside class="wallet-card wallet-card-primary" aria-label="Your wallet overview">
           <div class="wallet-card-top"><h1 class="eyebrow">YOUR WALLET</h1><span class="wallet-symbol"><svg><use href="#i-wallet"/></svg></span></div>
