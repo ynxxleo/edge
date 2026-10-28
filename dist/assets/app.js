@@ -321,7 +321,7 @@
       if(!Number.isFinite(amount)||amount<100||Math.round(amount*100)!==amount*100&&Math.abs(Math.round(amount*100)-amount*100)>0.00001)return fail('Enter an amount of at least $100 with no more than two decimal places.');
       if(amount>1000000)return fail('The transaction limit is $1,000,000.');
       if(walletMode==='withdraw'&&amount>state.balance)return fail('This amount exceeds your available balance. Active stakes must be cashed out first.');
-      if(walletMode==='withdraw'&&(!$('#bank-name').value||!/^\d{10}$/.test($('#account-number').value)||$('#account-name').value.trim().length<2))return fail('Select a bank and enter a 10-digit account number and account holder name.');
+      if(walletMode==='withdraw'&&($('#bank-name').value.trim().length<2||!/^\d{10}$/.test($('#account-number').value)||$('#account-name').value.trim().length<2))return fail('Enter a bank name, a 10-digit account number and account holder name.');
       const withdraw=walletMode==='withdraw',method=withdraw?'Bank transfer':$('#wallet-method').value==='card'?'Debit card':'Bank transfer';
       const reference=`TX-${Date.now().toString().slice(-9)}`;
       state.balance=Math.round((state.balance+(withdraw?-amount:amount))*100)/100;
